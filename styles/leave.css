@@ -1,0 +1,770 @@
+/* ============================================================
+   leave.css — Halaman Pengajuan Izin
+   Bergantung pada main.css untuk variabel dan komponen dasar.
+   ============================================================ */
+
+/* ── Page layout ────────────────────────────────────────────── */
+.leave-page {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: var(--space-lg) var(--gap);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.page-title {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.page-sub {
+  font-size: 0.845rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+/* ── Info cards: jenis izin ─────────────────────────────────── */
+.leave-types-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: var(--space-md);
+}
+
+.leave-type-card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-md) var(--space-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  box-shadow: var(--shadow-xs);
+  transition: box-shadow var(--transition);
+}
+
+.leave-type-card:hover {
+  box-shadow: var(--shadow);
+}
+
+.leave-type-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.leave-type-dayoff .leave-type-icon {
+  background: var(--brand-light);
+  color: var(--brand);
+}
+
+.leave-type-extraoff .leave-type-icon {
+  background: var(--warning-bg);
+  color: var(--warning);
+}
+
+.leave-type-sick .leave-type-icon {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.leave-type-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.leave-type-desc {
+  font-size: 0.77rem;
+  color: var(--text-muted);
+  margin-top: 0.1rem;
+}
+
+/* ── Table card ─────────────────────────────────────────────── */
+.table-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.section-title {
+  font-size: 0.975rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ── Table specific ─────────────────────────────────────────── */
+.leave-table {
+  min-width: 620px;
+}
+
+.leave-type-badge {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-xs);
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.leave-type-badge--day_off {
+  background: var(--brand-light);
+  color: var(--brand-dark);
+}
+
+.leave-type-badge--extra_off {
+  background: var(--warning-bg);
+  color: var(--warning);
+}
+
+.leave-type-badge--sick {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.date-range {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.date-sep {
+  display: inline-block;
+  margin: 0 0.3rem;
+  color: var(--text-faint);
+}
+
+.duration-badge {
+  display: inline-block;
+  padding: 0.18rem 0.48rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.reason-cell {
+  max-width: 220px;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.45;
+}
+
+.manager-note-cell {
+  max-width: 180px;
+  font-size: 0.82rem;
+}
+
+.manager-note {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.45;
+}
+
+/* ── Badge override (tambahan status cancelled) ─────────────── */
+.badge-cancelled {
+  background: var(--bg);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+/* ── Cancel button ──────────────────────────────────────────── */
+.btn-cancel-leave {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.28rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--danger);
+  background: var(--danger-bg);
+  border: 1px solid transparent;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  transition:
+    background var(--transition),
+    border-color var(--transition);
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.btn-cancel-leave:hover {
+  background: #fbd5d1;
+  border-color: var(--danger);
+}
+
+/* ── Empty state ────────────────────────────────────────────── */
+.empty-state {
+  text-align: center;
+  padding: var(--space-xl) var(--space-lg);
+}
+
+.empty-icon {
+  width: 52px;
+  height: 52px;
+  background: var(--bg);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-md);
+  color: var(--text-faint);
+}
+
+.empty-title {
+  font-size: 0.935rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.empty-sub {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+/* ── Critical: enforce [hidden] even when display is overridden ─ */
+/* This MUST appear before .modal-overlay so specificity wins.    */
+[hidden] {
+  display: none !important;
+}
+
+/* ── Modal overlay ──────────────────────────────────────────── */
+/*
+ * Modals are hidden via JS by toggling .is-open (not the HTML `hidden`
+ * attribute) so there is no conflict between display:flex and [hidden].
+ * On page load both overlays start without .is-open → invisible.
+ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 17, 23, 0.45);
+  z-index: 400;
+  display: none; /* hidden by default */
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+.modal-overlay.is-open {
+  display: flex;
+  animation: overlayIn 0.18s ease;
+}
+
+@keyframes overlayIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 600px) {
+  .modal-overlay.is-open {
+    align-items: center;
+    padding: var(--space-lg);
+  }
+}
+
+.modal {
+  background: var(--bg-card);
+  border-radius: var(--radius) var(--radius) 0 0;
+  width: 100%;
+  max-width: 520px;
+  max-height: 92vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  animation: modalUp 0.22s cubic-bezier(0.34, 1.2, 0.64, 1);
+}
+
+@media (min-width: 600px) {
+  .modal {
+    border-radius: var(--radius);
+    animation: modalPop 0.2s cubic-bezier(0.34, 1.1, 0.64, 1);
+  }
+  .modal--sm {
+    max-width: 380px;
+  }
+}
+
+@keyframes modalUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes modalPop {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-lg);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.modal-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 0.2rem;
+  border-radius: var(--radius-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    color var(--transition),
+    background var(--transition);
+}
+
+.modal-close:hover {
+  color: var(--text-primary);
+  background: var(--bg);
+}
+
+.modal-body {
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+  border-top: 1px solid var(--border-light);
+}
+
+/* ── Leave type selector ────────────────────────────────────── */
+.leave-type-selector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+@media (max-width: 400px) {
+  .leave-type-selector {
+    grid-template-columns: 1fr;
+  }
+}
+
+.type-option {
+  cursor: pointer;
+  display: block;
+}
+
+.type-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.type-option-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.75rem 0.5rem;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  text-align: center;
+  background: var(--bg-card);
+  transition:
+    border-color var(--transition),
+    background var(--transition);
+}
+
+.type-option input[type="radio"]:checked + .type-option-content {
+  border-color: var(--brand);
+  background: var(--brand-xlight);
+}
+
+.type-option:hover .type-option-content {
+  border-color: var(--brand-mid);
+  background: var(--brand-xlight);
+}
+
+.type-option-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.type-icon-dayoff {
+  background: var(--brand-light);
+  color: var(--brand);
+}
+
+.type-icon-extraoff {
+  background: var(--warning-bg);
+  color: var(--warning);
+}
+
+.type-icon-sick {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.type-option
+  input[type="radio"]:checked
+  + .type-option-content
+  .type-icon-dayoff,
+.type-option
+  input[type="radio"]:checked
+  + .type-option-content
+  .type-icon-extraoff,
+.type-option
+  input[type="radio"]:checked
+  + .type-option-content
+  .type-icon-sick {
+  box-shadow: 0 0 0 2px var(--brand-mid);
+}
+
+.type-option-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.type-option-desc {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  line-height: 1.3;
+}
+
+/* ── Duration summary ───────────────────────────────────────── */
+.duration-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--brand-light);
+  border-radius: var(--radius-xs);
+  font-size: 0.82rem;
+  color: var(--brand-dark);
+  font-weight: 500;
+}
+
+/* ── Info banner ────────────────────────────────────────────── */
+.info-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-xs);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.info-banner--warning {
+  background: var(--warning-bg);
+  color: var(--warning);
+  border: 1px solid #f0e0b5;
+}
+
+.info-banner svg {
+  flex-shrink: 0;
+  margin-top: 0.05rem;
+}
+
+/* ── Form helpers ───────────────────────────────────────────── */
+.required {
+  color: var(--danger);
+}
+
+.label-hint {
+  font-weight: 400;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  margin-left: 0.2rem;
+}
+
+.field-error {
+  font-size: 0.78rem;
+  color: var(--danger);
+  margin-top: 0.25rem;
+}
+
+/* ── Buttons ────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.58rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition),
+    opacity var(--transition);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--brand);
+  color: #fff;
+  border-color: var(--brand);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--brand-dark);
+  border-color: var(--brand-dark);
+  box-shadow: 0 2px 8px rgba(79, 110, 247, 0.3);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: var(--border);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: var(--bg);
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: #fff;
+  border-color: var(--danger);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: #a93226;
+  border-color: #a93226;
+}
+
+/* ── Spinner ────────────────────────────────────────────────── */
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Hidden rows via filter ─────────────────────────────────── */
+tr[data-status].row-hidden {
+  display: none;
+}
+
+/* ── Review section: tab badge counter ──────────────────────── */
+.badge-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 0.32rem;
+  border-radius: 9px;
+  background: var(--danger);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-left: 0.3rem;
+  vertical-align: middle;
+}
+
+/* ── Review section: employee name + department in table ─────── */
+.leave-emp-name {
+  display: block;
+  font-size: 0.845rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.leave-emp-dept {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.1rem;
+}
+
+/* ── Reviewer name inside manager-note-cell ─────────────────── */
+.leave-reviewer-name {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* ── Company Day-off page ───────────────────────────────────── */
+
+/* Navigasi tahun */
+.dayoff-year-nav {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+/* Tanggal + hari singkat di tabel */
+.dayoff-date {
+  display: block;
+  font-size: 0.845rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.dayoff-weekday {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 0.1rem;
+}
+
+.dayoff-name {
+  font-size: 0.845rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* ── Modal tambah: baris input tanggal + tombol ─────────────── */
+.dayoff-date-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.dayoff-date-row input[type="date"] {
+  flex: 1;
+}
+
+/* ── Tag tanggal yang dipilih ───────────────────────────────── */
+.dayoff-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+  min-height: 0;
+}
+
+.dayoff-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.22rem 0.55rem;
+  background: var(--brand-light);
+  color: var(--brand-dark);
+  border-radius: var(--radius-xs);
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.dayoff-tag-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--brand);
+  font-size: 0.9rem;
+  line-height: 1;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  opacity: 0.7;
+  font-family: inherit;
+}
+
+.dayoff-tag-remove:hover {
+  opacity: 1;
+}
+
+/* ── Radio scope (Semua / Kantor Tertentu) ──────────────────── */
+.dayoff-scope-row {
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.dayoff-scope-option {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.845rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+}
+
+.dayoff-scope-option input[type="radio"] {
+  width: auto;
+  accent-color: var(--brand);
+}

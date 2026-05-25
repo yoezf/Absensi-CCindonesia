@@ -1,0 +1,454 @@
+/* ============================================================
+   offices.css — Halaman manajemen kantor
+   Scoped under .ofc- prefix. Depends on main.css variables.
+   ============================================================ */
+
+/* ── Page header — sama persis dengan halaman manager lain ── */
+.ofc-page-header {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  padding: clamp(1rem, 3vw, 1.4rem) clamp(1rem, 3vw, 1.5rem);
+  margin-bottom: 0;
+}
+.ofc-page-header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  max-width: var(--container);
+  margin: 0 auto;
+}
+.ofc-page-title {
+  font-size: clamp(1.2rem, 3vw, 1.55rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+.ofc-page-subtitle {
+  font-size: clamp(0.7rem, 1.5vw, 0.78rem);
+  color: var(--text-faint);
+  margin-top: 0.15rem;
+  font-weight: 400;
+}
+
+/* ── Body wrapper — padding konsisten dgn halaman lain ──────── */
+.ofc-body {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 1.25rem clamp(1rem, 3vw, 1.5rem) 4rem;
+}
+
+/* ── Grid kartu kantor ───────────────────────────────────────── */
+.ofc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 0.85rem;
+  align-items: start;
+}
+
+/* ── Kartu kantor ────────────────────────────────────────────── */
+.ofc-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-xs);
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow var(--transition);
+  overflow: hidden;
+}
+.ofc-card:hover {
+  box-shadow: var(--shadow);
+}
+.ofc-card.inactive {
+  opacity: 0.62;
+}
+
+/* ── Kartu header ────────────────────────────────────────────── */
+.ofc-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem 1rem 0.75rem;
+}
+.ofc-card-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: var(--brand-light);
+  color: var(--brand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.ofc-card-icon svg {
+  width: 17px;
+  height: 17px;
+}
+.ofc-card-icon.inactive {
+  background: var(--border-light);
+  color: var(--text-faint);
+}
+.ofc-card-title-wrap {
+  flex: 1;
+  min-width: 0;
+}
+.ofc-card-name {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+.ofc-card-address {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.12rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ofc-badge-inactive {
+  display: inline-block;
+  font-size: 0.67rem;
+  font-weight: 600;
+  background: var(--border-light);
+  color: var(--text-faint);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 0.08rem 0.45rem;
+  margin-top: 0.2rem;
+}
+
+/* ── Meta grid ───────────────────────────────────────────────── */
+.ofc-card-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem 0.75rem;
+  padding: 0 1rem 1rem;
+}
+.ofc-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.08rem;
+}
+.ofc-meta-label {
+  font-size: 0.67rem;
+  font-weight: 700;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.ofc-meta-value {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+.ofc-meta-value strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+.ofc-meta-coord {
+  font-size: 0.72rem;
+}
+
+/* ── Card footer ─────────────────────────────────────────────── */
+.ofc-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 0.85rem;
+  border-top: 1px solid var(--border-light);
+  background: var(--bg);
+  flex-wrap: wrap;
+}
+.ofc-card-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+}
+
+/* ── Karyawan count pill ─────────────────────────────────────── */
+.ofc-emp-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: var(--radius-xs);
+  padding: 0.22rem 0.4rem;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-weight: 500;
+  transition:
+    background var(--transition),
+    color var(--transition);
+}
+.ofc-emp-count:hover {
+  background: var(--brand-xlight);
+  color: var(--brand);
+}
+.ofc-emp-count svg {
+  width: 13px;
+  height: 13px;
+}
+
+/* ── Maps link ───────────────────────────────────────────────── */
+.ofc-map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--brand);
+  text-decoration: none;
+  padding: 0.22rem 0.3rem;
+  border-radius: var(--radius-xs);
+  transition: background var(--transition);
+}
+.ofc-map-link:hover {
+  background: var(--brand-xlight);
+  text-decoration: none;
+}
+
+/* ── Tambah kantor card ──────────────────────────────────────── */
+.ofc-add-card {
+  background: transparent;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  color: var(--text-faint);
+  transition: all var(--transition);
+  font-size: 0.84rem;
+  font-weight: 500;
+  font-family: inherit;
+  width: 100%;
+}
+.ofc-add-card:hover {
+  border-color: var(--brand);
+  color: var(--brand);
+  background: var(--brand-xlight);
+}
+.ofc-add-card svg {
+  width: 26px;
+  height: 26px;
+  opacity: 0.4;
+  transition: opacity var(--transition);
+}
+.ofc-add-card:hover svg {
+  opacity: 1;
+}
+
+/* ── Modal overlay ───────────────────────────────────────────── */
+.ofc-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 17, 23, 0.45);
+  backdrop-filter: blur(3px);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s;
+}
+.ofc-modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.ofc-modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 520px;
+  max-height: 90dvh;
+  overflow-y: auto;
+  transform: translateY(10px);
+  transition: transform 0.18s;
+  display: flex;
+  flex-direction: column;
+}
+.ofc-modal-overlay.open .ofc-modal {
+  transform: translateY(0);
+}
+
+/* ── Modal header ────────────────────────────────────────────── */
+.ofc-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.35rem 0.9rem;
+  border-bottom: 1px solid var(--border-light);
+  flex-shrink: 0;
+}
+.ofc-modal-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* reuse modal-close dari main.css */
+.ofc-modal-close {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  font-size: 1.2rem;
+  color: var(--text-faint);
+  cursor: pointer;
+  border-radius: var(--radius-xs);
+  transition:
+    background var(--transition),
+    color var(--transition);
+  line-height: 1;
+}
+.ofc-modal-close:hover {
+  background: var(--bg);
+  color: var(--text-primary);
+}
+
+/* ── Modal body / form ───────────────────────────────────────── */
+.ofc-modal-body {
+  padding: 1.15rem 1.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  overflow-y: auto;
+  flex: 1;
+}
+.ofc-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+}
+.ofc-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+}
+.ofc-form-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.ofc-form-label span {
+  color: var(--danger);
+  margin-left: 2px;
+}
+.ofc-form-hint {
+  font-size: 0.69rem;
+  color: var(--text-faint);
+  line-height: 1.4;
+}
+.ofc-section-sep {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border-light);
+  margin-top: 0.1rem;
+}
+
+/* ── Modal footer ────────────────────────────────────────────── */
+.ofc-modal-foot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: 0.9rem 1.35rem;
+  border-top: 1px solid var(--border-light);
+  flex-shrink: 0;
+}
+
+/* ── Detail modal — employee list ────────────────────────────── */
+.ofc-detail-modal {
+  max-width: 440px;
+}
+.ofc-detail-emp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  max-height: 360px;
+  overflow-y: auto;
+}
+.ofc-detail-emp-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+}
+.ofc-detail-emp-row.inactive {
+  opacity: 0.5;
+}
+.ofc-det-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--brand-light);
+  color: var(--brand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.ofc-det-name {
+  font-weight: 500;
+  font-size: 0.83rem;
+  color: var(--text-primary);
+}
+.ofc-det-meta {
+  font-size: 0.71rem;
+  color: var(--text-muted);
+}
+.ofc-det-primary {
+  margin-left: auto;
+  font-size: 0.65rem;
+  font-weight: 600;
+  background: var(--brand-light);
+  color: var(--brand);
+  padding: 0.08rem 0.42rem;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+.ofc-empty-emp {
+  text-align: center;
+  color: var(--text-faint);
+  font-size: 0.84rem;
+  padding: 2.5rem 1rem;
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .ofc-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 479px) {
+  .ofc-form-row {
+    grid-template-columns: 1fr;
+  }
+}

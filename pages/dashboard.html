@@ -1,0 +1,4248 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="csrf-token" content="IjdlOGQxNGYzZTYzZDI5OTA1M2JhM2YyMjM0ZjE2OWNlNDMxMDAwMDUi.ahPTHw.xTIh4QRHRhZVIrySDZZsN1kdL3s">
+    <meta name="theme-color" content="#1A4A8C">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231A4A8C'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z'/%3E%3Ccircle cx='12' cy='9' r='2.5' fill='white'/%3E%3C/svg%3E">
+    <title>Manager Dashboard · Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="/css2" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../styles/main.css">
+    
+<link rel="stylesheet" href="../styles/dashboard.css">
+
+  <style id="nb-style">
+/* Notification Bell — nb-* namespace */
+
+.nb-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Bell button */
+.nb-bell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--color-text-secondary, #6b7280);
+  transition: background 0.15s, color 0.15s;
+  padding: 0;
+}
+
+.nb-bell:hover {
+  background: var(--color-background-secondary, #f3f4f6);
+  color: var(--color-text-primary, #111827);
+}
+
+.nb-bell:focus-visible {
+  outline: 2px solid var(--color-border-focus, #3b82f6);
+  outline-offset: 2px;
+}
+
+/* Badge */
+.nb-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 8px;
+  background: var(--color-background-danger, #ef4444);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  pointer-events: none;
+  border: 2px solid var(--color-background-primary, #fff);
+}
+
+/* Dropdown panel */
+.nb-dropdown {
+  position: fixed;
+  width: 340px;
+  max-height: 480px;
+  background: var(--color-background-primary, #fff);
+  border: 1px solid var(--color-border-secondary, #e5e7eb);
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.14), 0 2px 8px rgba(0,0,0,.07);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: nb-fade-in 0.15s ease;
+}
+
+/* KRITIS: override browser [hidden]{display:none} yang dikalahkan display:flex di atas */
+.nb-dropdown[hidden] {
+  display: none !important;
+}
+
+@keyframes nb-fade-in {
+  from { opacity: 0; transform: translateY(-6px) scale(.98); }
+  to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+
+/* Dropdown header */
+.nb-dropdown-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid var(--color-border-tertiary, #f3f4f6);
+  flex-shrink: 0;
+}
+
+.nb-dropdown-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary, #111827);
+}
+
+.nb-read-all {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-info, #3b82f6);
+  padding: 3px 8px;
+  border-radius: 6px;
+  transition: background 0.12s;
+  line-height: 1.4;
+}
+
+.nb-read-all:hover {
+  background: var(--color-background-info, #eff6ff);
+}
+
+/* Notification list */
+.nb-list {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0;
+  overflow-y: auto;
+  flex: 1;
+  scroll-behavior: smooth;
+}
+
+.nb-list::-webkit-scrollbar { width: 4px; }
+.nb-list::-webkit-scrollbar-track { background: transparent; }
+.nb-list::-webkit-scrollbar-thumb { background: var(--color-border-secondary, #e5e7eb); border-radius: 2px; }
+
+/* Notification item */
+.nb-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background 0.12s;
+  border-left: 3px solid transparent;
+  position: relative;
+}
+
+.nb-item:hover {
+  background: var(--color-background-secondary, #f9fafb);
+}
+
+.nb-item.nb-item--unread {
+  border-left-color: var(--color-border-info, #3b82f6);
+  background: var(--color-background-info, #eff6ff);
+}
+
+.nb-item.nb-item--unread:hover {
+  background: #dbeafe;
+}
+
+/* Icon bubble */
+.nb-item-icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-background-warning, #fef3c7);
+  color: var(--color-text-warning, #d97706);
+}
+
+.nb-item-icon svg {
+  width: 15px;
+  height: 15px;
+}
+
+.nb-item-icon.nb-icon--absent_alert {
+  background: var(--color-background-danger, #fee2e2);
+  color: var(--color-text-danger, #dc2626);
+}
+
+.nb-item-icon.nb-icon--leave_review {
+  background: var(--color-background-info, #eff6ff);
+  color: var(--color-text-info, #3b82f6);
+}
+
+/* Text content */
+.nb-item-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.nb-item-title {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--color-text-primary, #111827);
+  margin: 0 0 2px;
+  line-height: 1.4;
+  white-space: normal;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.nb-item-text {
+  font-size: 11.5px;
+  color: var(--color-text-secondary, #6b7280);
+  margin: 0 0 3px;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.nb-item-time {
+  font-size: 10.5px;
+  color: var(--color-text-tertiary, #9ca3af);
+  margin: 0;
+}
+
+/* Empty / loading state */
+.nb-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 32px 20px;
+  font-size: 13px;
+  color: var(--color-text-tertiary, #9ca3af);
+  text-align: center;
+}
+
+.nb-empty svg {
+  opacity: 0.35;
+}
+
+/* Mobile: full-width bottom sheet */
+@media (max-width: 480px) {
+  .nb-dropdown {
+    position: fixed !important;
+    left: 12px !important;
+    right: 12px !important;
+    width: auto !important;
+    top: auto !important;
+    bottom: calc(68px + env(safe-area-inset-bottom)) !important;
+    max-height: 60vh;
+    border-radius: 16px;
+  }
+}
+    </style></head>
+  <body class="role-manager">
+    
+    <aside class="sidebar" aria-label="Main navigation">
+      <div class="sidebar-brand">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+          <circle cx="12" cy="9" r="2.5" />
+        </svg>
+        <span>CC Indonesia</span>
+      </div>
+      <div class="sidebar-user">
+        <div class="avatar">MA</div>
+        <div>
+          <div class="sidebar-user-name">
+            Manager
+          </div>
+          <div class="sidebar-user-role">Manager</div>
+        </div>
+        <div id="notif-bell-wrap" style="margin-left: auto">
+    <div class="nb-container" id="nb-container">
+      <button class="nb-bell" id="nb-bell" aria-label="Notifikasi" aria-expanded="false" aria-haspopup="dialog">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+          <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+        </svg>
+        <span class="nb-badge" id="nb-badge" hidden aria-live="polite" aria-atomic="true">0</span>
+      </button>
+
+      <div class="nb-dropdown" id="nb-dropdown" role="dialog" aria-label="Notifikasi" aria-modal="false" hidden>
+        <div class="nb-dropdown-header">
+          <span class="nb-dropdown-title">Notifikasi</span>
+          <button class="nb-read-all" id="nb-read-all" type="button">Mark all as read</button>
+        </div>
+        <ul class="nb-list" id="nb-list" role="list">
+          <li class="nb-empty" role="listitem">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+            <span>Loading…</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+      </div>
+
+      <nav class="sidebar-nav">
+         
+        <a href="../pages/dashboard.html" class="active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" />
+          </svg>
+          Dashboard
+        </a>
+        <a href="../pages/employees.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 00-3-3.87" />
+            <path d="M16 3.13a4 4 0 010 7.75" />
+          </svg>
+          Employees
+        </a>
+
+        
+        <a href="../pages/shift-schedule.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+            <line x1="8" y1="14" x2="12" y2="14" />
+            <line x1="8" y1="18" x2="16" y2="18" />
+          </svg>
+          <span>Schedule</span>
+        </a>
+        <a href="../pages/leaves.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+            <polyline points="14 2 14 8 20 8" />
+          </svg>
+          Leave Requests
+        </a>
+        <a href="../pages/master.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+          Shift Configuration
+        </a>
+        <a href="../pages/company-calendar.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+            <line x1="8" y1="15" x2="16" y2="15" />
+          </svg>
+          Calendar
+        </a>
+        <a href="../pages/corrections.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+            <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+          </svg>
+          Corrections
+        </a>
+        <a href="../pages/reports.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10" />
+            <line x1="12" y1="20" x2="12" y2="4" />
+            <line x1="6" y1="20" x2="6" y2="14" />
+          </svg>
+          Reports
+        </a>
+        <a href="../pages/offices.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+            <circle cx="12" cy="9" r="2.5" />
+          </svg>
+          Offices
+        </a>
+        
+        <a href="../pages/equipment.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" />
+            <line x1="8" y1="21" x2="16" y2="21" />
+            <line x1="12" y1="17" x2="12" y2="21" />
+          </svg>
+          Perlengkapan
+        </a>
+
+         
+      </nav>
+
+      <div class="sidebar-footer">
+        
+        <div class="lang-switcher" aria-label="Pilih bahasa">
+           
+          <a href="../pages/id.html" class="lang-btn" title="Bahasa Indonesia" aria-current="false">ID</a>
+          
+          <a href="../pages/en.html" class="lang-btn active" title="English (US)" aria-current="true">EN</a>
+          
+          <a href="../pages/zh.html" class="lang-btn" title="中文" aria-current="false">ZH</a>
+          
+        </div>
+        <a href="../pages/logout.html" class="sidebar-logout">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          Sign Out
+        </a>
+      </div>
+    </aside>
+      
+    <div class="mobile-topbar">
+      <span class="mobile-topbar-title">CC Indonesia</span>
+      <div class="lang-switcher lang-switcher--mobile" aria-label="Pilih bahasa">
+         
+        <a href="../pages/id.html" class="lang-btn" title="Bahasa Indonesia" aria-current="false">ID</a>
+        
+        <a href="../pages/en.html" class="lang-btn active" title="English (US)" aria-current="true">EN</a>
+        
+        <a href="../pages/zh.html" class="lang-btn" title="中文" aria-current="false">ZH</a>
+        
+      </div>
+    </div>
+    
+
+    <div class="main-wrap">
+        
+      <main class="page-content" id="main-content">
+         
+<div class="page-header">
+  <div class="page-header-inner">
+    <div>
+      <p class="page-header-sub">
+        Good afternoon, Manager
+      </p>
+      <p class="page-header-name">Manager Dashboard</p>
+    </div>
+    <div class="page-header-right">
+      <span class="page-header-date-day">Senin</span>
+      <span class="page-header-date-full">
+        25 Mei 2026
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="dash-body">
+    
+  <section class="mgr-checkin-section">
+    <p class="mgr-checkin-section-label">My attendance today</p>
+    <div class="mgr-checkin-strip">
+      <div class="mgr-gps-status gps-ok" id="gps-status" role="status" aria-live="polite">
+        <span class="gps-status-dot"></span>
+        <span class="gps-status-text">Within area Kantor Vivo 9</span>
+        <span id="gps-accuracy">±102 m</span>
+      </div>
+      <div class="mgr-time-row">
+        <div class="mgr-time-item">
+          <span class="mgr-time-label">Clock In</span>
+          <span class="mgr-time-value">
+            —
+          </span>
+          
+        </div>
+        <div class="mgr-time-sep"></div>
+        <div class="mgr-time-item">
+          <span class="mgr-time-label">Sign Out</span>
+          <span class="mgr-time-value">
+            —
+          </span>
+        </div>
+        <div class="mgr-time-sep"></div>
+        <div class="mgr-time-item">
+          <span class="mgr-time-label">Duration</span>
+          <span class="mgr-time-value">
+            —
+          </span>
+        </div>
+      </div>
+      
+      <button class="btn-mgr-checkin btn-mgr-absent" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="8" x2="12" y2="12" />
+          <line x1="12" y1="16" x2="12.01" y2="16" />
+        </svg>
+        Absent – Attendance Closed
+      </button>
+      
+    </div>
+    <p class="checkin-note" id="checkin-note"></p>
+  </section>
+
+  
+  <div class="mgr-section-label">Team today</div>
+  <div class="mgr-stat-row">
+    <div class="mgr-stat-card">
+      <span class="mgr-stat-num">132</span>
+      <span class="mgr-stat-lbl">Total employees</span>
+    </div>
+    <div class="mgr-stat-card mgr-stat-success">
+      <span class="mgr-stat-num">68</span>
+      <span class="mgr-stat-lbl">Present</span>
+    </div>
+    <div class="mgr-stat-card mgr-stat-warn">
+      <span class="mgr-stat-num">4</span>
+      <span class="mgr-stat-lbl">Late</span>
+    </div>
+    <div class="mgr-stat-card mgr-stat-info">
+      <span class="mgr-stat-num">3</span>
+      <span class="mgr-stat-lbl">Leave</span>
+    </div>
+    <div class="mgr-stat-card mgr-stat-warn">
+      <span class="mgr-stat-num">1</span>
+      <span class="mgr-stat-lbl">Sick</span>
+    </div>
+    <div class="mgr-stat-card mgr-stat-danger">
+      <span class="mgr-stat-num">0</span>
+      <span class="mgr-stat-lbl">Alpha</span>
+    </div>
+    <div class="mgr-stat-card mgr-stat-neutral">
+      <span class="mgr-stat-num">60</span>
+      <span class="mgr-stat-lbl">Not clocked in</span>
+    </div>
+  </div>
+  
+  <p class="mgr-stat-note">
+    ⓘ Note: some employees may appear in more than one shift
+    or have a day-off status. Total verified: 136 / 132
+  </p>
+    
+  <div class="mgr-section-label">Ringkasan per shift</div>
+  <div class="mgr-shift-breakdown">
+    
+    <div class="mgr-shift-card">
+      <div class="mgr-shift-card-header">
+        <span class="mgr-shift-badge mgr-shift-badge--shift_3">
+          
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" />
+            <line x1="8" y1="21" x2="16" y2="21" />
+            <line x1="12" y1="17" x2="12" y2="21" />
+          </svg>
+           Shift 3 – Inventaris
+        </span>
+        <span class="mgr-shift-total">1 orang</span>
+      </div>
+      <div class="mgr-shift-card-divider"></div>
+      <div class="mgr-shift-stats">
+        <div class="mgr-shift-stat mgr-shift-stat--hadir">
+          <span class="mgr-shift-stat-num">1</span>
+          <span class="mgr-shift-stat-lbl">Present</span>
+          
+        </div>
+        <div class="mgr-shift-stat mgr-shift-stat--absent" data-zero="true">
+          <span class="mgr-shift-stat-num">0</span>
+          <span class="mgr-shift-stat-lbl">Alpha</span>
+        </div>
+        <div class="mgr-shift-stat mgr-shift-stat--izin" data-zero="true">
+          <span class="mgr-shift-stat-num">0</span>
+          <span class="mgr-shift-stat-lbl">Leave</span>
+        </div>
+        <div class="mgr-shift-stat mgr-shift-stat--sakit" data-zero="true">
+          <span class="mgr-shift-stat-num">0</span>
+          <span class="mgr-shift-stat-lbl">Sick</span>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="mgr-shift-card">
+      <div class="mgr-shift-card-header">
+        <span class="mgr-shift-badge mgr-shift-badge--shift_1">
+          
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          </svg>
+           Shift 1 – Produksi
+        </span>
+        <span class="mgr-shift-total">57 orang</span>
+      </div>
+      <div class="mgr-shift-card-divider"></div>
+      <div class="mgr-shift-stats">
+        <div class="mgr-shift-stat mgr-shift-stat--hadir">
+          <span class="mgr-shift-stat-num">55</span>
+          <span class="mgr-shift-stat-lbl">Present</span>
+          
+          <span class="mgr-shift-stat-sub">4 terlambat</span>
+          
+        </div>
+        <div class="mgr-shift-stat mgr-shift-stat--absent" data-zero="true">
+          <span class="mgr-shift-stat-num">0</span>
+          <span class="mgr-shift-stat-lbl">Alpha</span>
+        </div>
+        <div class="mgr-shift-stat mgr-shift-stat--izin">
+          <span class="mgr-shift-stat-num">1</span>
+          <span class="mgr-shift-stat-lbl">Leave</span>
+        </div>
+        <div class="mgr-shift-stat mgr-shift-stat--sakit" data-zero="true">
+          <span class="mgr-shift-stat-num">0</span>
+          <span class="mgr-shift-stat-lbl">Sick</span>
+        </div>
+        
+        <div class="mgr-shift-stat mgr-shift-stat--pending">
+          <span class="mgr-shift-stat-num">1</span>
+          <span class="mgr-shift-stat-lbl">Pending</span>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="mgr-shift-card">
+      <div class="mgr-shift-card-header">
+        <span class="mgr-shift-badge mgr-shift-badge--management">
+          
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+          </svg>
+           Manajemen / Kantor
+        </span>
+        <span class="mgr-shift-total">17 orang</span>
+      </div>
+      <div class="mgr-shift-card-divider"></div>
+      <div class="mgr-shift-stats">
+        <div class="mgr-shift-stat mgr-shift-stat--hadir">
+          <span class="mgr-shift-stat-num">12</span>
+          <span class="mgr-shift-stat-lbl">Present</span>
+          
+        </div>
+        <div class="mgr-shift-stat mgr-shift-stat--absent" data-zero="true">
+          <span class="mgr-shift-stat-num">0</span>
+          <span class="mgr-shift-stat-lbl">Alpha</span>
+        </div>
+        <div class="mgr-shift-stat mgr-shift-stat--izin">
+          <span class="mgr-shift-stat-num">2</span>
+          <span class="mgr-shift-stat-lbl">Leave</span>
+        </div>
+        <div class="mgr-shift-stat mgr-shift-stat--sakit">
+          <span class="mgr-shift-stat-num">1</span>
+          <span class="mgr-shift-stat-lbl">Sick</span>
+        </div>
+        
+        <div class="mgr-shift-stat mgr-shift-stat--pending">
+          <span class="mgr-shift-stat-num">2</span>
+          <span class="mgr-shift-stat-lbl">Pending</span>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="mgr-shift-card">
+      <div class="mgr-shift-card-header">
+        <span class="mgr-shift-badge mgr-shift-badge--shift_4">
+          
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+           Shift 4 – Inventaris
+        </span>
+        <span class="mgr-shift-total">1 orang</span>
+      </div>
+      <div class="mgr-shift-card-divider"></div>
+      <div class="mgr-shift-stats">
+        <div class="mgr-shift-stat mgr-shift-stat--hadir" data-zero="true">
+          <span class="mgr-shift-stat-num">0</span>
+          <span class="mgr-shift-stat-lbl">Present</span>
+          
+        </div>
+        <div class="mgr-shift-stat mgr-shift-stat--absent" data-zero="true">
+          <span class="mgr-shift-stat-num">0</span>
+          <span class="mgr-shift-stat-lbl">Alpha</span>
+        </div>
+        <div class="mgr-shift-stat mgr-shift-stat--izin" data-zero="true">
+          <span class="mgr-shift-stat-num">0</span>
+          <span class="mgr-shift-stat-lbl">Leave</span>
+        </div>
+        <div class="mgr-shift-stat mgr-shift-stat--sakit" data-zero="true">
+          <span class="mgr-shift-stat-num">0</span>
+          <span class="mgr-shift-stat-lbl">Sick</span>
+        </div>
+        
+        <div class="mgr-shift-stat mgr-shift-stat--pending">
+          <span class="mgr-shift-stat-num">1</span>
+          <span class="mgr-shift-stat-lbl">Pending</span>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="mgr-shift-card mgr-shift-card--midnight">
+      <div class="mgr-shift-card-header">
+        <span class="mgr-shift-badge mgr-shift-badge--shift_2">
+          
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+           Shift 2 – Produksi
+        </span>
+        <span class="mgr-shift-total">55 orang</span>
+      </div>
+      <div class="mgr-shift-card-divider"></div>
+      <div class="mgr-shift-stats">
+        <div class="mgr-shift-stat mgr-shift-stat--hadir" data-zero="true">
+          <span class="mgr-shift-stat-num">0</span>
+          <span class="mgr-shift-stat-lbl">Present</span>
+          
+        </div>
+        <div class="mgr-shift-stat mgr-shift-stat--absent" data-zero="true">
+          <span class="mgr-shift-stat-num">0</span>
+          <span class="mgr-shift-stat-lbl">Alpha</span>
+        </div>
+        <div class="mgr-shift-stat mgr-shift-stat--izin" data-zero="true">
+          <span class="mgr-shift-stat-num">0</span>
+          <span class="mgr-shift-stat-lbl">Leave</span>
+        </div>
+        <div class="mgr-shift-stat mgr-shift-stat--sakit" data-zero="true">
+          <span class="mgr-shift-stat-num">0</span>
+          <span class="mgr-shift-stat-lbl">Sick</span>
+        </div>
+        
+        <div class="mgr-shift-stat mgr-shift-stat--pending">
+          <span class="mgr-shift-stat-num">55</span>
+          <span class="mgr-shift-stat-lbl">Pending</span>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="mgr-shift-card mgr-shift-card--midnight">
+      <div class="mgr-shift-card-header">
+        <span class="mgr-shift-badge mgr-shift-badge--shift_6">
+          
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          </svg>
+           Shift 6 – Security
+        </span>
+        <span class="mgr-shift-total">1 orang</span>
+      </div>
+      <div class="mgr-shift-card-divider"></div>
+      <div class="mgr-shift-stats">
+        <div class="mgr-shift-stat mgr-shift-stat--hadir" data-zero="true">
+          <span class="mgr-shift-stat-num">0</span>
+          <span class="mgr-shift-stat-lbl">Present</span>
+          
+        </div>
+        <div class="mgr-shift-stat mgr-shift-stat--absent" data-zero="true">
+          <span class="mgr-shift-stat-num">0</span>
+          <span class="mgr-shift-stat-lbl">Alpha</span>
+        </div>
+        <div class="mgr-shift-stat mgr-shift-stat--izin" data-zero="true">
+          <span class="mgr-shift-stat-num">0</span>
+          <span class="mgr-shift-stat-lbl">Leave</span>
+        </div>
+        <div class="mgr-shift-stat mgr-shift-stat--sakit" data-zero="true">
+          <span class="mgr-shift-stat-num">0</span>
+          <span class="mgr-shift-stat-lbl">Sick</span>
+        </div>
+        
+        <div class="mgr-shift-stat mgr-shift-stat--pending">
+          <span class="mgr-shift-stat-num">1</span>
+          <span class="mgr-shift-stat-lbl">Pending</span>
+        </div>
+        
+      </div>
+    </div>
+    
+  </div>
+   
+  <div class="mgr-table-card">
+    <div class="mgr-table-header">
+      <span class="mgr-table-title">Today's attendance</span>
+      <div class="mgr-filter-tabs-wrap">
+        <div class="mgr-filter-tabs" id="filter-tabs-status">
+          <button class="mgr-filter-tab active" onclick="filterTable(this, 'all', 'status')">
+            All
+          </button>
+          <button class="mgr-filter-tab" onclick="filterTable(this, 'present', 'status')">
+            Present
+          </button>
+          <button class="mgr-filter-tab" onclick="filterTable(this, 'late', 'status')">
+            Late
+          </button>
+          <button class="mgr-filter-tab" onclick="filterTable(this, 'extra_off', 'status')">
+            Leave
+          </button>
+          <button class="mgr-filter-tab" onclick="filterTable(this, 'sick', 'status')">
+            Sick
+          </button>
+          <button class="mgr-filter-tab" onclick="filterTable(this, 'absent', 'status')">
+            Alpha
+          </button>
+          <button class="mgr-filter-tab" onclick="filterTable(this, 'pending', 'status')">
+            Pending
+          </button>
+        </div>
+        
+        <div class="mgr-filter-tabs mgr-filter-tabs--shift" id="filter-tabs-shift">
+          <button class="mgr-filter-tab mgr-filter-tab--shift active" data-shift="all" onclick="filterTable(this, 'all', 'shift')" aria-pressed="true">
+            Semua Shift
+          </button>
+          
+          <button class="mgr-filter-tab mgr-filter-tab--shift shift-chip--shift_3" data-shift="shift_3" onclick="filterTable(this, 'shift_3', 'shift')" aria-pressed="false">
+            Shift 3 – Inventaris
+          </button>
+          
+          <button class="mgr-filter-tab mgr-filter-tab--shift shift-chip--shift_1" data-shift="shift_1" onclick="filterTable(this, 'shift_1', 'shift')" aria-pressed="false">
+            Shift 1 – Produksi
+          </button>
+          
+          <button class="mgr-filter-tab mgr-filter-tab--shift shift-chip--management" data-shift="management" onclick="filterTable(this, 'management', 'shift')" aria-pressed="false">
+            Manajemen / Kantor
+          </button>
+          
+          <button class="mgr-filter-tab mgr-filter-tab--shift shift-chip--shift_4" data-shift="shift_4" onclick="filterTable(this, 'shift_4', 'shift')" aria-pressed="false">
+            Shift 4 – Inventaris
+          </button>
+          
+          <button class="mgr-filter-tab mgr-filter-tab--shift shift-chip--shift_2" data-shift="shift_2" onclick="filterTable(this, 'shift_2', 'shift')" aria-pressed="false">
+            Shift 2 – Produksi
+          </button>
+          
+          <button class="mgr-filter-tab mgr-filter-tab--shift shift-chip--shift_6" data-shift="shift_6" onclick="filterTable(this, 'shift_6', 'shift')" aria-pressed="false">
+            Shift 6 – Security
+          </button>
+          
+        </div>
+        
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table class="mgr-table" id="attendance-table">
+        <thead>
+          <tr>
+            <th>Employees</th>
+            <th>Shift</th>
+            <th>Clock In</th>
+            <th>Sign Out</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">SI</div>
+                <div>
+                  <span class="mgr-emp-name">Siti anindya</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AM</div>
+                <div>
+                  <span class="mgr-emp-name">Amey Jumayni Fasslah</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">NU</div>
+                <div>
+                  <span class="mgr-emp-name">Nurholipah</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:43 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AH</div>
+                <div>
+                  <span class="mgr-emp-name">Ahmad Fauzi</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:45 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AH</div>
+                <div>
+                  <span class="mgr-emp-name">Ahmad Khudori</span>
+                  <span class="mgr-emp-dept">0113</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">MA</div>
+                <div>
+                  <span class="mgr-emp-name">maida</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:52 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="extra_off" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">NI</div>
+                <div>
+                  <span class="mgr-emp-name">Niken dwi sholehatun</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-izin">Leave</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">NA</div>
+                <div>
+                  <span class="mgr-emp-name">Naila Mozza</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:30 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AN</div>
+                <div>
+                  <span class="mgr-emp-name">ANANDA TIARA PUTRI</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:19 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">DO</div>
+                <div>
+                  <span class="mgr-emp-name">Doni Setiawan</span>
+                  <span class="mgr-emp-dept">0092</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="extra_off" data-shift="management">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">LI</div>
+                <div>
+                  <span class="mgr-emp-name">Linsan</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--management">Kantor</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-izin">Leave</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">BU</div>
+                <div>
+                  <span class="mgr-emp-name">BUNGA KIRANA</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:47 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AN</div>
+                <div>
+                  <span class="mgr-emp-name">Ananda Eka Putra Jahara</span>
+                  <span class="mgr-emp-dept">0112</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AN</div>
+                <div>
+                  <span class="mgr-emp-name">Anwar Nasrulloh Hoer</span>
+                  <span class="mgr-emp-dept">0091</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:59 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">DE</div>
+                <div>
+                  <span class="mgr-emp-name">Deva Octaviana</span>
+                  <span class="mgr-emp-dept">0091</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AH</div>
+                <div>
+                  <span class="mgr-emp-name">Ahmad pauji</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">YO</div>
+                <div>
+                  <span class="mgr-emp-name">Yogi Marnia Sanam</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">RI</div>
+                <div>
+                  <span class="mgr-emp-name">Rifa Zanirah</span>
+                  <span class="mgr-emp-dept">0113</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">MU</div>
+                <div>
+                  <span class="mgr-emp-name">Muhamad Reza</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:38 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">RA</div>
+                <div>
+                  <span class="mgr-emp-name">Raneu Aprianti</span>
+                  <span class="mgr-emp-dept">LPK</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:43 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AJ</div>
+                <div>
+                  <span class="mgr-emp-name">Ajeng Kinangti</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:32 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="management">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">JU</div>
+                <div>
+                  <span class="mgr-emp-name">Julyana Fayumi Hidayat</span>
+                  <span class="mgr-emp-dept">LPK</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--management">Kantor</span>
+            </td>
+            <td class="mgr-td-mono">
+              08:20 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">PU</div>
+                <div>
+                  <span class="mgr-emp-name">Putri Nurhaliza</span>
+                  <span class="mgr-emp-dept">0091</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">ER</div>
+                <div>
+                  <span class="mgr-emp-name">Erna Septiana</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:32 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">FA</div>
+                <div>
+                  <span class="mgr-emp-name">Fajriyanto</span>
+                  <span class="mgr-emp-dept">0093</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">MI</div>
+                <div>
+                  <span class="mgr-emp-name">Michelle fairen</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AH</div>
+                <div>
+                  <span class="mgr-emp-name">AHMAD WAHYUDI</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:43 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">MU</div>
+                <div>
+                  <span class="mgr-emp-name">Muhammad Fathurahman</span>
+                  <span class="mgr-emp-dept">0092</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="management">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">RA</div>
+                <div>
+                  <span class="mgr-emp-name">Rafiyus Gunawan</span>
+                  <span class="mgr-emp-dept">0092</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--management">Kantor</span>
+            </td>
+            <td class="mgr-td-mono">
+              08:04 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">MO</div>
+                <div>
+                  <span class="mgr-emp-name">Mochamad taufik hidayat</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="management">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">SA</div>
+                <div>
+                  <span class="mgr-emp-name">Samsul</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--management">Kantor</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AN</div>
+                <div>
+                  <span class="mgr-emp-name">Ananda Rayhan Barizky</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">PU</div>
+                <div>
+                  <span class="mgr-emp-name">Putra Setiawan</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:58 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">DA</div>
+                <div>
+                  <span class="mgr-emp-name">Dani Kuswanto</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:55 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="management">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">DI</div>
+                <div>
+                  <span class="mgr-emp-name">Dianissa Salsabila</span>
+                  <span class="mgr-emp-dept">0093</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--management">Kantor</span>
+            </td>
+            <td class="mgr-td-mono">
+              08:10 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="sick" data-shift="management">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">PI</div>
+                <div>
+                  <span class="mgr-emp-name">PIRMANSYAH</span>
+                  <span class="mgr-emp-dept">0113</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--management">Kantor</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-sick">Sick</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">MU</div>
+                <div>
+                  <span class="mgr-emp-name">Muhammad Yusuf</span>
+                  <span class="mgr-emp-dept">0113</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:32 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">YE</div>
+                <div>
+                  <span class="mgr-emp-name">Yefta Deni Setiawan</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="management">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AZ</div>
+                <div>
+                  <span class="mgr-emp-name">Azka Amali</span>
+                  <span class="mgr-emp-dept">0092</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--management">Kantor</span>
+            </td>
+            <td class="mgr-td-mono">
+              08:10 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">NU</div>
+                <div>
+                  <span class="mgr-emp-name">Nursita Dewi Lestari</span>
+                  <span class="mgr-emp-dept">0092</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">FI</div>
+                <div>
+                  <span class="mgr-emp-name">Fitra Loka</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">HE</div>
+                <div>
+                  <span class="mgr-emp-name">Hery Ardiansyah</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:55 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">NU</div>
+                <div>
+                  <span class="mgr-emp-name">Nurul Alfiani</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:47 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AN</div>
+                <div>
+                  <span class="mgr-emp-name">Andy</span>
+                  <span class="mgr-emp-dept">Team E</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AY</div>
+                <div>
+                  <span class="mgr-emp-name">Ayu Safitri</span>
+                  <span class="mgr-emp-dept">0113</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">UN</div>
+                <div>
+                  <span class="mgr-emp-name">Untung Kurniawan</span>
+                  <span class="mgr-emp-dept">0092</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:48 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">PR</div>
+                <div>
+                  <span class="mgr-emp-name">Predy Pratama</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">VI</div>
+                <div>
+                  <span class="mgr-emp-name">Vicky Fajar Ramadhany</span>
+                  <span class="mgr-emp-dept">0093</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:48 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">MU</div>
+                <div>
+                  <span class="mgr-emp-name">Muhammad Dzikrullah</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:43 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AN</div>
+                <div>
+                  <span class="mgr-emp-name">Anisa Nurmala Sari</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">MU</div>
+                <div>
+                  <span class="mgr-emp-name">Muhamad Pikri Ramadan</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:38 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">SI</div>
+                <div>
+                  <span class="mgr-emp-name">Siti Nurhalizah</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:47 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">GA</div>
+                <div>
+                  <span class="mgr-emp-name">Galih widjaya kusuma</span>
+                  <span class="mgr-emp-dept">0091</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:49 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">OL</div>
+                <div>
+                  <span class="mgr-emp-name">OLIVIA REGINA TAMBUNAN</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:46 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">RI</div>
+                <div>
+                  <span class="mgr-emp-name">Rico Kurniawan</span>
+                  <span class="mgr-emp-dept">LPK</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:44 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">FI</div>
+                <div>
+                  <span class="mgr-emp-name">Firman Maulana</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">YU</div>
+                <div>
+                  <span class="mgr-emp-name">Yulia Daniati</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:45 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AL</div>
+                <div>
+                  <span class="mgr-emp-name">Algi Ardiansyah</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">FI</div>
+                <div>
+                  <span class="mgr-emp-name">Firel Pebriansyah</span>
+                  <span class="mgr-emp-dept">0113</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">IW</div>
+                <div>
+                  <span class="mgr-emp-name">Iwan Setiawan</span>
+                  <span class="mgr-emp-dept">0092</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:45 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">SU</div>
+                <div>
+                  <span class="mgr-emp-name">Surya Ade Lesmana</span>
+                  <span class="mgr-emp-dept">0091</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:40 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="late" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AX</div>
+                <div>
+                  <span class="mgr-emp-name">Axel Aditya Gunawan</span>
+                  <span class="mgr-emp-dept">00091</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              07:01 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-late">Late</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">FE</div>
+                <div>
+                  <span class="mgr-emp-name">Femi Paturohman</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">EV</div>
+                <div>
+                  <span class="mgr-emp-name">Evandra Na'azim</span>
+                  <span class="mgr-emp-dept">Team E</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:38 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AH</div>
+                <div>
+                  <span class="mgr-emp-name">Ahmad Arif Kiana</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:57 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AU</div>
+                <div>
+                  <span class="mgr-emp-name">Aulia Alfath</span>
+                  <span class="mgr-emp-dept">0092</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AH</div>
+                <div>
+                  <span class="mgr-emp-name">Ahmad Faisal</span>
+                  <span class="mgr-emp-dept">0093</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AL</div>
+                <div>
+                  <span class="mgr-emp-name">Alpian Ripai</span>
+                  <span class="mgr-emp-dept">0092</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="management">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">FA</div>
+                <div>
+                  <span class="mgr-emp-name">Faris Hafizhan Rahmat</span>
+                  <span class="mgr-emp-dept">09113</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--management">Kantor</span>
+            </td>
+            <td class="mgr-td-mono">
+              08:22 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AR</div>
+                <div>
+                  <span class="mgr-emp-name">Arya Wira</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:55 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">NO</div>
+                <div>
+                  <span class="mgr-emp-name">Novita Dewi</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:53 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AL</div>
+                <div>
+                  <span class="mgr-emp-name">Alhadid Azier</span>
+                  <span class="mgr-emp-dept">Management</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">MU</div>
+                <div>
+                  <span class="mgr-emp-name">Muhammad Alfa Roji</span>
+                  <span class="mgr-emp-dept">0113</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">MU</div>
+                <div>
+                  <span class="mgr-emp-name">Muhammad Al Farizi Abdullah</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:59 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_3">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AN</div>
+                <div>
+                  <span class="mgr-emp-name">Anisa Triana</span>
+                  <span class="mgr-emp-dept">LPK</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_3">Inventaris 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              05:58 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AN</div>
+                <div>
+                  <span class="mgr-emp-name">Anjani Ghina Rauda</span>
+                  <span class="mgr-emp-dept">0093</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">ZA</div>
+                <div>
+                  <span class="mgr-emp-name">ZAHWA</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:38 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">PR</div>
+                <div>
+                  <span class="mgr-emp-name">Pramudita Andhika Pratama</span>
+                  <span class="mgr-emp-dept">0091</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:44 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">ED</div>
+                <div>
+                  <span class="mgr-emp-name">Edwin Fathul Jalil</span>
+                  <span class="mgr-emp-dept">0091</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AR</div>
+                <div>
+                  <span class="mgr-emp-name">Arif Rifaldi</span>
+                  <span class="mgr-emp-dept">0113</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">SA</div>
+                <div>
+                  <span class="mgr-emp-name">Saepul Jamiludin</span>
+                  <span class="mgr-emp-dept">0113</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">SI</div>
+                <div>
+                  <span class="mgr-emp-name">Siti Annisa'tulalawiyah</span>
+                  <span class="mgr-emp-dept">0092</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:47 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">FI</div>
+                <div>
+                  <span class="mgr-emp-name">Fitria ningsih</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AR</div>
+                <div>
+                  <span class="mgr-emp-name">Ardhy Rizky Suharyadi</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AY</div>
+                <div>
+                  <span class="mgr-emp-name">Ayu Altsani Andayani</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:53 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AB</div>
+                <div>
+                  <span class="mgr-emp-name">Abdi Surya negara</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">ZU</div>
+                <div>
+                  <span class="mgr-emp-name">Zulmi Fajar</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:57 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">RE</div>
+                <div>
+                  <span class="mgr-emp-name">Revo Jeza Pratama</span>
+                  <span class="mgr-emp-dept">0093</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:50 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="management">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">FA</div>
+                <div>
+                  <span class="mgr-emp-name">Fauzi</span>
+                  <span class="mgr-emp-dept">Management</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--management">Kantor</span>
+            </td>
+            <td class="mgr-td-mono">
+              08:01 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">RE</div>
+                <div>
+                  <span class="mgr-emp-name">Retno diwanti</span>
+                  <span class="mgr-emp-dept">Team E</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:46 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">NO</div>
+                <div>
+                  <span class="mgr-emp-name">Novelya Arzena Levia</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:49 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_4">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">RI</div>
+                <div>
+                  <span class="mgr-emp-name">Ricky Saputra</span>
+                  <span class="mgr-emp-dept">0091</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_4">Inventaris 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="late" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">DW</div>
+                <div>
+                  <span class="mgr-emp-name">Dwi Retno Wulandari</span>
+                  <span class="mgr-emp-dept">0092</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              07:08 
+              <span class="late-badge-sm">+7m</span>
+              
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-late">Late</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="management">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">RI</div>
+                <div>
+                  <span class="mgr-emp-name">Rinaldi lesmana</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--management">Kantor</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">M </div>
+                <div>
+                  <span class="mgr-emp-name">M Luthfi Ardiansyah Putra</span>
+                  <span class="mgr-emp-dept">0093</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AN</div>
+                <div>
+                  <span class="mgr-emp-name">Anggun Prastika</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="management">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">RI</div>
+                <div>
+                  <span class="mgr-emp-name">Rizki Maulana</span>
+                  <span class="mgr-emp-dept">IT</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--management">Kantor</span>
+            </td>
+            <td class="mgr-td-mono">
+              08:10 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">MU</div>
+                <div>
+                  <span class="mgr-emp-name">MUHAMMAD FARHAN</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">DE</div>
+                <div>
+                  <span class="mgr-emp-name">Denis Yudistira</span>
+                  <span class="mgr-emp-dept">0093</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">WA</div>
+                <div>
+                  <span class="mgr-emp-name">Wa Fia</span>
+                  <span class="mgr-emp-dept">0093</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">JE</div>
+                <div>
+                  <span class="mgr-emp-name">Jeni Aulia</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AB</div>
+                <div>
+                  <span class="mgr-emp-name">Abdan Syakuro</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:51 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="late" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">NU</div>
+                <div>
+                  <span class="mgr-emp-name">Nurul Intan</span>
+                  <span class="mgr-emp-dept">LPK</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              07:05 
+              <span class="late-badge-sm">+4m</span>
+              
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-late">Late</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="management">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">MI</div>
+                <div>
+                  <span class="mgr-emp-name">Mirangga Jakti</span>
+                  <span class="mgr-emp-dept">0091</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--management">Kantor</span>
+            </td>
+            <td class="mgr-td-mono">
+              08:17 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="management">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">RI</div>
+                <div>
+                  <span class="mgr-emp-name">Richard Bednarski</span>
+                  <span class="mgr-emp-dept">Management</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--management">Kantor</span>
+            </td>
+            <td class="mgr-td-mono">
+              08:21 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AC</div>
+                <div>
+                  <span class="mgr-emp-name">achmad chumayri</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">SI</div>
+                <div>
+                  <span class="mgr-emp-name">Sindianti</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:41 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">LU</div>
+                <div>
+                  <span class="mgr-emp-name">Luhur tegar sahaja</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">IL</div>
+                <div>
+                  <span class="mgr-emp-name">Ilham Ibnu Riziq</span>
+                  <span class="mgr-emp-dept">0113</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="extra_off" data-shift="management">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">BA</div>
+                <div>
+                  <span class="mgr-emp-name">Bagus Rizky Jumahadi</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--management">Kantor</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-izin">Leave</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">FA</div>
+                <div>
+                  <span class="mgr-emp-name">Fachry Ramdhani Rosman</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:44 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">KO</div>
+                <div>
+                  <span class="mgr-emp-name">Kosimah Qurrotu Aini</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">MA</div>
+                <div>
+                  <span class="mgr-emp-name">Maurilla Herasti Eka Putri</span>
+                  <span class="mgr-emp-dept">0093</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:42 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AS</div>
+                <div>
+                  <span class="mgr-emp-name">Aslam Muzaky</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AU</div>
+                <div>
+                  <span class="mgr-emp-name">Auliya nur amanda</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:59 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="management">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">IM</div>
+                <div>
+                  <span class="mgr-emp-name">Imas Prayoga</span>
+                  <span class="mgr-emp-dept">LPK</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--management">Kantor</span>
+            </td>
+            <td class="mgr-td-mono">
+              08:17 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AL</div>
+                <div>
+                  <span class="mgr-emp-name">Aldinata Gumelar</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">HU</div>
+                <div>
+                  <span class="mgr-emp-name">Hudri Ramadan</span>
+                  <span class="mgr-emp-dept">0091</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">NO</div>
+                <div>
+                  <span class="mgr-emp-name">Norma anggraeni</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:39 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">AU</div>
+                <div>
+                  <span class="mgr-emp-name">Aulia sabila</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:49 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="management">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">MU</div>
+                <div>
+                  <span class="mgr-emp-name">Muhamad Fahrurrozi</span>
+                  <span class="mgr-emp-dept">Management</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--management">Kantor</span>
+            </td>
+            <td class="mgr-td-mono">
+              08:22 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">DA</div>
+                <div>
+                  <span class="mgr-emp-name">Dafit Santoso</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">MA</div>
+                <div>
+                  <span class="mgr-emp-name">Maharani</span>
+                  <span class="mgr-emp-dept">LPK</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">MU</div>
+                <div>
+                  <span class="mgr-emp-name">Muhamad Reja Sutansah</span>
+                  <span class="mgr-emp-dept">0091</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">CA</div>
+                <div>
+                  <span class="mgr-emp-name">Candra bahtiar</span>
+                  <span class="mgr-emp-dept">0091</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:47 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_6">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">LO</div>
+                <div>
+                  <span class="mgr-emp-name">Lo Li Fung</span>
+                  <span class="mgr-emp-dept">Management</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_6">Security</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">SI</div>
+                <div>
+                  <span class="mgr-emp-name">Siti Anjelika</span>
+                  <span class="mgr-emp-dept">—</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:40 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="late" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">DZ</div>
+                <div>
+                  <span class="mgr-emp-name">Dzulfikri Hidayattuloh</span>
+                  <span class="mgr-emp-dept">0092</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              07:12 
+              <span class="late-badge-sm">+11m</span>
+              
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-late">Late</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">RI</div>
+                <div>
+                  <span class="mgr-emp-name">Rizki Putra Wibowo</span>
+                  <span class="mgr-emp-dept">0113</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="pending" data-shift="shift_2">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">M </div>
+                <div>
+                  <span class="mgr-emp-name">M Ridwan Maulana</span>
+                  <span class="mgr-emp-dept">0093</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_2">Produksi 2</span>
+            </td>
+            <td class="mgr-td-mono">
+              — 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-pending">Pending</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="shift_1">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">KA</div>
+                <div>
+                  <span class="mgr-emp-name">Kaila Rahmalia Agustin</span>
+                  <span class="mgr-emp-dept">Produksi</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--shift_1">Produksi 1</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:25 
+              <span class="late-badge-sm">+134m</span>
+              
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+          <tr data-status="present" data-shift="management">
+            <td>
+              <div class="mgr-employee-cell">
+                <div class="mgr-avatar">SH</div>
+                <div>
+                  <span class="mgr-emp-name">Shinita Theresia</span>
+                  <span class="mgr-emp-dept">0113</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="shift-chip shift-chip--management">Kantor</span>
+            </td>
+            <td class="mgr-td-mono">
+              06:45 
+            </td>
+            <td class="mgr-td-mono">—</td>
+            <td>
+              <span class="status-pill pill-present">Present</span>
+              
+            </td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+   
+  
+  <div class="mgr-section-label">
+    Awaiting approval (10)
+  </div>
+  <div class="mgr-pending-list">
+    
+    <div class="mgr-pending-item" id="leave-8ea0149c-fa15-4b2a-88a5-359b9986d3a5">
+      <div class="mgr-avatar mgr-avatar-sm">MU</div>
+      <div class="mgr-pending-info">
+        <span class="mgr-pending-name">Muhammad Yusuf</span>
+        <span class="mgr-pending-detail">Sick · 12 Mei 2026</span>
+      </div>
+      <div class="mgr-pending-actions">
+        <button class="btn-approve" onclick="reviewLeave('8ea0149c-fa15-4b2a-88a5-359b9986d3a5','approved')">
+          Approve
+        </button>
+        <button class="btn-reject" onclick="reviewLeave('8ea0149c-fa15-4b2a-88a5-359b9986d3a5','rejected')">
+          Reject
+        </button>
+      </div>
+    </div>
+    
+    <div class="mgr-pending-item" id="leave-5754a9f2-c226-42c6-b7ec-597c29eb6d03">
+      <div class="mgr-avatar mgr-avatar-sm">AB</div>
+      <div class="mgr-pending-info">
+        <span class="mgr-pending-name">Abdan Syakuro</span>
+        <span class="mgr-pending-detail">Sick · 12 Mei 2026</span>
+      </div>
+      <div class="mgr-pending-actions">
+        <button class="btn-approve" onclick="reviewLeave('5754a9f2-c226-42c6-b7ec-597c29eb6d03','approved')">
+          Approve
+        </button>
+        <button class="btn-reject" onclick="reviewLeave('5754a9f2-c226-42c6-b7ec-597c29eb6d03','rejected')">
+          Reject
+        </button>
+      </div>
+    </div>
+    
+    <div class="mgr-pending-item" id="leave-871c747b-ebe7-456a-9d5b-026438f8ceab">
+      <div class="mgr-avatar mgr-avatar-sm">AN</div>
+      <div class="mgr-pending-info">
+        <span class="mgr-pending-name">Anwar Nasrulloh Hoer</span>
+        <span class="mgr-pending-detail">Annual Leave · 12 Mei 2026</span>
+      </div>
+      <div class="mgr-pending-actions">
+        <button class="btn-approve" onclick="reviewLeave('871c747b-ebe7-456a-9d5b-026438f8ceab','approved')">
+          Approve
+        </button>
+        <button class="btn-reject" onclick="reviewLeave('871c747b-ebe7-456a-9d5b-026438f8ceab','rejected')">
+          Reject
+        </button>
+      </div>
+    </div>
+    
+    <div class="mgr-pending-item" id="leave-3097c7af-77fe-4769-961d-75ee2cd59649">
+      <div class="mgr-avatar mgr-avatar-sm">ZU</div>
+      <div class="mgr-pending-info">
+        <span class="mgr-pending-name">Zulmi Fajar</span>
+        <span class="mgr-pending-detail">Leave · 12 Mei 2026</span>
+      </div>
+      <div class="mgr-pending-actions">
+        <button class="btn-approve" onclick="reviewLeave('3097c7af-77fe-4769-961d-75ee2cd59649','approved')">
+          Approve
+        </button>
+        <button class="btn-reject" onclick="reviewLeave('3097c7af-77fe-4769-961d-75ee2cd59649','rejected')">
+          Reject
+        </button>
+      </div>
+    </div>
+    
+    <div class="mgr-pending-item" id="leave-b1dead92-db93-4ab9-a0d3-56e1732b6c40">
+      <div class="mgr-avatar mgr-avatar-sm">AH</div>
+      <div class="mgr-pending-info">
+        <span class="mgr-pending-name">Ahmad Fauzi</span>
+        <span class="mgr-pending-detail">Annual Leave · 12 Mei 2026</span>
+      </div>
+      <div class="mgr-pending-actions">
+        <button class="btn-approve" onclick="reviewLeave('b1dead92-db93-4ab9-a0d3-56e1732b6c40','approved')">
+          Approve
+        </button>
+        <button class="btn-reject" onclick="reviewLeave('b1dead92-db93-4ab9-a0d3-56e1732b6c40','rejected')">
+          Reject
+        </button>
+      </div>
+    </div>
+    
+    <div class="mgr-pending-item" id="leave-9ad5cdeb-47e6-4bec-aa9d-6b7596efdc46">
+      <div class="mgr-avatar mgr-avatar-sm">ZU</div>
+      <div class="mgr-pending-info">
+        <span class="mgr-pending-name">Zulmi Fajar</span>
+        <span class="mgr-pending-detail">Leave · 13 Mei 2026</span>
+      </div>
+      <div class="mgr-pending-actions">
+        <button class="btn-approve" onclick="reviewLeave('9ad5cdeb-47e6-4bec-aa9d-6b7596efdc46','approved')">
+          Approve
+        </button>
+        <button class="btn-reject" onclick="reviewLeave('9ad5cdeb-47e6-4bec-aa9d-6b7596efdc46','rejected')">
+          Reject
+        </button>
+      </div>
+    </div>
+    
+    <div class="mgr-pending-item" id="leave-04e68951-6272-4340-ba2c-bc958f2d8cc2">
+      <div class="mgr-avatar mgr-avatar-sm">FA</div>
+      <div class="mgr-pending-info">
+        <span class="mgr-pending-name">Fachry Ramdhani Rosman</span>
+        <span class="mgr-pending-detail">Leave · 14 Mei 2026</span>
+      </div>
+      <div class="mgr-pending-actions">
+        <button class="btn-approve" onclick="reviewLeave('04e68951-6272-4340-ba2c-bc958f2d8cc2','approved')">
+          Approve
+        </button>
+        <button class="btn-reject" onclick="reviewLeave('04e68951-6272-4340-ba2c-bc958f2d8cc2','rejected')">
+          Reject
+        </button>
+      </div>
+    </div>
+    
+    <div class="mgr-pending-item" id="leave-502614ca-fe78-4aab-b803-97f587e3a15c">
+      <div class="mgr-avatar mgr-avatar-sm">ZU</div>
+      <div class="mgr-pending-info">
+        <span class="mgr-pending-name">Zulmi Fajar</span>
+        <span class="mgr-pending-detail">Leave · 14 Mei 2026</span>
+      </div>
+      <div class="mgr-pending-actions">
+        <button class="btn-approve" onclick="reviewLeave('502614ca-fe78-4aab-b803-97f587e3a15c','approved')">
+          Approve
+        </button>
+        <button class="btn-reject" onclick="reviewLeave('502614ca-fe78-4aab-b803-97f587e3a15c','rejected')">
+          Reject
+        </button>
+      </div>
+    </div>
+    
+    <div class="mgr-pending-item" id="leave-8baf85b8-5f9c-41e0-8823-090e3e11761c">
+      <div class="mgr-avatar mgr-avatar-sm">AN</div>
+      <div class="mgr-pending-info">
+        <span class="mgr-pending-name">Anjani Ghina Rauda</span>
+        <span class="mgr-pending-detail">Sick · 18 Mei 2026</span>
+      </div>
+      <div class="mgr-pending-actions">
+        <button class="btn-approve" onclick="reviewLeave('8baf85b8-5f9c-41e0-8823-090e3e11761c','approved')">
+          Approve
+        </button>
+        <button class="btn-reject" onclick="reviewLeave('8baf85b8-5f9c-41e0-8823-090e3e11761c','rejected')">
+          Reject
+        </button>
+      </div>
+    </div>
+    
+    <div class="mgr-pending-item" id="leave-284b314b-e25d-49d7-a815-ee5cb31659a0">
+      <div class="mgr-avatar mgr-avatar-sm">AH</div>
+      <div class="mgr-pending-info">
+        <span class="mgr-pending-name">Ahmad Faisal</span>
+        <span class="mgr-pending-detail">Annual Leave · 18 Mei 2026</span>
+      </div>
+      <div class="mgr-pending-actions">
+        <button class="btn-approve" onclick="reviewLeave('284b314b-e25d-49d7-a815-ee5cb31659a0','approved')">
+          Approve
+        </button>
+        <button class="btn-reject" onclick="reviewLeave('284b314b-e25d-49d7-a815-ee5cb31659a0','rejected')">
+          Reject
+        </button>
+      </div>
+    </div>
+    
+  </div>
+  
+</div>
+ 
+      </main>
+    </div>
+
+     
+    <nav class="bottom-nav" aria-label="Bottom navigation">
+       
+      <a href="../pages/dashboard.html" class="active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7" />
+          <rect x="14" y="3" width="7" height="7" />
+          <rect x="14" y="14" width="7" height="7" />
+          <rect x="3" y="14" width="7" height="7" />
+        </svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="../pages/employees.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+        </svg>
+        <span>Employees</span>
+      </a>
+      <a href="../pages/shift-schedule.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2" />
+          <line x1="16" y1="2" x2="16" y2="6" />
+          <line x1="8" y1="2" x2="8" y2="6" />
+          <line x1="3" y1="10" x2="21" y2="10" />
+          <line x1="8" y1="14" x2="12" y2="14" />
+          <line x1="8" y1="18" x2="16" y2="18" />
+        </svg>
+        <span>Schedule</span>
+      </a>
+      <a href="../pages/leaves.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+        </svg>
+        <span>Leave</span>
+      </a>
+      <a href="../pages/company-calendar.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2" />
+          <line x1="16" y1="2" x2="16" y2="6" />
+          <line x1="8" y1="2" x2="8" y2="6" />
+          <line x1="3" y1="10" x2="21" y2="10" />
+          <line x1="8" y1="15" x2="16" y2="15" />
+        </svg>
+        <span>Calendar</span>
+      </a>
+      <a href="../pages/reports.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="20" x2="18" y2="10" />
+          <line x1="12" y1="20" x2="12" y2="4" />
+          <line x1="6" y1="20" x2="6" y2="14" />
+        </svg>
+        <span>Reports</span>
+      </a>
+      <a href="../pages/corrections.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+          <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+        </svg>
+        <span>Corrections</span>
+      </a>
+      <a href="../pages/offices.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+          <circle cx="12" cy="9" r="2.5" />
+        </svg>
+        <span>Offices</span>
+      </a>
+      
+      <a href="../pages/equipment.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2" />
+          <line x1="8" y1="21" x2="16" y2="21" />
+          <line x1="12" y1="17" x2="12" y2="21" />
+        </svg>
+        <span>Alat</span>
+      </a>
+      <a href="../pages/logout.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+        <span>Sign Out</span>
+      </a>
+
+       
+    </nav>
+     
+<script>
+  window.APP = {
+    OFFICES: [
+      
+      { lat: -6.1530189, lng: 106.6404759, radius_meters: 50, name: "Kantor Pusat" },
+      
+      { lat: -6.152259, lng: 106.640983, radius_meters: 30, name: "Kantor Inventaris" },
+      
+      { lat: -6.15228, lng: 106.640992, radius_meters: 30, name: "Kantor Vivo 11" }
+      
+    ],
+    CHECKIN_STATE: "out",
+    PAST_CUTOFF:   true,
+    CSRF_TOKEN:    "IjdlOGQxNGYzZTYzZDI5OTA1M2JhM2YyMjM0ZjE2OWNlNDMxMDAwMDUi.ahPTHw.xTIh4QRHRhZVIrySDZZsN1kdL3s",
+    CHART_DATA:    {},
+    I18N: {
+      gpsOfficeNotConfigured: "Office not configured. Contact your manager.",
+      gpsOfficeNotFound:      "Office not found",
+      gpsTapCheckOut:         "Tap to check out",
+      gpsTapCheckIn:          "Tap to check in",
+      gpsWaiting:             "Waiting for GPS signal...",
+      gpsDetecting:           "Detecting location...",
+      gpsInsideArea:          "Within area",
+      gpsOutsideArea:         "Outside area",
+      gpsDistanceUnknown:     "distance unknown",
+      gpsMetersFromOffice:    "m from office",
+      gpsKmFromOffice:        "km from office",
+      gpsPermissionDenied:    "GPS permission denied. Enable it in browser settings.",
+      gpsSignalUnavailable:   "GPS signal unavailable. Try moving outdoors.",
+      gpsTimedOut:            "GPS detection timed out. Try again.",
+      gpsError:               "GPS unavailable.",
+      gpsOutsideOffice:       "You are outside the office zone",
+      gpsBrowserNoSupport:    "Browser does not support GPS.",
+      gpsNotSupported:        "GPS not supported",
+      gpsNotReady:            "GPS not ready. Please wait.",
+      gpsProcessing:          "Processing...",
+      gpsUpdatingPage:        "Refreshing page...",
+      gpsConnectionError:     "Connection error. Check your internet.",
+      cutoffReached:          "Attendance is closed (past your shift's cutoff time).",
+      confirmApprove:         "Approve this request?",
+      confirmReject:          "Reject this request?",
+      requestError:           "Terjadi kesalahan. Coba lagi.",
+      checkoutOpenAt:         "Check-out available from {time}.",
+      checkinOpenAt:          "Check-in opens at {time}",
+      cutoffReachedAt:        "Attendance closed (cutoff: {cutoff})",
+      checkInCutoffPassed:    "Check-in deadline has passed.",
+      notifTitle:             "Notifikasi",
+      notifMarkAllRead:       "Mark all as read",
+      notifLoading:           "Loading…",
+      notifEmpty:             "Tidak ada notifikasi",
+      notifError:             "Gagal memuat notifikasi",
+    },
+  };
+  window.OFFICES    = window.APP.OFFICES;
+  window.CSRF_TOKEN = window.APP.CSRF_TOKEN;
+  window.I18N       = window.APP.I18N;
+</script>
+<script src="../scripts/gps.js"></script>
+<script src="../scripts/dashboard.js"></script>
+
+    <script src="../scripts/app.js"></script>
+    
+    <script src="../scripts/notifications.js"></script>
+    
+  
+</body></html>

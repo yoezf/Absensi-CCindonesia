@@ -1,0 +1,684 @@
+/* =============================================================================
+   shift_schedule.css — Jadwal Shift (Manager)  (v3.1 — 7-Shift)
+   ============================================================================= */
+
+/* ── Responsive columns ──────────────────────────────────────────────────── */
+.sched-col-office,
+.sched-col-period,
+.sched-col-upcoming {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .sched-col-office {
+    display: table-cell;
+  }
+}
+@media (min-width: 900px) {
+  .sched-col-period,
+  .sched-col-upcoming {
+    display: table-cell;
+  }
+}
+
+/* ── Employee strip di modal ─────────────────────────────────────────────── */
+.sched-emp-strip {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.75rem;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+}
+.sched-emp-strip-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+.sched-emp-strip-dept {
+  font-size: 0.73rem;
+  color: var(--text-faint);
+  margin-top: 1px;
+}
+
+/* ── Shift hint ──────────────────────────────────────────────────────────── */
+.sched-shift-hint {
+  font-size: 0.73rem;
+  color: var(--text-faint);
+  margin-top: 0.3rem;
+  min-height: 1rem;
+}
+
+/* ── Swap arrow ──────────────────────────────────────────────────────────── */
+.sched-swap-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0;
+  color: var(--text-faint);
+}
+
+/* ── Swap preview ────────────────────────────────────────────────────────── */
+.sched-swap-preview {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+.sched-swap-preview-label {
+  font-size: 0.73rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+.sched-preview-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.3rem 0;
+  font-size: 0.82rem;
+}
+.sched-preview-row + .sched-preview-row {
+  border-top: 1px solid var(--border-light);
+}
+.sched-preview-name {
+  font-weight: 500;
+  color: var(--text-primary);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SHIFT COLOR SYSTEM — 7 Shift
+   Urutan pagi → malam:
+     shift_3    06:00–14:00  hijau
+     shift_1    07:00–15:00  kuning
+     management 08:30–17:30  biru
+     shift_4    11:00–19:00  ungu muda
+     shift_2    16:00–00:00  ungu tua  (crosses_midnight)
+     shift_5    17:00–01:00  merah     (crosses_midnight)
+     shift_6    23:00–08:00  hitam     (crosses_midnight)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Badge chip — dipakai di seluruh halaman */
+.shift-badge,
+.shift-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 9px;
+  border-radius: 20px;
+  white-space: nowrap;
+  line-height: 1.5;
+}
+
+.shift-badge--shift_3,
+.shift-chip--shift_3 {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.shift-badge--shift_1,
+.shift-chip--shift_1 {
+  background: #fef9c3;
+  color: #854d0e;
+}
+
+.shift-badge--management,
+.shift-chip--management {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.shift-badge--shift_4,
+.shift-chip--shift_4 {
+  background: #fdf4ff;
+  color: #7e22ce;
+}
+
+/* Shift malam — subtle border kiri */
+.shift-badge--shift_2,
+.shift-chip--shift_2 {
+  background: #f5f3ff;
+  color: #6d28d9;
+}
+
+.shift-badge--shift_5,
+.shift-chip--shift_5 {
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.shift-badge--shift_6,
+.shift-chip--shift_6 {
+  background: #0f172a;
+  color: #f8fafc;
+}
+
+/* Ikon malam kecil */
+.shift-midnight-icon {
+  font-size: 10px;
+  opacity: 0.65;
+  margin-left: 2px;
+}
+
+/* ── Warna dot kecil (timeline / legend) ─────────────────────────────────── */
+.shift-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.shift-dot--shift_3 {
+  background: #16a34a;
+}
+.shift-dot--shift_1 {
+  background: #ca8a04;
+}
+.shift-dot--management {
+  background: #1d4ed8;
+}
+.shift-dot--shift_4 {
+  background: #7e22ce;
+}
+.shift-dot--shift_2 {
+  background: #6d28d9;
+}
+.shift-dot--shift_5 {
+  background: #991b1b;
+}
+.shift-dot--shift_6 {
+  background: #0f172a;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BULK ASSIGN
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.bulk-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.85rem;
+}
+.bulk-toolbar .form-input {
+  flex: 1;
+  min-width: 160px;
+}
+.bulk-toolbar .form-select {
+  min-width: 140px;
+}
+
+.bulk-emp-table-wrap {
+  max-height: 320px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.85rem;
+}
+.bulk-emp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+.bulk-emp-table thead {
+  position: sticky;
+  top: 0;
+  background: var(--bg-card, #fff);
+  z-index: 1;
+}
+.bulk-emp-table th {
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.73rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.bulk-emp-table td {
+  padding: 0.45rem 0.75rem;
+  border-bottom: 1px solid var(--border-light, #f0f0f0);
+  vertical-align: middle;
+}
+.bulk-emp-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.bulk-emp-table tbody tr:hover {
+  background: var(--bg-hover, #f8f9fb);
+}
+.bulk-emp-table tbody tr.bulk-hidden {
+  display: none;
+}
+
+.bulk-emp-table .col-check {
+  width: 36px;
+  text-align: center;
+}
+.bulk-emp-table input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  accent-color: var(--primary, #3b5bdb);
+}
+
+.bulk-footer-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+.bulk-selected-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.bulk-selected-count {
+  font-weight: 700;
+  color: var(--primary, #3b5bdb);
+}
+.bulk-footer-row .form-select {
+  flex: 1;
+  min-width: 180px;
+}
+
+.bulk-date-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  margin-bottom: 0.75rem;
+}
+
+.bulk-info-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  font-size: 0.73rem;
+  color: var(--text-faint);
+  padding: 0.5rem 0.65rem;
+  background: var(--bg, #f5f7fa);
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.5rem;
+}
+
+/* Informasi khusus shift malam dalam bulk assign */
+.bulk-midnight-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  font-size: 0.73rem;
+  color: #6d28d9;
+  background: #f5f3ff;
+  border: 1px solid #ddd6fe;
+  padding: 0.5rem 0.65rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.5rem;
+}
+
+.bulk-select-all-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  background: var(--bg, #f5f7fa);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+.bulk-select-all-row:hover {
+  background: var(--bg-hover, #eef0f6);
+}
+
+.bulk-empty-row td {
+  text-align: center;
+  color: var(--text-faint);
+  padding: 1.5rem 0;
+  font-size: 0.82rem;
+}
+
+.bulk-loading-row td {
+  text-align: center;
+  padding: 1.5rem 0;
+}
+.bulk-loading-spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border);
+  border-top-color: var(--primary, #3b5bdb);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Chips karyawan terpilih ─────────────────────────────────────────────── */
+.bulk-chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  min-height: 2rem;
+  padding: 0.4rem 0.6rem;
+  background: var(--bg, #f5f7fa);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  max-height: 100px;
+  overflow-y: auto;
+}
+.bulk-chips-empty {
+  font-size: 0.73rem;
+  color: var(--text-faint);
+  align-self: center;
+}
+.bulk-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.18rem 0.45rem 0.18rem 0.55rem;
+  background: var(--primary, #3b5bdb);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  white-space: nowrap;
+  max-width: 180px;
+}
+.bulk-chip-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bulk-chip-remove {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.75);
+  cursor: pointer;
+  font-size: 0.85rem;
+  line-height: 1;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s;
+  flex-shrink: 0;
+}
+.bulk-chip-remove:hover {
+  color: #fff;
+}
+
+/* Row highlight untuk baris yang terpilih */
+.bulk-emp-table tbody tr.bulk-row-selected {
+  background: color-mix(in srgb, var(--primary, #3b5bdb) 8%, transparent);
+}
+.bulk-emp-table tbody tr.bulk-row-selected:hover {
+  background: color-mix(in srgb, var(--primary, #3b5bdb) 13%, transparent);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SHIFT STAT CARDS — satu kartu per shift_type aktif
+   ─────────────────────────────────────────────────────────────────────────
+   Desain: grid responsif, setiap kartu punya color-strip atas sesuai
+   warna shift (color_hex dari DB), angka besar, label kecil, dan
+   time-range shift di bawah sebagai konteks.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.ss-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.65rem;
+  margin-bottom: 1.25rem;
+}
+
+.ss-stat-card {
+  background: var(--bg-card, #fff);
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 10px;
+  padding: 0.9rem 1rem 0.8rem;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  transition:
+    box-shadow 0.15s,
+    transform 0.15s;
+}
+.ss-stat-card:hover {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+/* Garis warna atas — identitas shift */
+.ss-stat-card-strip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: 10px 10px 0 0;
+}
+
+/* Badge chip kecil di pojok kanan atas */
+.ss-stat-card-badge {
+  position: absolute;
+  top: 0.65rem;
+  right: 0.7rem;
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 0.12rem 0.45rem;
+  border-radius: 20px;
+  letter-spacing: 0.02em;
+  opacity: 0.85;
+}
+
+/* Angka utama */
+.ss-stat-num {
+  display: block;
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-top: 0.35rem;
+  margin-bottom: 0.25rem;
+  font-variant-numeric: tabular-nums;
+  /* Warna di-set inline dari JS */
+}
+
+/* Label nama shift */
+.ss-stat-label {
+  display: block;
+  font-size: 0.73rem;
+  font-weight: 600;
+  color: var(--text-primary, #111);
+  margin-bottom: 0.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Jam kerja — konteks informatif */
+.ss-stat-time {
+  display: block;
+  font-size: 0.67rem;
+  color: var(--text-faint, #9ca3af);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Kartu khusus "Belum di-assign" — warna netral */
+.ss-stat-card--unassigned .ss-stat-num {
+  color: var(--text-faint, #9ca3af);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SWAP SEARCHABLE EMPLOYEE PICKER
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.swap-search-wrap {
+  position: relative;
+}
+
+.swap-search-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 3px);
+  left: 0;
+  right: 0;
+  background: var(--bg-card, #fff);
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: var(--radius-sm, 6px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  z-index: 200;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.swap-dd-item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 0.75rem;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.swap-dd-item:hover {
+  background: var(--bg-hover, #f4f6fb);
+}
+.swap-dd-item + .swap-dd-item {
+  border-top: 1px solid var(--border-light, #f0f0f0);
+}
+
+.swap-dd-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--primary, #3b5bdb);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.swap-dd-info {
+  flex: 1;
+  min-width: 0;
+}
+.swap-dd-name {
+  font-size: 0.83rem;
+  font-weight: 500;
+  color: var(--text-primary, #111);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.swap-dd-dept {
+  font-size: 0.7rem;
+  color: var(--text-faint, #9ca3af);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.swap-dd-badge {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.12rem 0.5rem;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.swap-dd-empty {
+  padding: 0.85rem 0.75rem;
+  font-size: 0.8rem;
+  color: var(--text-faint, #9ca3af);
+  text-align: center;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   STAT CARD — Filter aktif
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.ss-stat-card {
+  cursor: pointer;
+  user-select: none;
+}
+.ss-stat-card:hover {
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Kartu aktif: ring warna, sedikit terangkat */
+.ss-stat-card--active {
+  outline: 2px solid var(--_card-color, #3b5bdb);
+  outline-offset: 2px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+/* Kartu non-aktif saat ada filter: redup */
+.ss-stat-grid:has(.ss-stat-card--active)
+  .ss-stat-card:not(.ss-stat-card--active) {
+  opacity: 0.45;
+}
+
+/* Fallback untuk browser tanpa :has() */
+.ss-stat-card--dimmed {
+  opacity: 0.45;
+}
+
+/* ── Pill label filter aktif di header tabel ─────────────────────────────── */
+.ss-filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.18rem 0.35rem 0.18rem 0.6rem;
+  background: var(--primary-light, #eff6ff);
+  color: var(--primary, #3b5bdb);
+  border: 1px solid var(--primary, #3b5bdb);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+  animation: pill-in 0.15s ease;
+}
+@keyframes pill-in {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.ss-filter-pill button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--primary, #3b5bdb);
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0 0.1rem;
+  display: flex;
+  align-items: center;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+.ss-filter-pill button:hover {
+  opacity: 1;
+}

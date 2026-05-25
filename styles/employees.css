@@ -1,0 +1,331 @@
+/* =============================================================
+   employees.css — Scoped styles untuk halaman Data Karyawan
+   Letakkan di: static/css/employees.css
+   ============================================================= */
+
+/* ── Pico badge di tabel ────────────────────────────────────── */
+.pico-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--radius-xs);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.pico-badge-active {
+  background: var(--brand-light);
+  color: var(--brand-dark);
+}
+.pico-badge-inactive {
+  background: var(--border);
+  color: var(--text-muted);
+}
+.pico-badge-resigned {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+.td-faint {
+  color: var(--text-faint);
+}
+
+/* ── Tombol detail ──────────────────────────────────────────── */
+.btn-detail {
+  color: var(--brand);
+  border-color: var(--brand-light);
+  background: var(--brand-xlight);
+}
+.btn-detail:hover {
+  background: var(--brand-light);
+}
+
+/* ── Modal size variants ────────────────────────────────────── */
+.modal-box-lg {
+  max-width: 700px;
+}
+.modal-box-detail {
+  max-width: 680px;
+}
+
+/* ── Detail header ──────────────────────────────────────────── */
+.detail-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+.detail-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--brand-light);
+  color: var(--brand-dark);
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+.det-sub {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* ── Tab nav ────────────────────────────────────────────────── */
+.detail-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1.5px solid var(--border);
+  padding: 0 1.5rem;
+  background: var(--bg-card);
+}
+.det-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.7rem 1rem;
+  border: none;
+  background: none;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1.5px;
+  transition: color var(--transition);
+}
+.det-tab:hover {
+  color: var(--text-primary);
+}
+.det-tab.active {
+  color: var(--brand);
+  border-bottom-color: var(--brand);
+  font-weight: 600;
+}
+
+/* ── Tab panels ─────────────────────────────────────────────── */
+.det-tab-panel {
+  padding: 1.25rem 1.5rem 0.5rem;
+}
+
+/* ── Loading skeleton ───────────────────────────────────────── */
+.det-loading {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+/* Pastikan [hidden] benar-benar hide meski class punya display */
+.det-loading[hidden],
+.det-tab-panel[hidden] {
+  display: none !important;
+}
+.skel-line {
+  height: 14px;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    var(--border) 25%,
+    var(--border-light) 50%,
+    var(--border) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+.skel-w40 {
+  width: 40%;
+}
+.skel-w50 {
+  width: 55%;
+}
+.skel-w60 {
+  width: 65%;
+}
+.skel-w80 {
+  width: 80%;
+}
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ── Form sections ──────────────────────────────────────────── */
+.form-section-title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.form-section-badge {
+  font-size: 0.68rem;
+  background: var(--border);
+  color: var(--text-muted);
+  padding: 1px 6px;
+  border-radius: 99px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.form-section-divider {
+  border: none;
+  border-top: 1px solid var(--border-light);
+  margin: 1rem 0 1.1rem;
+}
+
+/* ── Read-only fields ───────────────────────────────────────── */
+.form-label-ro {
+  color: var(--text-faint);
+  font-size: 0.72rem;
+}
+.form-ro-val {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  padding: 0.4rem 0;
+  word-break: break-all;
+}
+
+/* ── Form hint ──────────────────────────────────────────────── */
+.form-hint {
+  font-size: 0.72rem;
+  color: var(--text-faint);
+  margin-top: 3px;
+}
+
+/* ── Textarea ───────────────────────────────────────────────── */
+.form-textarea {
+  resize: vertical;
+  min-height: 56px;
+}
+
+/* ── Det form actions ───────────────────────────────────────── */
+.det-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 0 0.25rem;
+  border-top: 1px solid var(--border-light);
+  margin-top: 0.5rem;
+}
+
+/* ── Info banner ────────────────────────────────────────────── */
+.det-info-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  background: var(--brand-xlight);
+  border: 1px solid var(--brand-light);
+  border-radius: var(--radius-xs);
+  padding: 0.65rem 0.9rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+.det-info-banner-warn {
+  background: var(--warning-bg);
+  border-color: #f0e0b0;
+  color: var(--warning);
+}
+
+/* ── Rekening (bank accounts) ───────────────────────────────── */
+.bank-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  margin-bottom: 0.6rem;
+  background: var(--bg-card);
+}
+.bank-item-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: var(--brand-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.bank-item-body {
+  flex: 1;
+  min-width: 0;
+}
+.bank-item-name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.bank-item-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+.bank-item-badges {
+  display: flex;
+  gap: 5px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+.bank-badge {
+  font-size: 0.66rem;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 99px;
+}
+.bank-badge-primary {
+  background: var(--brand-light);
+  color: var(--brand-dark);
+}
+.bank-badge-verified {
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.det-rekening-note {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  margin-top: 0.75rem;
+  line-height: 1.5;
+}
+
+/* ── Toast sukses di dalam modal ────────────────────────────── */
+.det-toast {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--success-bg);
+  color: var(--success);
+  border-top: 1px solid #b5e3ca;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.6rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  animation: slideUp 0.2s ease;
+  z-index: 10;
+}
+.det-toast-error {
+  background: var(--danger-bg);
+  color: var(--danger);
+  border-top-color: #f5bcb5;
+}
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

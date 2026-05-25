@@ -1,0 +1,338 @@
+/* ============================================================
+   login.css — halaman autentikasi
+   Menggunakan CSS variables dari main.css (tidak ada duplikasi)
+   Mobile-first. Breakpoints: md=768, lg=1024
+   ============================================================ */
+
+/* ============================================================
+   Tambahan login.css — Language switcher untuk halaman login
+   Append isi ini ke app/static/css/login.css
+   ============================================================ */
+
+/* ── Language switcher (pojok kanan atas login page) ──────── */
+.login-lang-switcher {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+/* Reuse .lang-btn dari main.css (sudah ada via lang-switcher.css).
+   Override ringan agar kontras di background login yang terang. */
+.login-wrap .lang-btn {
+  width: 30px;
+  height: 24px;
+  font-size: 0.7rem;
+  border-radius: 6px;
+  color: var(--text-faint);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition:
+    background var(--transition),
+    color var(--transition);
+}
+
+.login-wrap .lang-btn:hover {
+  background: var(--brand-xlight);
+  color: var(--brand);
+  text-decoration: none;
+}
+
+.login-wrap .lang-btn.active {
+  background: var(--brand-light);
+  color: var(--brand);
+}
+
+/* Pastikan .login-wrap punya position: relative
+   agar absolute switcher bekerja */
+.login-wrap {
+  position: relative;
+}
+
+/* ── Wrapper halaman ─────────────────────────────────────── */
+.login-wrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem calc(1.5rem + env(safe-area-inset-bottom));
+  gap: 1.25rem;
+}
+
+/* ── Brand di atas card ─────────────────────────────────── */
+.login-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--brand);
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+.login-brand svg {
+  flex-shrink: 0;
+}
+
+/* ── Card ───────────────────────────────────────────────── */
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  /* menggunakan .card dari main.css — padding, shadow, radius, border */
+}
+
+/* ── Header teks ─────────────────────────────────────────── */
+.login-card-head {
+  margin-bottom: 1.5rem;
+}
+.login-title {
+  font-size: clamp(1.35rem, 4vw, 1.65rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-bottom: 0.3rem;
+}
+.login-sub {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+/* ── Alert error ─────────────────────────────────────────── */
+.login-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  background: var(--danger-bg);
+  color: var(--danger);
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 0.9rem;
+  font-size: 0.845rem;
+  line-height: 1.5;
+  margin-bottom: 1.1rem;
+}
+.login-alert[hidden] {
+  display: none;
+}
+.login-alert svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ── Form fields ─────────────────────────────────────────── */
+.form-field {
+  margin-bottom: 1rem;
+}
+.form-label {
+  display: block;
+  font-size: 0.845rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.005em;
+}
+
+/* Input wrapper dengan ikon */
+.input-wrap {
+  position: relative;
+}
+.input-icon {
+  position: absolute;
+  left: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  color: var(--text-faint);
+  pointer-events: none;
+}
+.input-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.form-input {
+  width: 100%;
+  height: 44px;
+  padding: 0 2.75rem 0 2.5rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  outline: none;
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition);
+  -webkit-appearance: none;
+}
+.form-input::placeholder {
+  color: var(--text-faint);
+}
+.form-input:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(79, 110, 247, 0.12);
+}
+
+/* Tombol show/hide password */
+.input-toggle-pw {
+  position: absolute;
+  right: 0.7rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  cursor: pointer;
+  color: var(--text-faint);
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius-xs);
+  transition: color var(--transition);
+}
+.input-toggle-pw:hover {
+  color: var(--text-muted);
+}
+.input-toggle-pw svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ── Baris remember + lupa sandi ─────────────────────────── */
+.login-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.35rem;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.login-remember {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.845rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+.login-remember input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  accent-color: var(--brand);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.login-forgot {
+  font-size: 0.845rem;
+  font-weight: 500;
+  color: var(--brand);
+  text-decoration: none;
+}
+.login-forgot:hover {
+  text-decoration: underline;
+}
+
+/* ── Tombol submit ───────────────────────────────────────── */
+/* Menggunakan .btn .btn-primary .btn-full dari main.css */
+.login-btn {
+  height: 44px;
+  font-size: 0.9rem;
+  position: relative;
+  transition:
+    opacity var(--transition),
+    transform 0.1s,
+    background var(--transition);
+}
+.login-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.login-btn:disabled:active {
+  transform: none;
+}
+
+/* Spinner di dalam tombol */
+.login-spinner {
+  display: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: loginSpin 0.65s linear infinite;
+}
+@keyframes loginSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.login-btn.is-loading .login-btn-text {
+  display: none;
+}
+.login-btn.is-loading .login-spinner {
+  display: block;
+}
+
+/* ── Teks bantuan di bawah form ─────────────────────────── */
+.login-help {
+  margin-top: 1.25rem;
+  font-size: 0.8rem;
+  color: var(--text-faint);
+  text-align: center;
+  line-height: 1.55;
+}
+.login-help strong {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* ── Footer copyright ───────────────────────────────────── */
+.login-footer-note {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  text-align: center;
+}
+
+/* ── Override body untuk halaman login ──────────────────── */
+/* Sembunyikan sidebar dan bottom-nav (tidak relevan di halaman guest) */
+body.role-guest .sidebar,
+body.role-guest .bottom-nav {
+  display: none !important;
+}
+
+/* Hilangkan margin-left yang ditambahkan untuk sidebar di desktop */
+body.role-guest .main-wrap {
+  margin-left: 0 !important;
+}
+
+/* Hapus bottom padding page-content bawaan (kita pakai login-wrap sendiri) */
+body.role-guest .page-content {
+  padding: 0;
+  max-width: none;
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (min-width: 480px) {
+  .login-card {
+    padding: clamp(1.5rem, 4vw, 2rem);
+  }
+}
+
+@media (max-width: 360px) {
+  .login-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

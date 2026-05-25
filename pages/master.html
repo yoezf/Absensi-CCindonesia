@@ -1,0 +1,1374 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="csrf-token" content="IjdlOGQxNGYzZTYzZDI5OTA1M2JhM2YyMjM0ZjE2OWNlNDMxMDAwMDUi.ahPTMg.YcoDCEAK8gDRqLLLPIi0zpDcj6Y">
+    <meta name="theme-color" content="#1A4A8C">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231A4A8C'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z'/%3E%3Ccircle cx='12' cy='9' r='2.5' fill='white'/%3E%3C/svg%3E">
+    <title>Shift Configuration</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="/css2" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../styles/main.css">
+    
+<link rel="stylesheet" href="../styles/shift_master.css">
+
+  <style id="nb-style">
+/* Notification Bell — nb-* namespace */
+
+.nb-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Bell button */
+.nb-bell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--color-text-secondary, #6b7280);
+  transition: background 0.15s, color 0.15s;
+  padding: 0;
+}
+
+.nb-bell:hover {
+  background: var(--color-background-secondary, #f3f4f6);
+  color: var(--color-text-primary, #111827);
+}
+
+.nb-bell:focus-visible {
+  outline: 2px solid var(--color-border-focus, #3b82f6);
+  outline-offset: 2px;
+}
+
+/* Badge */
+.nb-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 8px;
+  background: var(--color-background-danger, #ef4444);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  pointer-events: none;
+  border: 2px solid var(--color-background-primary, #fff);
+}
+
+/* Dropdown panel */
+.nb-dropdown {
+  position: fixed;
+  width: 340px;
+  max-height: 480px;
+  background: var(--color-background-primary, #fff);
+  border: 1px solid var(--color-border-secondary, #e5e7eb);
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.14), 0 2px 8px rgba(0,0,0,.07);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: nb-fade-in 0.15s ease;
+}
+
+/* KRITIS: override browser [hidden]{display:none} yang dikalahkan display:flex di atas */
+.nb-dropdown[hidden] {
+  display: none !important;
+}
+
+@keyframes nb-fade-in {
+  from { opacity: 0; transform: translateY(-6px) scale(.98); }
+  to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+
+/* Dropdown header */
+.nb-dropdown-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid var(--color-border-tertiary, #f3f4f6);
+  flex-shrink: 0;
+}
+
+.nb-dropdown-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary, #111827);
+}
+
+.nb-read-all {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-info, #3b82f6);
+  padding: 3px 8px;
+  border-radius: 6px;
+  transition: background 0.12s;
+  line-height: 1.4;
+}
+
+.nb-read-all:hover {
+  background: var(--color-background-info, #eff6ff);
+}
+
+/* Notification list */
+.nb-list {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0;
+  overflow-y: auto;
+  flex: 1;
+  scroll-behavior: smooth;
+}
+
+.nb-list::-webkit-scrollbar { width: 4px; }
+.nb-list::-webkit-scrollbar-track { background: transparent; }
+.nb-list::-webkit-scrollbar-thumb { background: var(--color-border-secondary, #e5e7eb); border-radius: 2px; }
+
+/* Notification item */
+.nb-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background 0.12s;
+  border-left: 3px solid transparent;
+  position: relative;
+}
+
+.nb-item:hover {
+  background: var(--color-background-secondary, #f9fafb);
+}
+
+.nb-item.nb-item--unread {
+  border-left-color: var(--color-border-info, #3b82f6);
+  background: var(--color-background-info, #eff6ff);
+}
+
+.nb-item.nb-item--unread:hover {
+  background: #dbeafe;
+}
+
+/* Icon bubble */
+.nb-item-icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-background-warning, #fef3c7);
+  color: var(--color-text-warning, #d97706);
+}
+
+.nb-item-icon svg {
+  width: 15px;
+  height: 15px;
+}
+
+.nb-item-icon.nb-icon--absent_alert {
+  background: var(--color-background-danger, #fee2e2);
+  color: var(--color-text-danger, #dc2626);
+}
+
+.nb-item-icon.nb-icon--leave_review {
+  background: var(--color-background-info, #eff6ff);
+  color: var(--color-text-info, #3b82f6);
+}
+
+/* Text content */
+.nb-item-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.nb-item-title {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--color-text-primary, #111827);
+  margin: 0 0 2px;
+  line-height: 1.4;
+  white-space: normal;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.nb-item-text {
+  font-size: 11.5px;
+  color: var(--color-text-secondary, #6b7280);
+  margin: 0 0 3px;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.nb-item-time {
+  font-size: 10.5px;
+  color: var(--color-text-tertiary, #9ca3af);
+  margin: 0;
+}
+
+/* Empty / loading state */
+.nb-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 32px 20px;
+  font-size: 13px;
+  color: var(--color-text-tertiary, #9ca3af);
+  text-align: center;
+}
+
+.nb-empty svg {
+  opacity: 0.35;
+}
+
+/* Mobile: full-width bottom sheet */
+@media (max-width: 480px) {
+  .nb-dropdown {
+    position: fixed !important;
+    left: 12px !important;
+    right: 12px !important;
+    width: auto !important;
+    top: auto !important;
+    bottom: calc(68px + env(safe-area-inset-bottom)) !important;
+    max-height: 60vh;
+    border-radius: 16px;
+  }
+}
+    </style></head>
+  <body class="role-manager">
+    
+    <aside class="sidebar" aria-label="Main navigation">
+      <div class="sidebar-brand">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+          <circle cx="12" cy="9" r="2.5" />
+        </svg>
+        <span>CC Indonesia</span>
+      </div>
+      <div class="sidebar-user">
+        <div class="avatar">MA</div>
+        <div>
+          <div class="sidebar-user-name">
+            Manager
+          </div>
+          <div class="sidebar-user-role">Manager</div>
+        </div>
+        <div id="notif-bell-wrap" style="margin-left: auto">
+    <div class="nb-container" id="nb-container">
+      <button class="nb-bell" id="nb-bell" aria-label="Notifikasi" aria-expanded="false" aria-haspopup="dialog">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+          <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+        </svg>
+        <span class="nb-badge" id="nb-badge" hidden aria-live="polite" aria-atomic="true">0</span>
+      </button>
+
+      <div class="nb-dropdown" id="nb-dropdown" role="dialog" aria-label="Notifikasi" aria-modal="false" hidden>
+        <div class="nb-dropdown-header">
+          <span class="nb-dropdown-title">Notifikasi</span>
+          <button class="nb-read-all" id="nb-read-all" type="button">Tandai semua dibaca</button>
+        </div>
+        <ul class="nb-list" id="nb-list" role="list">
+          <li class="nb-empty" role="listitem">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+            <span>Memuat…</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+      </div>
+
+      <nav class="sidebar-nav">
+         
+        <a href="../pages/dashboard.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" />
+          </svg>
+          Dashboard
+        </a>
+        <a href="../pages/employees.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 00-3-3.87" />
+            <path d="M16 3.13a4 4 0 010 7.75" />
+          </svg>
+          Employees
+        </a>
+
+        
+        <a href="../pages/shift-schedule.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+            <line x1="8" y1="14" x2="12" y2="14" />
+            <line x1="8" y1="18" x2="16" y2="18" />
+          </svg>
+          <span>Schedule</span>
+        </a>
+        <a href="../pages/leaves.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+            <polyline points="14 2 14 8 20 8" />
+          </svg>
+          Leave Requests
+        </a>
+        <a href="../pages/master.html" class="active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+          Shift Configuration
+        </a>
+        <a href="../pages/company-calendar.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+            <line x1="8" y1="15" x2="16" y2="15" />
+          </svg>
+          Calendar
+        </a>
+        <a href="../pages/corrections.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+            <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+          </svg>
+          Corrections
+        </a>
+        <a href="../pages/reports.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10" />
+            <line x1="12" y1="20" x2="12" y2="4" />
+            <line x1="6" y1="20" x2="6" y2="14" />
+          </svg>
+          Reports
+        </a>
+        <a href="../pages/offices.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+            <circle cx="12" cy="9" r="2.5" />
+          </svg>
+          Offices
+        </a>
+        
+        <a href="../pages/equipment.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" />
+            <line x1="8" y1="21" x2="16" y2="21" />
+            <line x1="12" y1="17" x2="12" y2="21" />
+          </svg>
+          Perlengkapan
+        </a>
+
+         
+      </nav>
+
+      <div class="sidebar-footer">
+        
+        <div class="lang-switcher" aria-label="Pilih bahasa">
+           
+          <a href="../pages/id.html" class="lang-btn" title="Bahasa Indonesia" aria-current="false">ID</a>
+          
+          <a href="../pages/en.html" class="lang-btn active" title="English (US)" aria-current="true">EN</a>
+          
+          <a href="../pages/zh.html" class="lang-btn" title="中文" aria-current="false">ZH</a>
+          
+        </div>
+        <a href="../pages/logout.html" class="sidebar-logout">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          Sign Out
+        </a>
+      </div>
+    </aside>
+      
+    <div class="mobile-topbar">
+      <span class="mobile-topbar-title">CC Indonesia</span>
+      <div class="lang-switcher lang-switcher--mobile" aria-label="Pilih bahasa">
+         
+        <a href="../pages/id.html" class="lang-btn" title="Bahasa Indonesia" aria-current="false">ID</a>
+        
+        <a href="../pages/en.html" class="lang-btn active" title="English (US)" aria-current="true">EN</a>
+        
+        <a href="../pages/zh.html" class="lang-btn" title="中文" aria-current="false">ZH</a>
+        
+      </div>
+    </div>
+    
+
+    <div class="main-wrap">
+        
+      <main class="page-content" id="main-content">
+         
+<div class="page-header">
+  <div class="page-header-inner">
+    <div>
+      <div class="page-header-sub">Manager</div>
+      <div class="page-header-name">Shift Configuration</div>
+    </div>
+    
+    <button class="sm-btn-add" onclick="openAddModal()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14">
+        <line x1="12" y1="5" x2="12" y2="19" />
+        <line x1="5" y1="12" x2="19" y2="12" />
+      </svg>
+      Tambah Shift
+    </button>
+    
+  </div>
+</div>
+
+<div class="container" style="padding-top: 1.25rem; padding-bottom: 3rem">
+  
+  <div class="sm-scheduler-banner">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+      <circle cx="12" cy="12" r="10" />
+      <polyline points="12 6 12 12 16 14" />
+    </svg>
+    <div>
+      <div class="sm-scheduler-title">
+        Auto-Absent Scheduler Status
+      </div>
+      <div class="sm-scheduler-jobs">
+             
+        <span class="sm-job-chip" id="chip-auto_absent_shift_3">
+          <span class="sm-dot"></span>
+          Inventaris 1: <strong>—</strong>
+        </span>
+           
+        <span class="sm-job-chip" id="chip-auto_absent_shift_1">
+          <span class="sm-dot"></span>
+          Produksi 1: <strong>—</strong>
+        </span>
+           
+        <span class="sm-job-chip" id="chip-auto_absent_management">
+          <span class="sm-dot"></span>
+          Kantor: <strong>—</strong>
+        </span>
+           
+        <span class="sm-job-chip" id="chip-auto_absent_shift_4">
+          <span class="sm-dot"></span>
+          Inventaris 2: <strong>—</strong>
+        </span>
+           
+        <span class="sm-job-chip" id="chip-auto_absent_shift_2">
+          <span class="sm-dot"></span>
+          Produksi
+        2: <strong>—</strong>
+        </span>
+              
+        <span class="sm-job-chip" id="chip-auto_absent_shift_6">
+          <span class="sm-dot"></span>
+          Security: <strong>—</strong>
+        </span>
+         
+      </div>
+      <div style="font-size: 0.68rem; color: var(--text-faint); margin-top: 0.4rem">
+        The scheduler time updates automatically each time the shift configuration is saved.
+      </div>
+    </div>
+  </div>
+
+  
+  
+  <div class="sm-shift-grid">
+         
+
+    <div class="sm-shift-card" id="card-e3a91956-475a-11f1-a19f-24e8d4b66f1c">
+      <div class="sm-shift-card-accent" style="background:#0891b2"></div>
+
+      <div class="sm-shift-card-header">
+        <div class="sm-shift-name">Inventaris 1</div>
+        <span class="sm-shift-type-badge" style="background:#e0f2fe; color:#0369a1">
+          Inventaris 1
+        </span>
+      </div>
+
+      <div class="sm-info-rows">
+        <div class="sm-info-row">
+          <span class="sm-info-label">Work Hours</span>
+          <span class="sm-info-val" id="val-range-e3a91956-475a-11f1-a19f-24e8d4b66f1c">
+            06:00 – 14:00 
+          </span>
+        </div>
+        <div class="sm-info-row">
+          <span class="sm-info-label">Window Check-in</span>
+          <span class="sm-info-val" id="val-checkin-window-e3a91956-475a-11f1-a19f-24e8d4b66f1c" style="color: #0369a1">
+            04:00 – 08:30
+          </span>
+        </div>
+        <div class="sm-info-row">
+          <span class="sm-info-label">Batas Check-in</span>
+          <span class="sm-info-val cutoff" id="val-cutoff-e3a91956-475a-11f1-a19f-24e8d4b66f1c">
+            08:30
+          </span>
+        </div>
+        <div class="sm-info-row">
+          <span class="sm-info-label">Window Check-out</span>
+          <span class="sm-info-val" id="val-checkout-window-e3a91956-475a-11f1-a19f-24e8d4b66f1c" style="color: #7c3aed">
+            06:00 – 17:00
+          </span>
+        </div>
+        <div class="sm-info-row">
+          <span class="sm-info-label">Toleransi Terlambat</span>
+          <span class="sm-info-val" id="val-tol-e3a91956-475a-11f1-a19f-24e8d4b66f1c">
+            1 mnt
+          </span>
+        </div>
+      </div>
+
+      
+      <div class="sm-synced-row">
+        <span class="sm-synced-dot warn"></span>
+         Scheduler not detected 
+      </div>
+
+      
+      <div class="sm-card-actions">
+        <button class="sm-btn-edit" onclick="openEditModal('e3a91956-475a-11f1-a19f-24e8d4b66f1c', {&quot;checkin_open_before_minutes&quot;: 120, &quot;checkin_window_label&quot;: &quot;04:00 \u2013 08:30&quot;, &quot;checkout_grace_minutes&quot;: 180, &quot;checkout_window_label&quot;: &quot;06:00 \u2013 17:00&quot;, &quot;color_hex&quot;: &quot;#0891b2&quot;, &quot;crosses_midnight&quot;: false, &quot;cutoff_time&quot;: &quot;08:30&quot;, &quot;id&quot;: &quot;e3a91956-475a-11f1-a19f-24e8d4b66f1c&quot;, &quot;is_active&quot;: true, &quot;late_tolerance_minutes&quot;: 1, &quot;name&quot;: &quot;Inventaris 1&quot;, &quot;shift_type&quot;: &quot;shift_3&quot;, &quot;type_label&quot;: &quot;Inventaris 1&quot;, &quot;work_end&quot;: &quot;14:00&quot;, &quot;work_start&quot;: &quot;06:00&quot;})">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+            <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+          </svg>
+          Edit
+        </button>
+        <button class="sm-btn-delete" onclick="deleteShift('e3a91956-475a-11f1-a19f-24e8d4b66f1c', 'Inventaris 1', 'shift_3')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+            <polyline points="3 6 5 6 21 6" />
+            <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" />
+            <path d="M10 11v6M14 11v6" />
+            <path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2" />
+          </svg>
+          Delete
+        </button>
+      </div>
+    </div>
+        
+
+    <div class="sm-shift-card" id="card-3f05cee0-3f90-11f1-a19f-24e8d4b66f1c">
+      <div class="sm-shift-card-accent" style="background:#1E8449"></div>
+
+      <div class="sm-shift-card-header">
+        <div class="sm-shift-name">Shift 1 — Produksi</div>
+        <span class="sm-shift-type-badge" style="background:#dcfce7; color:#15803d">
+          Produksi 1
+        </span>
+      </div>
+
+      <div class="sm-info-rows">
+        <div class="sm-info-row">
+          <span class="sm-info-label">Work Hours</span>
+          <span class="sm-info-val" id="val-range-3f05cee0-3f90-11f1-a19f-24e8d4b66f1c">
+            07:00 – 15:00 
+          </span>
+        </div>
+        <div class="sm-info-row">
+          <span class="sm-info-label">Window Check-in</span>
+          <span class="sm-info-val" id="val-checkin-window-3f05cee0-3f90-11f1-a19f-24e8d4b66f1c" style="color: #0369a1">
+            05:00 – 10:30
+          </span>
+        </div>
+        <div class="sm-info-row">
+          <span class="sm-info-label">Batas Check-in</span>
+          <span class="sm-info-val cutoff" id="val-cutoff-3f05cee0-3f90-11f1-a19f-24e8d4b66f1c">
+            10:30
+          </span>
+        </div>
+        <div class="sm-info-row">
+          <span class="sm-info-label">Window Check-out</span>
+          <span class="sm-info-val" id="val-checkout-window-3f05cee0-3f90-11f1-a19f-24e8d4b66f1c" style="color: #7c3aed">
+            07:00 – 17:00
+          </span>
+        </div>
+        <div class="sm-info-row">
+          <span class="sm-info-label">Toleransi Terlambat</span>
+          <span class="sm-info-val" id="val-tol-3f05cee0-3f90-11f1-a19f-24e8d4b66f1c">
+            1 mnt
+          </span>
+        </div>
+      </div>
+
+      
+      <div class="sm-synced-row">
+        <span class="sm-synced-dot warn"></span>
+         Scheduler not detected 
+      </div>
+
+      
+      <div class="sm-card-actions">
+        <button class="sm-btn-edit" onclick="openEditModal('3f05cee0-3f90-11f1-a19f-24e8d4b66f1c', {&quot;checkin_open_before_minutes&quot;: 120, &quot;checkin_window_label&quot;: &quot;05:00 \u2013 10:30&quot;, &quot;checkout_grace_minutes&quot;: 120, &quot;checkout_window_label&quot;: &quot;07:00 \u2013 17:00&quot;, &quot;color_hex&quot;: &quot;#1E8449&quot;, &quot;crosses_midnight&quot;: false, &quot;cutoff_time&quot;: &quot;10:30&quot;, &quot;id&quot;: &quot;3f05cee0-3f90-11f1-a19f-24e8d4b66f1c&quot;, &quot;is_active&quot;: true, &quot;late_tolerance_minutes&quot;: 1, &quot;name&quot;: &quot;Shift 1 \u2014 Produksi&quot;, &quot;shift_type&quot;: &quot;shift_1&quot;, &quot;type_label&quot;: &quot;Produksi 1&quot;, &quot;work_end&quot;: &quot;15:00&quot;, &quot;work_start&quot;: &quot;07:00&quot;})">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+            <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+          </svg>
+          Edit
+        </button>
+        <button class="sm-btn-delete" onclick="deleteShift('3f05cee0-3f90-11f1-a19f-24e8d4b66f1c', 'Shift 1 — Produksi', 'shift_1')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+            <polyline points="3 6 5 6 21 6" />
+            <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" />
+            <path d="M10 11v6M14 11v6" />
+            <path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2" />
+          </svg>
+          Delete
+        </button>
+      </div>
+    </div>
+        
+
+    <div class="sm-shift-card" id="card-3f05cdd1-3f90-11f1-a19f-24e8d4b66f1c">
+      <div class="sm-shift-card-accent" style="background:#1B4F72"></div>
+
+      <div class="sm-shift-card-header">
+        <div class="sm-shift-name">Manajemen / Kantor</div>
+        <span class="sm-shift-type-badge" style="background:#eff6ff; color:#1d4ed8">
+          Kantor
+        </span>
+      </div>
+
+      <div class="sm-info-rows">
+        <div class="sm-info-row">
+          <span class="sm-info-label">Work Hours</span>
+          <span class="sm-info-val" id="val-range-3f05cdd1-3f90-11f1-a19f-24e8d4b66f1c">
+            08:30 – 17:30 
+          </span>
+        </div>
+        <div class="sm-info-row">
+          <span class="sm-info-label">Window Check-in</span>
+          <span class="sm-info-val" id="val-checkin-window-3f05cdd1-3f90-11f1-a19f-24e8d4b66f1c" style="color: #0369a1">
+            06:30 – 11:00
+          </span>
+        </div>
+        <div class="sm-info-row">
+          <span class="sm-info-label">Batas Check-in</span>
+          <span class="sm-info-val cutoff" id="val-cutoff-3f05cdd1-3f90-11f1-a19f-24e8d4b66f1c">
+            11:00
+          </span>
+        </div>
+        <div class="sm-info-row">
+          <span class="sm-info-label">Window Check-out</span>
+          <span class="sm-info-val" id="val-checkout-window-3f05cdd1-3f90-11f1-a19f-24e8d4b66f1c" style="color: #7c3aed">
+            08:30 – 19:30
+          </span>
+        </div>
+        <div class="sm-info-row">
+          <span class="sm-info-label">Toleransi Terlambat</span>
+          <span class="sm-info-val" id="val-tol-3f05cdd1-3f90-11f1-a19f-24e8d4b66f1c">
+            1 mnt
+          </span>
+        </div>
+      </div>
+
+      
+      <div class="sm-synced-row">
+        <span class="sm-synced-dot warn"></span>
+         Scheduler not detected 
+      </div>
+
+      
+      <div class="sm-card-actions">
+        <button class="sm-btn-edit" onclick="openEditModal('3f05cdd1-3f90-11f1-a19f-24e8d4b66f1c', {&quot;checkin_open_before_minutes&quot;: 120, &quot;checkin_window_label&quot;: &quot;06:30 \u2013 11:00&quot;, &quot;checkout_grace_minutes&quot;: 120, &quot;checkout_window_label&quot;: &quot;08:30 \u2013 19:30&quot;, &quot;color_hex&quot;: &quot;#1B4F72&quot;, &quot;crosses_midnight&quot;: false, &quot;cutoff_time&quot;: &quot;11:00&quot;, &quot;id&quot;: &quot;3f05cdd1-3f90-11f1-a19f-24e8d4b66f1c&quot;, &quot;is_active&quot;: true, &quot;late_tolerance_minutes&quot;: 1, &quot;name&quot;: &quot;Manajemen / Kantor&quot;, &quot;shift_type&quot;: &quot;management&quot;, &quot;type_label&quot;: &quot;Kantor&quot;, &quot;work_end&quot;: &quot;17:30&quot;, &quot;work_start&quot;: &quot;08:30&quot;})">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+            <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+          </svg>
+          Edit
+        </button>
+        <button class="sm-btn-delete" onclick="deleteShift('3f05cdd1-3f90-11f1-a19f-24e8d4b66f1c', 'Manajemen / Kantor', 'management')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+            <polyline points="3 6 5 6 21 6" />
+            <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" />
+            <path d="M10 11v6M14 11v6" />
+            <path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2" />
+          </svg>
+          Delete
+        </button>
+      </div>
+    </div>
+        
+
+    <div class="sm-shift-card" id="card-e3ab5cd6-475a-11f1-a19f-24e8d4b66f1c">
+      <div class="sm-shift-card-accent" style="background:#d97706"></div>
+
+      <div class="sm-shift-card-header">
+        <div class="sm-shift-name">Inventaris 2</div>
+        <span class="sm-shift-type-badge" style="background:#fef9c3; color:#b45309">
+          Inventaris 2
+        </span>
+      </div>
+
+      <div class="sm-info-rows">
+        <div class="sm-info-row">
+          <span class="sm-info-label">Work Hours</span>
+          <span class="sm-info-val" id="val-range-e3ab5cd6-475a-11f1-a19f-24e8d4b66f1c">
+            14:00 – 22:00 
+            <span style="font-size: 0.65rem; color: var(--text-faint)">+1</span>
+            
+          </span>
+        </div>
+        <div class="sm-info-row">
+          <span class="sm-info-label">Window Check-in</span>
+          <span class="sm-info-val" id="val-checkin-window-e3ab5cd6-475a-11f1-a19f-24e8d4b66f1c" style="color: #0369a1">
+            12:00 – 15:30
+          </span>
+        </div>
+        <div class="sm-info-row">
+          <span class="sm-info-label">Batas Check-in</span>
+          <span class="sm-info-val cutoff" id="val-cutoff-e3ab5cd6-475a-11f1-a19f-24e8d4b66f1c">
+            15:30
+          </span>
+        </div>
+        <div class="sm-info-row">
+          <span class="sm-info-label">Window Check-out</span>
+          <span class="sm-info-val" id="val-checkout-window-e3ab5cd6-475a-11f1-a19f-24e8d4b66f1c" style="color: #7c3aed">
+            14:00 – +00:30
+          </span>
+        </div>
+        <div class="sm-info-row">
+          <span class="sm-info-label">Toleransi Terlambat</span>
+          <span class="sm-info-val" id="val-tol-e3ab5cd6-475a-11f1-a19f-24e8d4b66f1c">
+            1 mnt
+          </span>
+        </div>
+      </div>
+
+      
+      <div class="sm-synced-row">
+        <span class="sm-synced-dot warn"></span>
+         Scheduler not detected 
+      </div>
+
+      
+      <div class="sm-card-actions">
+        <button class="sm-btn-edit" onclick="openEditModal('e3ab5cd6-475a-11f1-a19f-24e8d4b66f1c', {&quot;checkin_open_before_minutes&quot;: 120, &quot;checkin_window_label&quot;: &quot;12:00 \u2013 15:30&quot;, &quot;checkout_grace_minutes&quot;: 150, &quot;checkout_window_label&quot;: &quot;14:00 \u2013 +00:30&quot;, &quot;color_hex&quot;: &quot;#d97706&quot;, &quot;crosses_midnight&quot;: true, &quot;cutoff_time&quot;: &quot;15:30&quot;, &quot;id&quot;: &quot;e3ab5cd6-475a-11f1-a19f-24e8d4b66f1c&quot;, &quot;is_active&quot;: true, &quot;late_tolerance_minutes&quot;: 1, &quot;name&quot;: &quot;Inventaris 2&quot;, &quot;shift_type&quot;: &quot;shift_4&quot;, &quot;type_label&quot;: &quot;Inventaris 2&quot;, &quot;work_end&quot;: &quot;22:00&quot;, &quot;work_start&quot;: &quot;14:00&quot;})">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+            <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+          </svg>
+          Edit
+        </button>
+        <button class="sm-btn-delete" onclick="deleteShift('e3ab5cd6-475a-11f1-a19f-24e8d4b66f1c', 'Inventaris 2', 'shift_4')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+            <polyline points="3 6 5 6 21 6" />
+            <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" />
+            <path d="M10 11v6M14 11v6" />
+            <path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2" />
+          </svg>
+          Delete
+        </button>
+      </div>
+    </div>
+        
+
+    <div class="sm-shift-card" id="card-3f05cf53-3f90-11f1-a19f-24e8d4b66f1c">
+      <div class="sm-shift-card-accent" style="background:#BA4A00"></div>
+
+      <div class="sm-shift-card-header">
+        <div class="sm-shift-name">Shift 2 - Produksi</div>
+        <span class="sm-shift-type-badge" style="background:#f5f3ff; color:#7e22ce">
+          Produksi 2
+        </span>
+      </div>
+
+      <div class="sm-info-rows">
+        <div class="sm-info-row">
+          <span class="sm-info-label">Work Hours</span>
+          <span class="sm-info-val" id="val-range-3f05cf53-3f90-11f1-a19f-24e8d4b66f1c">
+            16:00 – 00:00 
+            <span style="font-size: 0.65rem; color: var(--text-faint)">+1</span>
+            
+          </span>
+        </div>
+        <div class="sm-info-row">
+          <span class="sm-info-label">Window Check-in</span>
+          <span class="sm-info-val" id="val-checkin-window-3f05cf53-3f90-11f1-a19f-24e8d4b66f1c" style="color: #0369a1">
+            14:00 – 18:00
+          </span>
+        </div>
+        <div class="sm-info-row">
+          <span class="sm-info-label">Batas Check-in</span>
+          <span class="sm-info-val cutoff" id="val-cutoff-3f05cf53-3f90-11f1-a19f-24e8d4b66f1c">
+            18:00
+          </span>
+        </div>
+        <div class="sm-info-row">
+          <span class="sm-info-label">Window Check-out</span>
+          <span class="sm-info-val" id="val-checkout-window-3f05cf53-3f90-11f1-a19f-24e8d4b66f1c" style="color: #7c3aed">
+            16:00 – +01:30
+          </span>
+        </div>
+        <div class="sm-info-row">
+          <span class="sm-info-label">Toleransi Terlambat</span>
+          <span class="sm-info-val" id="val-tol-3f05cf53-3f90-11f1-a19f-24e8d4b66f1c">
+            1 mnt
+          </span>
+        </div>
+      </div>
+
+      
+      <div class="sm-synced-row">
+        <span class="sm-synced-dot warn"></span>
+         Scheduler not detected 
+      </div>
+
+      
+      <div class="sm-card-actions">
+        <button class="sm-btn-edit" onclick="openEditModal('3f05cf53-3f90-11f1-a19f-24e8d4b66f1c', {&quot;checkin_open_before_minutes&quot;: 120, &quot;checkin_window_label&quot;: &quot;14:00 \u2013 18:00&quot;, &quot;checkout_grace_minutes&quot;: 90, &quot;checkout_window_label&quot;: &quot;16:00 \u2013 +01:30&quot;, &quot;color_hex&quot;: &quot;#BA4A00&quot;, &quot;crosses_midnight&quot;: true, &quot;cutoff_time&quot;: &quot;18:00&quot;, &quot;id&quot;: &quot;3f05cf53-3f90-11f1-a19f-24e8d4b66f1c&quot;, &quot;is_active&quot;: true, &quot;late_tolerance_minutes&quot;: 1, &quot;name&quot;: &quot;Shift 2 - Produksi&quot;, &quot;shift_type&quot;: &quot;shift_2&quot;, &quot;type_label&quot;: &quot;Produksi 2&quot;, &quot;work_end&quot;: &quot;00:00&quot;, &quot;work_start&quot;: &quot;16:00&quot;})">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+            <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+          </svg>
+          Edit
+        </button>
+        <button class="sm-btn-delete" onclick="deleteShift('3f05cf53-3f90-11f1-a19f-24e8d4b66f1c', 'Shift 2 - Produksi', 'shift_2')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+            <polyline points="3 6 5 6 21 6" />
+            <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" />
+            <path d="M10 11v6M14 11v6" />
+            <path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2" />
+          </svg>
+          Delete
+        </button>
+      </div>
+    </div>
+        
+
+    <div class="sm-shift-card" id="card-e3ad3db0-475a-11f1-a19f-24e8d4b66f1c">
+      <div class="sm-shift-card-accent" style="background:#0f172a"></div>
+
+      <div class="sm-shift-card-header">
+        <div class="sm-shift-name">Security</div>
+        <span class="sm-shift-type-badge" style="background:#f1f5f9; color:#0f172a">
+          Security
+        </span>
+      </div>
+
+      <div class="sm-info-rows">
+        <div class="sm-info-row">
+          <span class="sm-info-label">Work Hours</span>
+          <span class="sm-info-val" id="val-range-e3ad3db0-475a-11f1-a19f-24e8d4b66f1c">
+            22:00 – 07:30 
+            <span style="font-size: 0.65rem; color: var(--text-faint)">+1</span>
+            
+          </span>
+        </div>
+        <div class="sm-info-row">
+          <span class="sm-info-label">Window Check-in</span>
+          <span class="sm-info-val" id="val-checkin-window-e3ad3db0-475a-11f1-a19f-24e8d4b66f1c" style="color: #0369a1">
+            20:00 – 23:30
+          </span>
+        </div>
+        <div class="sm-info-row">
+          <span class="sm-info-label">Batas Check-in</span>
+          <span class="sm-info-val cutoff" id="val-cutoff-e3ad3db0-475a-11f1-a19f-24e8d4b66f1c">
+            23:30
+          </span>
+        </div>
+        <div class="sm-info-row">
+          <span class="sm-info-label">Window Check-out</span>
+          <span class="sm-info-val" id="val-checkout-window-e3ad3db0-475a-11f1-a19f-24e8d4b66f1c" style="color: #7c3aed">
+            22:00 – +09:30
+          </span>
+        </div>
+        <div class="sm-info-row">
+          <span class="sm-info-label">Toleransi Terlambat</span>
+          <span class="sm-info-val" id="val-tol-e3ad3db0-475a-11f1-a19f-24e8d4b66f1c">
+            1 mnt
+          </span>
+        </div>
+      </div>
+
+      
+      <div class="sm-synced-row">
+        <span class="sm-synced-dot warn"></span>
+         Scheduler not detected 
+      </div>
+
+      
+      <div class="sm-card-actions">
+        <button class="sm-btn-edit" onclick="openEditModal('e3ad3db0-475a-11f1-a19f-24e8d4b66f1c', {&quot;checkin_open_before_minutes&quot;: 120, &quot;checkin_window_label&quot;: &quot;20:00 \u2013 23:30&quot;, &quot;checkout_grace_minutes&quot;: 120, &quot;checkout_window_label&quot;: &quot;22:00 \u2013 +09:30&quot;, &quot;color_hex&quot;: &quot;#0f172a&quot;, &quot;crosses_midnight&quot;: true, &quot;cutoff_time&quot;: &quot;23:30&quot;, &quot;id&quot;: &quot;e3ad3db0-475a-11f1-a19f-24e8d4b66f1c&quot;, &quot;is_active&quot;: true, &quot;late_tolerance_minutes&quot;: 1, &quot;name&quot;: &quot;Security&quot;, &quot;shift_type&quot;: &quot;shift_6&quot;, &quot;type_label&quot;: &quot;Security&quot;, &quot;work_end&quot;: &quot;07:30&quot;, &quot;work_start&quot;: &quot;22:00&quot;})">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+            <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+          </svg>
+          Edit
+        </button>
+        <button class="sm-btn-delete" onclick="deleteShift('e3ad3db0-475a-11f1-a19f-24e8d4b66f1c', 'Security', 'shift_6')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+            <polyline points="3 6 5 6 21 6" />
+            <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" />
+            <path d="M10 11v6M14 11v6" />
+            <path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2" />
+          </svg>
+          Delete
+        </button>
+      </div>
+    </div>
+    
+  </div>
+
+  
+</div>
+ 
+<div class="modal-overlay" id="modal-edit-shift" style="display: none">
+  <div class="modal-box" style="max-width: 480px">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-edit-title">Edit Shift</span>
+      <button class="modal-close" onclick="closeEditModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="sm-form-grid">
+        <div class="form-group full">
+          <label class="form-label">Shift Name <span class="req">*</span></label>
+          <input type="text" class="form-input" id="edit-name" placeholder="e.g. Inventaris 1 — Gudang A">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Jam Mulai <span class="req">*</span></label>
+          <input type="time" class="form-input" id="edit-work-start">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Jam Selesai <span class="req">*</span></label>
+          <input type="time" class="form-input" id="edit-work-end">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Batas Check-in <span class="req">*</span></label>
+          <input type="time" class="form-input" id="edit-cutoff">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Toleransi Terlambat (mnt)</label>
+          <input type="number" class="form-input" id="edit-tolerance" min="0" max="120" step="5" placeholder="15">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" style="display: flex; align-items: center; gap: 0.3rem">
+            Buka Check-in Sebelum (mnt)
+            <span title="How many minutes before the shift start time check-in becomes available." style="cursor: help; color: var(--text-faint)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+            </span>
+          </label>
+          <input type="number" class="form-input" id="edit-checkin-open-before" min="0" max="480" step="15" placeholder="120">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" style="display: flex; align-items: center; gap: 0.3rem">
+            Toleransi Check-out Setelah (mnt)
+            <span title="How many minutes after the shift end time check-out is still allowed." style="cursor: help; color: var(--text-faint)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+            </span>
+          </label>
+          <input type="number" class="form-input" id="edit-checkout-grace" min="0" max="480" step="15" placeholder="120">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Label Color</label>
+          <div style="display: flex; gap: 0.5rem; align-items: center">
+            <input type="color" id="edit-color" style="
+                width: 42px;
+                height: 36px;
+                padding: 2px;
+                border: 1px solid var(--border);
+                border-radius: 6px;
+                cursor: pointer;
+              ">
+            <input type="text" class="form-input" id="edit-color-hex" maxlength="7" placeholder="#1e8449" style="font-family: monospace; font-size: 0.8rem">
+          </div>
+        </div>
+
+        <div class="form-group full" style="
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 0;
+          ">
+          <input type="checkbox" id="edit-crosses-midnight" style="
+              width: 16px;
+              height: 16px;
+              cursor: pointer;
+              accent-color: var(--primary);
+            ">
+          <label for="edit-crosses-midnight" style="font-size: 0.8rem; font-weight: 500; cursor: pointer">
+            Shift crosses midnight
+          </label>
+        </div>
+      </div>
+
+      <div class="sm-form-note" style="margin-top: 0.85rem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="8" x2="12" y2="12" />
+          <line x1="12" y1="16" x2="12.01" y2="16" />
+        </svg>
+        <span>Check-in Deadline = the last time an employee can clock in; past this
+          the system records "Absent". Open Check-in = how early
+          the system accepts check-in. Check-out Grace Period = how long
+          after the shift ends check-out is still permitted.</span>
+      </div>
+
+      <div class="sm-reschedule-notice">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+          <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+          <line x1="12" y1="9" x2="12" y2="13" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
+        </svg>
+        <span>Changing the Check-in Deadline will automatically update the auto-absent schedule.</span>
+      </div>
+
+      <div id="edit-error" class="form-error" style="display: none; margin-top: 0.75rem"></div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-modal-cancel" onclick="closeEditModal()">
+        Cancel
+      </button>
+      <button class="btn-modal-submit" id="btn-edit-submit" onclick="submitEdit()">
+        <svg class="spin" id="edit-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14" style="display: none">
+          <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83
+                   M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+        </svg>
+        Simpan &amp; Perbarui Scheduler
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal-overlay" id="modal-add-shift" style="display: none">
+  <div class="modal-box" style="max-width: 480px">
+    <div class="modal-header">
+      <span class="modal-title">Tambah Shift Baru</span>
+      <button class="modal-close" onclick="closeAddModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="sm-form-grid">
+        
+        <div class="form-group full">
+          <label class="form-label">Shift Type <span class="req">*</span></label>
+          <select class="form-input" id="add-shift-type">
+            <option value="">— Pilih tipe shift —</option>
+            
+            <option value="shift_5">
+              Inventaris 3 (shift_5)
+            </option>
+            
+          </select>
+        </div>
+
+        <div class="form-group full">
+          <label class="form-label">Shift Name <span class="req">*</span></label>
+          <input type="text" class="form-input" id="add-name" placeholder="e.g. Produksi 3 — Malam">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Jam Mulai <span class="req">*</span></label>
+          <input type="time" class="form-input" id="add-work-start">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Jam Selesai <span class="req">*</span></label>
+          <input type="time" class="form-input" id="add-work-end">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Batas Check-in <span class="req">*</span></label>
+          <input type="time" class="form-input" id="add-cutoff">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Toleransi Terlambat (mnt)</label>
+          <input type="number" class="form-input" id="add-tolerance" min="0" max="120" step="5" value="15">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Buka Check-in Sebelum (mnt)</label>
+          <input type="number" class="form-input" id="add-checkin-open-before" min="0" max="480" step="15" value="120">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Toleransi Check-out Setelah (mnt)</label>
+          <input type="number" class="form-input" id="add-checkout-grace" min="0" max="480" step="15" value="120">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Label Color</label>
+          <div style="display: flex; gap: 0.5rem; align-items: center">
+            <input type="color" id="add-color" value="#4f6ef7" style="
+                width: 42px;
+                height: 36px;
+                padding: 2px;
+                border: 1px solid var(--border);
+                border-radius: 6px;
+                cursor: pointer;
+              ">
+            <input type="text" class="form-input" id="add-color-hex" maxlength="7" value="#4f6ef7" style="font-family: monospace; font-size: 0.8rem">
+          </div>
+        </div>
+
+        <div class="form-group full" style="
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 0;
+          ">
+          <input type="checkbox" id="add-crosses-midnight" style="
+              width: 16px;
+              height: 16px;
+              cursor: pointer;
+              accent-color: var(--primary);
+            ">
+          <label for="add-crosses-midnight" style="font-size: 0.8rem; font-weight: 500; cursor: pointer">
+            Shift crosses midnight
+          </label>
+        </div>
+      </div>
+
+      <div class="sm-form-note" style="margin-top: 0.85rem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="8" x2="12" y2="12" />
+          <line x1="12" y1="16" x2="12.01" y2="16" />
+        </svg>
+        <span>New shifts will be applied to all active offices automatically.</span>
+      </div>
+
+      <div id="add-error" class="form-error" style="display: none; margin-top: 0.75rem"></div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-modal-cancel" onclick="closeAddModal()">
+        Cancel
+      </button>
+      <button class="btn-modal-submit" id="btn-add-submit" onclick="submitAdd()">
+        <svg class="spin" id="add-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14" style="display: none">
+          <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83
+                   M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+        </svg>
+        Save New Shift
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<div class="sm-toast" id="sm-toast"></div>
+
+
+      </main>
+    </div>
+
+     
+    <nav class="bottom-nav" aria-label="Bottom navigation">
+       
+      <a href="../pages/dashboard.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7" />
+          <rect x="14" y="3" width="7" height="7" />
+          <rect x="14" y="14" width="7" height="7" />
+          <rect x="3" y="14" width="7" height="7" />
+        </svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="../pages/employees.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+        </svg>
+        <span>Employees</span>
+      </a>
+      <a href="../pages/shift-schedule.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2" />
+          <line x1="16" y1="2" x2="16" y2="6" />
+          <line x1="8" y1="2" x2="8" y2="6" />
+          <line x1="3" y1="10" x2="21" y2="10" />
+          <line x1="8" y1="14" x2="12" y2="14" />
+          <line x1="8" y1="18" x2="16" y2="18" />
+        </svg>
+        <span>Schedule</span>
+      </a>
+      <a href="../pages/leaves.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+        </svg>
+        <span>Leave</span>
+      </a>
+      <a href="../pages/company-calendar.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2" />
+          <line x1="16" y1="2" x2="16" y2="6" />
+          <line x1="8" y1="2" x2="8" y2="6" />
+          <line x1="3" y1="10" x2="21" y2="10" />
+          <line x1="8" y1="15" x2="16" y2="15" />
+        </svg>
+        <span>Calendar</span>
+      </a>
+      <a href="../pages/reports.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="20" x2="18" y2="10" />
+          <line x1="12" y1="20" x2="12" y2="4" />
+          <line x1="6" y1="20" x2="6" y2="14" />
+        </svg>
+        <span>Reports</span>
+      </a>
+      <a href="../pages/corrections.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+          <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+        </svg>
+        <span>Corrections</span>
+      </a>
+      <a href="../pages/offices.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+          <circle cx="12" cy="9" r="2.5" />
+        </svg>
+        <span>Offices</span>
+      </a>
+      
+      <a href="../pages/equipment.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2" />
+          <line x1="8" y1="21" x2="16" y2="21" />
+          <line x1="12" y1="17" x2="12" y2="21" />
+        </svg>
+        <span>Alat</span>
+      </a>
+      <a href="../pages/logout.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+        <span>Sign Out</span>
+      </a>
+
+       
+    </nav>
+     
+<script>
+  const SHIFT_DATA     = [{"checkin_open_before_minutes": 120, "checkin_window_label": "04:00 \u2013 08:30", "checkout_grace_minutes": 180, "checkout_window_label": "06:00 \u2013 17:00", "color_hex": "#0891b2", "crosses_midnight": false, "cutoff_time": "08:30", "id": "e3a91956-475a-11f1-a19f-24e8d4b66f1c", "is_active": true, "late_tolerance_minutes": 1, "name": "Inventaris 1", "shift_type": "shift_3", "type_label": "Inventaris 1", "work_end": "14:00", "work_start": "06:00"}, {"checkin_open_before_minutes": 120, "checkin_window_label": "05:00 \u2013 10:30", "checkout_grace_minutes": 120, "checkout_window_label": "07:00 \u2013 17:00", "color_hex": "#1E8449", "crosses_midnight": false, "cutoff_time": "10:30", "id": "3f05cee0-3f90-11f1-a19f-24e8d4b66f1c", "is_active": true, "late_tolerance_minutes": 1, "name": "Shift 1 \u2014 Produksi", "shift_type": "shift_1", "type_label": "Produksi 1", "work_end": "15:00", "work_start": "07:00"}, {"checkin_open_before_minutes": 120, "checkin_window_label": "06:30 \u2013 11:00", "checkout_grace_minutes": 120, "checkout_window_label": "08:30 \u2013 19:30", "color_hex": "#1B4F72", "crosses_midnight": false, "cutoff_time": "11:00", "id": "3f05cdd1-3f90-11f1-a19f-24e8d4b66f1c", "is_active": true, "late_tolerance_minutes": 1, "name": "Manajemen / Kantor", "shift_type": "management", "type_label": "Kantor", "work_end": "17:30", "work_start": "08:30"}, {"checkin_open_before_minutes": 120, "checkin_window_label": "12:00 \u2013 15:30", "checkout_grace_minutes": 150, "checkout_window_label": "14:00 \u2013 +00:30", "color_hex": "#d97706", "crosses_midnight": true, "cutoff_time": "15:30", "id": "e3ab5cd6-475a-11f1-a19f-24e8d4b66f1c", "is_active": true, "late_tolerance_minutes": 1, "name": "Inventaris 2", "shift_type": "shift_4", "type_label": "Inventaris 2", "work_end": "22:00", "work_start": "14:00"}, {"checkin_open_before_minutes": 120, "checkin_window_label": "14:00 \u2013 18:00", "checkout_grace_minutes": 90, "checkout_window_label": "16:00 \u2013 +01:30", "color_hex": "#BA4A00", "crosses_midnight": true, "cutoff_time": "18:00", "id": "3f05cf53-3f90-11f1-a19f-24e8d4b66f1c", "is_active": true, "late_tolerance_minutes": 1, "name": "Shift 2 - Produksi", "shift_type": "shift_2", "type_label": "Produksi 2", "work_end": "00:00", "work_start": "16:00"}, {"checkin_open_before_minutes": 120, "checkin_window_label": "20:00 \u2013 23:30", "checkout_grace_minutes": 120, "checkout_window_label": "22:00 \u2013 +09:30", "color_hex": "#0f172a", "crosses_midnight": true, "cutoff_time": "23:30", "id": "e3ad3db0-475a-11f1-a19f-24e8d4b66f1c", "is_active": true, "late_tolerance_minutes": 1, "name": "Security", "shift_type": "shift_6", "type_label": "Security", "work_end": "07:30", "work_start": "22:00"}];
+  const SCHEDULER_INFO = {};
+  const CSRF_TOKEN     = document.querySelector('meta[name="csrf-token"]').content;
+</script>
+<script src="../scripts/shift_master.js" defer></script>
+
+
+<style>
+  .sm-card-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+  .sm-card-actions .sm-btn-edit {
+    flex: 1;
+  }
+  .sm-btn-delete {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.85rem;
+    border: 1px solid #fecaca;
+    background: #fff5f5;
+    color: #dc2626;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition:
+      background 0.15s,
+      border-color 0.15s;
+    white-space: nowrap;
+  }
+  .sm-btn-delete:hover {
+    background: #fee2e2;
+    border-color: #f87171;
+  }
+  .sm-btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #166534;
+    background: #f0fdf4;
+    border: 1.5px solid #86efac;
+    border-radius: 8px;
+    cursor: pointer;
+    transition:
+      background 0.15s,
+      border-color 0.15s;
+    white-space: nowrap;
+  }
+  .sm-btn-add:hover {
+    background: #dcfce7;
+    border-color: #4ade80;
+  }
+  .page-header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+</style>
+
+    <script src="../scripts/app.js"></script>
+    
+    <script src="../scripts/notifications.js"></script>
+    
+  
+</body></html>

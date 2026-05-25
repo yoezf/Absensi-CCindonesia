@@ -1,0 +1,919 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="csrf-token" content="IjdlOGQxNGYzZTYzZDI5OTA1M2JhM2YyMjM0ZjE2OWNlNDMxMDAwMDUi.ahPTNQ.OTDsbaJmx_-J0bHQTlckx9tSU0A">
+    <meta name="theme-color" content="#1A4A8C">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231A4A8C'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z'/%3E%3Ccircle cx='12' cy='9' r='2.5' fill='white'/%3E%3C/svg%3E">
+    <title>Kalender Perusahaan — Attendance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="/css2" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../styles/main.css">
+    
+<link rel="stylesheet" href="../styles/company_calendar.css">
+
+  <style id="nb-style">
+/* Notification Bell — nb-* namespace */
+
+.nb-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Bell button */
+.nb-bell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--color-text-secondary, #6b7280);
+  transition: background 0.15s, color 0.15s;
+  padding: 0;
+}
+
+.nb-bell:hover {
+  background: var(--color-background-secondary, #f3f4f6);
+  color: var(--color-text-primary, #111827);
+}
+
+.nb-bell:focus-visible {
+  outline: 2px solid var(--color-border-focus, #3b82f6);
+  outline-offset: 2px;
+}
+
+/* Badge */
+.nb-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 8px;
+  background: var(--color-background-danger, #ef4444);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  pointer-events: none;
+  border: 2px solid var(--color-background-primary, #fff);
+}
+
+/* Dropdown panel */
+.nb-dropdown {
+  position: fixed;
+  width: 340px;
+  max-height: 480px;
+  background: var(--color-background-primary, #fff);
+  border: 1px solid var(--color-border-secondary, #e5e7eb);
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.14), 0 2px 8px rgba(0,0,0,.07);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: nb-fade-in 0.15s ease;
+}
+
+/* KRITIS: override browser [hidden]{display:none} yang dikalahkan display:flex di atas */
+.nb-dropdown[hidden] {
+  display: none !important;
+}
+
+@keyframes nb-fade-in {
+  from { opacity: 0; transform: translateY(-6px) scale(.98); }
+  to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+
+/* Dropdown header */
+.nb-dropdown-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid var(--color-border-tertiary, #f3f4f6);
+  flex-shrink: 0;
+}
+
+.nb-dropdown-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary, #111827);
+}
+
+.nb-read-all {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-info, #3b82f6);
+  padding: 3px 8px;
+  border-radius: 6px;
+  transition: background 0.12s;
+  line-height: 1.4;
+}
+
+.nb-read-all:hover {
+  background: var(--color-background-info, #eff6ff);
+}
+
+/* Notification list */
+.nb-list {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0;
+  overflow-y: auto;
+  flex: 1;
+  scroll-behavior: smooth;
+}
+
+.nb-list::-webkit-scrollbar { width: 4px; }
+.nb-list::-webkit-scrollbar-track { background: transparent; }
+.nb-list::-webkit-scrollbar-thumb { background: var(--color-border-secondary, #e5e7eb); border-radius: 2px; }
+
+/* Notification item */
+.nb-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background 0.12s;
+  border-left: 3px solid transparent;
+  position: relative;
+}
+
+.nb-item:hover {
+  background: var(--color-background-secondary, #f9fafb);
+}
+
+.nb-item.nb-item--unread {
+  border-left-color: var(--color-border-info, #3b82f6);
+  background: var(--color-background-info, #eff6ff);
+}
+
+.nb-item.nb-item--unread:hover {
+  background: #dbeafe;
+}
+
+/* Icon bubble */
+.nb-item-icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-background-warning, #fef3c7);
+  color: var(--color-text-warning, #d97706);
+}
+
+.nb-item-icon svg {
+  width: 15px;
+  height: 15px;
+}
+
+.nb-item-icon.nb-icon--absent_alert {
+  background: var(--color-background-danger, #fee2e2);
+  color: var(--color-text-danger, #dc2626);
+}
+
+.nb-item-icon.nb-icon--leave_review {
+  background: var(--color-background-info, #eff6ff);
+  color: var(--color-text-info, #3b82f6);
+}
+
+/* Text content */
+.nb-item-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.nb-item-title {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--color-text-primary, #111827);
+  margin: 0 0 2px;
+  line-height: 1.4;
+  white-space: normal;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.nb-item-text {
+  font-size: 11.5px;
+  color: var(--color-text-secondary, #6b7280);
+  margin: 0 0 3px;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.nb-item-time {
+  font-size: 10.5px;
+  color: var(--color-text-tertiary, #9ca3af);
+  margin: 0;
+}
+
+/* Empty / loading state */
+.nb-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 32px 20px;
+  font-size: 13px;
+  color: var(--color-text-tertiary, #9ca3af);
+  text-align: center;
+}
+
+.nb-empty svg {
+  opacity: 0.35;
+}
+
+/* Mobile: full-width bottom sheet */
+@media (max-width: 480px) {
+  .nb-dropdown {
+    position: fixed !important;
+    left: 12px !important;
+    right: 12px !important;
+    width: auto !important;
+    top: auto !important;
+    bottom: calc(68px + env(safe-area-inset-bottom)) !important;
+    max-height: 60vh;
+    border-radius: 16px;
+  }
+}
+    </style></head>
+  <body class="role-manager">
+    
+    <aside class="sidebar" aria-label="Main navigation">
+      <div class="sidebar-brand">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+          <circle cx="12" cy="9" r="2.5" />
+        </svg>
+        <span>CC Indonesia</span>
+      </div>
+      <div class="sidebar-user">
+        <div class="avatar">MA</div>
+        <div>
+          <div class="sidebar-user-name">
+            Manager
+          </div>
+          <div class="sidebar-user-role">Manager</div>
+        </div>
+        <div id="notif-bell-wrap" style="margin-left: auto">
+    <div class="nb-container" id="nb-container">
+      <button class="nb-bell" id="nb-bell" aria-label="Notifikasi" aria-expanded="false" aria-haspopup="dialog">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+          <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+        </svg>
+        <span class="nb-badge" id="nb-badge" hidden aria-live="polite" aria-atomic="true">0</span>
+      </button>
+
+      <div class="nb-dropdown" id="nb-dropdown" role="dialog" aria-label="Notifikasi" aria-modal="false" hidden>
+        <div class="nb-dropdown-header">
+          <span class="nb-dropdown-title">Notifikasi</span>
+          <button class="nb-read-all" id="nb-read-all" type="button">Tandai semua dibaca</button>
+        </div>
+        <ul class="nb-list" id="nb-list" role="list">
+          <li class="nb-empty" role="listitem">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+            <span>Memuat…</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+      </div>
+
+      <nav class="sidebar-nav">
+         
+        <a href="../pages/dashboard.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" />
+          </svg>
+          Dashboard
+        </a>
+        <a href="../pages/employees.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 00-3-3.87" />
+            <path d="M16 3.13a4 4 0 010 7.75" />
+          </svg>
+          Employees
+        </a>
+
+        
+        <a href="../pages/shift-schedule.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+            <line x1="8" y1="14" x2="12" y2="14" />
+            <line x1="8" y1="18" x2="16" y2="18" />
+          </svg>
+          <span>Schedule</span>
+        </a>
+        <a href="../pages/leaves.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+            <polyline points="14 2 14 8 20 8" />
+          </svg>
+          Leave Requests
+        </a>
+        <a href="../pages/master.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+          Shift Configuration
+        </a>
+        <a href="../pages/company-calendar.html" class="active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+            <line x1="8" y1="15" x2="16" y2="15" />
+          </svg>
+          Calendar
+        </a>
+        <a href="../pages/corrections.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+            <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+          </svg>
+          Corrections
+        </a>
+        <a href="../pages/reports.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10" />
+            <line x1="12" y1="20" x2="12" y2="4" />
+            <line x1="6" y1="20" x2="6" y2="14" />
+          </svg>
+          Reports
+        </a>
+        <a href="../pages/offices.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+            <circle cx="12" cy="9" r="2.5" />
+          </svg>
+          Offices
+        </a>
+        
+        <a href="../pages/equipment.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" />
+            <line x1="8" y1="21" x2="16" y2="21" />
+            <line x1="12" y1="17" x2="12" y2="21" />
+          </svg>
+          Perlengkapan
+        </a>
+
+         
+      </nav>
+
+      <div class="sidebar-footer">
+        
+        <div class="lang-switcher" aria-label="Pilih bahasa">
+           
+          <a href="../pages/id.html" class="lang-btn" title="Bahasa Indonesia" aria-current="false">ID</a>
+          
+          <a href="../pages/en.html" class="lang-btn active" title="English (US)" aria-current="true">EN</a>
+          
+          <a href="../pages/zh.html" class="lang-btn" title="中文" aria-current="false">ZH</a>
+          
+        </div>
+        <a href="../pages/logout.html" class="sidebar-logout">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          Sign Out
+        </a>
+      </div>
+    </aside>
+      
+    <div class="mobile-topbar">
+      <span class="mobile-topbar-title">CC Indonesia</span>
+      <div class="lang-switcher lang-switcher--mobile" aria-label="Pilih bahasa">
+         
+        <a href="../pages/id.html" class="lang-btn" title="Bahasa Indonesia" aria-current="false">ID</a>
+        
+        <a href="../pages/en.html" class="lang-btn active" title="English (US)" aria-current="true">EN</a>
+        
+        <a href="../pages/zh.html" class="lang-btn" title="中文" aria-current="false">ZH</a>
+        
+      </div>
+    </div>
+    
+
+    <div class="main-wrap">
+        
+      <main class="page-content" id="main-content">
+        
+<div class="kal-page">
+  <!-- ── Header ───────────────────────────────────────────────── -->
+  <div class="kal-header">
+    <div class="kal-header-left">
+      <h1>Kalender Perusahaan</h1>
+      <p>
+        National holidays, joint leave, weekly days off &amp; company holidays
+      </p>
+    </div>
+    <div class="kal-header-actions">
+      <div class="kal-legend">
+        <span class="kal-legend-item"><span class="kal-legend-dot dot-nasional"></span>Libur Nasional</span>
+        <span class="kal-legend-item"><span class="kal-legend-dot dot-bersama"></span>Joint Leave</span>
+        <span class="kal-legend-item"><span class="kal-legend-dot dot-mingguan"></span>Weekly Day Off</span>
+        <span class="kal-legend-item"><span class="kal-legend-dot dot-perusahaan"></span>Libur Perusahaan</span>
+      </div>
+      <button class="btn btn-primary btn-sm" id="btnTambahLibur" aria-haspopup="dialog">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
+          <line x1="12" y1="5" x2="12" y2="19" />
+          <line x1="5" y1="12" x2="19" y2="12" />
+        </svg>
+        Tambah Libur
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Info banner ─────────────────────────────────────────── -->
+  <div class="info-banner info-banner--warning">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15" style="flex-shrink: 0">
+      <circle cx="12" cy="12" r="10" />
+      <line x1="12" y1="8" x2="12" y2="12" />
+      <line x1="12" y1="16" x2="12.01" y2="16" />
+    </svg>
+    <span>
+      Company holidays added will automatically mark
+      the attendance of affected employees as
+      <strong>Day Off</strong>. Edits &amp; deletions can only be
+      made up to and including the date itself.
+    </span>
+  </div>
+
+  <!-- ── Body: kalender + panel upcoming ─────────────────────── -->
+  <div class="kal-body">
+    <!-- Kalender -->
+    <div class="kal-card">
+      <!-- Nav bar -->
+      <div class="kal-nav">
+        <button class="kal-nav-btn" id="btnPrevMonth" aria-label="Previous month">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+        <div class="kal-nav-center">
+          <select class="kal-nav-month-select" id="kalMonthSelect">
+            <option value="0">Januari</option>
+            <option value="1">Februari</option>
+            <option value="2">Maret</option>
+            <option value="3">April</option>
+            <option value="4">Mei</option>
+            <option value="5">Juni</option>
+            <option value="6">Juli</option>
+            <option value="7">Agustus</option>
+            <option value="8">September</option>
+            <option value="9">Oktober</option>
+            <option value="10">November</option>
+            <option value="11">Desember</option>
+          </select>
+          <select class="kal-nav-year-select" id="kalYearSelect">
+            
+            <option value="2025">2025</option>
+            
+            <option value="2026" selected>2026</option>
+            
+            <option value="2027">2027</option>
+            
+            <option value="2028">2028</option>
+            
+          </select>
+        </div>
+        <button class="kal-nav-btn" id="btnNextMonth" aria-label="Next month">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Day-of-week header -->
+      <div class="kal-grid-head">
+        <span>Sun</span>
+        <span>Mon</span>
+        <span>Tue</span>
+        <span>Wed</span>
+        <span>Thu</span>
+        <span>Fri</span>
+        <span>Sat</span>
+      </div>
+
+      <!-- Day grid (rendered by JS) -->
+      <div class="kal-grid" id="kalGrid"><div class="kal-day kal-day--outside" data-iso="2026-04-26" data-day-num="26" data-col="0"><div class="kal-day-events"><div class="kal-event kal-event--perusahaan kal-event--expired" data-id="5bdb6095-b41d-4f05-b82c-f66446447d16">Libur Perusahaan</div></div><div class="kal-day-num">26</div></div><div class="kal-day kal-day--outside" data-iso="2026-04-27" data-day-num="27" data-col="1"><div class="kal-day-events"></div><div class="kal-day-num">27</div></div><div class="kal-day kal-day--outside" data-iso="2026-04-28" data-day-num="28" data-col="2"><div class="kal-day-events"></div><div class="kal-day-num">28</div></div><div class="kal-day kal-day--outside" data-iso="2026-04-29" data-day-num="29" data-col="3"><div class="kal-day-events"></div><div class="kal-day-num">29</div></div><div class="kal-day kal-day--outside" data-iso="2026-04-30" data-day-num="30" data-col="4"><div class="kal-day-events"></div><div class="kal-day-num">30</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-01" data-day-num="1" data-col="5"><div class="kal-day-events"></div><div class="kal-day-num">1</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-02" data-day-num="2" data-col="6"><div class="kal-day-events"><div class="kal-event kal-event--perusahaan kal-event--expired" data-id="d52d7651-f470-4d56-ac09-cfbbf4addf77">Libur Perusahaan</div></div><div class="kal-day-num">2</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-03" data-day-num="3" data-col="0"><div class="kal-day-events"><div class="kal-event kal-event--perusahaan kal-event--expired" data-id="e3397f04-b4b8-4afe-9cba-ccf80cabfb97">Libur Perusahaan</div></div><div class="kal-day-num">3</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-04" data-day-num="4" data-col="1"><div class="kal-day-events"></div><div class="kal-day-num">4</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-05" data-day-num="5" data-col="2"><div class="kal-day-events"></div><div class="kal-day-num">5</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-06" data-day-num="6" data-col="3"><div class="kal-day-events"></div><div class="kal-day-num">6</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-07" data-day-num="7" data-col="4"><div class="kal-day-events"></div><div class="kal-day-num">7</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-08" data-day-num="8" data-col="5"><div class="kal-day-events"></div><div class="kal-day-num">8</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-09" data-day-num="9" data-col="6"><div class="kal-day-events"></div><div class="kal-day-num">9</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-10" data-day-num="10" data-col="0"><div class="kal-day-events"><div class="kal-event kal-event--perusahaan kal-event--expired" data-id="65a03358-bc92-4d9c-8d06-4c0f1adb0a06">Libur Perusahaan</div></div><div class="kal-day-num">10</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-11" data-day-num="11" data-col="1"><div class="kal-day-events"></div><div class="kal-day-num">11</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-12" data-day-num="12" data-col="2"><div class="kal-day-events"></div><div class="kal-day-num">12</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-13" data-day-num="13" data-col="3"><div class="kal-day-events"></div><div class="kal-day-num">13</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-14" data-day-num="14" data-col="4"><div class="kal-day-events"></div><div class="kal-day-num">14</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-15" data-day-num="15" data-col="5"><div class="kal-day-events"><div class="kal-event kal-event--perusahaan kal-event--expired" data-id="87af9fb2-175f-4d82-a31c-235a9db47112">Libur Perusahaan</div></div><div class="kal-day-num">15</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-16" data-day-num="16" data-col="6"><div class="kal-day-events"><div class="kal-event kal-event--perusahaan kal-event--expired" data-id="dee40787-dfdd-42e4-af0c-74fed3d0c8b2">Libur Perusahaan</div></div><div class="kal-day-num">16</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-17" data-day-num="17" data-col="0"><div class="kal-day-events"><div class="kal-event kal-event--perusahaan kal-event--expired" data-id="bfa51774-f62a-425e-8316-b3b0e149d6b8">Libur Perusahaan</div></div><div class="kal-day-num">17</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-18" data-day-num="18" data-col="1"><div class="kal-day-events"></div><div class="kal-day-num">18</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-19" data-day-num="19" data-col="2"><div class="kal-day-events"></div><div class="kal-day-num">19</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-20" data-day-num="20" data-col="3"><div class="kal-day-events"></div><div class="kal-day-num">20</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-21" data-day-num="21" data-col="4"><div class="kal-day-events"></div><div class="kal-day-num">21</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-22" data-day-num="22" data-col="5"><div class="kal-day-events"></div><div class="kal-day-num">22</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-23" data-day-num="23" data-col="6"><div class="kal-day-events"></div><div class="kal-day-num">23</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-24" data-day-num="24" data-col="0"><div class="kal-day-events"><div class="kal-event kal-event--mingguan kal-event--expired" data-id="4b471f8d-0b29-45aa-9605-9e0077984f2f">Weekly Day Off</div></div><div class="kal-day-num">24</div></div><div class="kal-day kal-day--today kal-day--clickable" data-iso="2026-05-25" data-day-num="25" data-col="1"><div class="kal-day-events"></div><div class="kal-day-num">25</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-26" data-day-num="26" data-col="2"><div class="kal-day-events"></div><div class="kal-day-num">26</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-27" data-day-num="27" data-col="3"><div class="kal-day-events"></div><div class="kal-day-num">27</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-28" data-day-num="28" data-col="4"><div class="kal-day-events"></div><div class="kal-day-num">28</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-29" data-day-num="29" data-col="5"><div class="kal-day-events"></div><div class="kal-day-num">29</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-30" data-day-num="30" data-col="6"><div class="kal-day-events"></div><div class="kal-day-num">30</div></div><div class="kal-day kal-day--clickable" data-iso="2026-05-31" data-day-num="31" data-col="0"><div class="kal-day-events"></div><div class="kal-day-num">31</div></div><div class="kal-day kal-day--outside" data-iso="2026-06-01" data-day-num="1" data-col="1"><div class="kal-day-events"></div><div class="kal-day-num">1</div></div><div class="kal-day kal-day--outside" data-iso="2026-06-02" data-day-num="2" data-col="2"><div class="kal-day-events"></div><div class="kal-day-num">2</div></div><div class="kal-day kal-day--outside" data-iso="2026-06-03" data-day-num="3" data-col="3"><div class="kal-day-events"></div><div class="kal-day-num">3</div></div><div class="kal-day kal-day--outside" data-iso="2026-06-04" data-day-num="4" data-col="4"><div class="kal-day-events"></div><div class="kal-day-num">4</div></div><div class="kal-day kal-day--outside" data-iso="2026-06-05" data-day-num="5" data-col="5"><div class="kal-day-events"></div><div class="kal-day-num">5</div></div><div class="kal-day kal-day--outside" data-iso="2026-06-06" data-day-num="6" data-col="6"><div class="kal-day-events"></div><div class="kal-day-num">6</div></div></div>
+    </div>
+
+    <!-- Upcoming panel -->
+    <div class="kal-upcoming">
+      <div class="kal-upcoming-header">📅 Libur Mendatang</div>
+      <div class="kal-upcoming-list" id="upcomingList"><div class="kal-upcoming-item"><div class="kal-upcoming-datebox datebox--perusahaan"><span>MAY</span><span class="kal-upcoming-datebox-day">2</span></div><div class="kal-upcoming-info"><div class="kal-upcoming-name">Libur</div><div class="kal-upcoming-sub">Libur Perusahaan · Semua Karyawan</div></div></div><div class="kal-upcoming-item"><div class="kal-upcoming-datebox datebox--perusahaan"><span>MAY</span><span class="kal-upcoming-datebox-day">3</span></div><div class="kal-upcoming-info"><div class="kal-upcoming-name">Libur</div><div class="kal-upcoming-sub">Libur Perusahaan · Semua Karyawan</div></div></div><div class="kal-upcoming-item"><div class="kal-upcoming-datebox datebox--perusahaan"><span>MAY</span><span class="kal-upcoming-datebox-day">10</span></div><div class="kal-upcoming-info"><div class="kal-upcoming-name">Libur</div><div class="kal-upcoming-sub">Libur Perusahaan · Semua Karyawan</div></div></div><div class="kal-upcoming-item"><div class="kal-upcoming-datebox datebox--perusahaan"><span>MAY</span><span class="kal-upcoming-datebox-day">15</span></div><div class="kal-upcoming-info"><div class="kal-upcoming-name">Libur</div><div class="kal-upcoming-sub">Libur Perusahaan · Semua Karyawan</div></div></div><div class="kal-upcoming-item"><div class="kal-upcoming-datebox datebox--perusahaan"><span>MAY</span><span class="kal-upcoming-datebox-day">16</span></div><div class="kal-upcoming-info"><div class="kal-upcoming-name">Libur</div><div class="kal-upcoming-sub">Libur Perusahaan · Semua Karyawan</div></div></div><div class="kal-upcoming-item"><div class="kal-upcoming-datebox datebox--perusahaan"><span>MAY</span><span class="kal-upcoming-datebox-day">17</span></div><div class="kal-upcoming-info"><div class="kal-upcoming-name">Libur</div><div class="kal-upcoming-sub">Libur Perusahaan · Semua Karyawan</div></div></div><div class="kal-upcoming-item"><div class="kal-upcoming-datebox datebox--mingguan"><span>MAY</span><span class="kal-upcoming-datebox-day">24</span></div><div class="kal-upcoming-info"><div class="kal-upcoming-name">Libur mingguan</div><div class="kal-upcoming-sub">Weekly Day Off · Semua Karyawan</div></div></div></div>
+    </div>
+  </div>
+</div>
+<!-- /kal-page -->
+
+<!-- ── Popover (hover detail) ─────────────────────────────── -->
+<div class="kal-popover" id="kalPopover" role="tooltip" aria-hidden="true"></div>
+
+<!-- ══════════════════════════════════════════════════════════
+     MODAL: Tambah Libur
+     ══════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalTambah" role="dialog" aria-modal="true" aria-labelledby="modalTambahTitle" aria-hidden="true">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 class="modal-title" id="modalTambahTitle">
+        Tambah Hari Libur
+      </h2>
+      <button class="modal-close" id="btnCloseTambah" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <!-- Tipe libur -->
+      <div class="form-group">
+        <label>Jenis Hari Libur <span class="required">*</span></label>
+        <div class="dayoff-type-grid">
+          <label class="dayoff-type-opt">
+            <input type="radio" name="dayoff_type" value="perusahaan" checked>
+            <div>
+              <div class="dayoff-type-label">
+                🏢 Libur Perusahaan
+              </div>
+              <div class="dayoff-type-sub">
+                This company only
+              </div>
+            </div>
+          </label>
+          <label class="dayoff-type-opt">
+            <input type="radio" name="dayoff_type" value="nasional">
+            <div>
+              <div class="dayoff-type-label">🇮🇩 Libur Nasional</div>
+              <div class="dayoff-type-sub">Hari libur negara</div>
+            </div>
+          </label>
+          <label class="dayoff-type-opt">
+            <input type="radio" name="dayoff_type" value="bersama">
+            <div>
+              <div class="dayoff-type-label">📆 Joint Leave</div>
+              <div class="dayoff-type-sub">
+                Government-designated
+              </div>
+            </div>
+          </label>
+          <label class="dayoff-type-opt">
+            <input type="radio" name="dayoff_type" value="mingguan">
+            <div>
+              <div class="dayoff-type-label">📅 Weekly Day Off</div>
+              <div class="dayoff-type-sub">Sabtu, Minggu, dll</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Nama -->
+      <div class="form-group">
+        <label for="addName">Nama / Keterangan <span class="required">*</span></label>
+        <input type="text" id="addName" placeholder="e.g. Independence Day, Eid al-Fitr, etc.">
+        <p class="field-error" id="addNameErr" hidden>
+          Nama wajib diisi.
+        </p>
+      </div>
+
+      <!-- Tanggal multi-select -->
+      <div class="form-group">
+        <label>Date <span class="required">*</span></label>
+        <div class="dayoff-date-row">
+          <input type="date" id="addDateInput">
+          <button class="btn btn-ghost btn-sm" id="btnAddDate" type="button">
+            + Add
+          </button>
+        </div>
+        <div class="dayoff-tags" id="addDateTags"></div>
+        <p class="field-error" id="addDateErr" hidden>
+          Please select at least one date.
+        </p>
+      </div>
+
+      <!-- Berlaku untuk -->
+      <div class="form-group">
+        <label>Applies to</label>
+        <div class="dayoff-scope-row">
+          <label class="dayoff-scope-option">
+            <input type="radio" name="add_scope" value="all" checked>
+            <span>Semua Karyawan</span>
+          </label>
+          <label class="dayoff-scope-option">
+            <input type="radio" name="add_scope" value="office">
+            <span>Specific Office</span>
+          </label>
+        </div>
+        <div id="addOfficeWrap" hidden style="margin-top: 6px">
+          <select id="addOffice">
+            <option value="">— Select office —</option>
+            
+            <option value="f8805045-80cb-4eef-801a-3fbf986c29e8">Kantor Inventaris</option>
+            
+            <option value="a1a1a1a1-0000-0000-0000-000000000001">Kantor Pusat</option>
+            
+            <option value="fc196a71-37f2-4519-88f9-d267485d4817">Kantor Vivo 11</option>
+            
+            <option value="a2a2a2a2-0000-0000-0000-000000000002">Kantor Vivo 9</option>
+            
+          </select>
+          <p class="field-error" id="addOfficeErr" hidden>
+            Pilih kantor terlebih dahulu.
+          </p>
+        </div>
+      </div>
+
+      <!-- Catatan -->
+      <div class="form-group">
+        <label for="addNote">Notes
+          <span class="label-hint">(optional)</span></label>
+        <textarea id="addNote" rows="2" placeholder="Additional notes..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="btnCancelTambah">
+        Cancel
+      </button>
+      <button class="btn btn-primary" id="btnSubmitTambah">
+        <span id="tambahText">Simpan Libur</span>
+        <span id="tambahSpinner" class="spinner" hidden></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     MODAL: Edit Libur
+     ══════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalEdit" role="dialog" aria-modal="true" aria-labelledby="modalEditTitle" aria-hidden="true">
+  <div class="modal modal--sm">
+    <div class="modal-header">
+      <h2 class="modal-title" id="modalEditTitle">
+        Edit Hari Libur
+      </h2>
+      <button class="modal-close" id="btnCloseEdit" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="editName">Nama / Keterangan <span class="required">*</span></label>
+        <input type="text" id="editName">
+        <p class="field-error" id="editNameErr" hidden>
+          Nama wajib diisi.
+        </p>
+      </div>
+      <div class="form-group">
+        <label for="editNote">Notes
+          <span class="label-hint">(optional)</span></label>
+        <textarea id="editNote" rows="2"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="btnCancelEdit">Cancel</button>
+      <button class="btn btn-primary" id="btnSubmitEdit">
+        <span id="editText">Save</span>
+        <span id="editSpinner" class="spinner" hidden></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     MODAL: Hapus Konfirmasi
+     ══════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalHapus" role="dialog" aria-modal="true" aria-labelledby="modalHapusTitle" aria-hidden="true">
+  <div class="modal modal--sm">
+    <div class="modal-header">
+      <h2 class="modal-title" id="modalHapusTitle">
+        Hapus Hari Libur
+      </h2>
+      <button class="modal-close" id="btnCloseHapus" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>
+        Delete <strong id="hapusName"></strong> on
+        <strong id="hapusDate"></strong>?
+      </p>
+      <div class="info-banner info-banner--warning" style="margin-top: 8px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" style="flex-shrink: 0">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="8" x2="12" y2="12" />
+          <line x1="12" y1="16" x2="12.01" y2="16" />
+        </svg>
+        <span>Employee attendance status for this date will be reset to
+          Absent.</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="btnCancelHapus">
+        Cancel
+      </button>
+      <button class="btn btn-danger" id="btnSubmitHapus">
+        <span id="hapusText">Yes, Delete</span>
+        <span id="hapusSpinner" class="spinner" hidden></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- I18N + data untuk JS -->
+<script>
+  var KAL_I18N = {
+    months: [
+      "January","February","March",
+      "April","May","June",
+      "July","August","September",
+      "October","November","December"
+    ],
+    days: [
+      "Sun","Mon","Tue",
+      "Wed","Thu","Fri","Sat"
+    ],
+    today:        "Hari ini",
+    noUpcoming:   "No upcoming holidays in the next 60 days.",
+    noUpcomingMonth: "Tidak ada libur pada bulan ini.",
+    expiredMsg:   "Cannot edit/delete — this date has already passed.",
+    closeLabel:   "Close",
+    editLabel:    "Edit",
+    deleteLabel:  "Delete",
+    typeLabels: {
+      nasional:   "Libur Nasional",
+      bersama:    "Joint Leave",
+      mingguan:   "Weekly Day Off",
+      perusahaan: "Libur Perusahaan"
+    },
+    scopeAll:       "Semua Karyawan",
+    scopeOffice:    "Per Kantor",
+    toastAdded:     "Libur ditambahkan.",
+    toastUpdated:   "Libur diperbarui.",
+    toastDeleted:   "Holiday deleted.",
+    toastError:     "An error occurred.",
+    toastConnFail:  "Connection failed.",
+    toastUpdateFail:"Gagal memperbarui.",
+    toastDeleteFail:"Gagal menghapus.",
+    toastDateDup:   "Date already added."
+  };
+
+  // Semua dayoff dari server — dipakai JS untuk render kalender
+  var KAL_DAYOFFS = [{"id": "4f4fd2fe-9fff-495e-ad3b-57cee9eb6970", "date": "2026-04-04", "name": "Libur mingguan perusahaan", "dayoff_type": "perusahaan", "applies_to": "all", "office_id": null, "scope_label": "Semua Karyawan", "note": "", "declarer": "Manager"}, {"id": "e37fb7b6-d6b2-422e-bbe4-3f4ea355f986", "date": "2026-04-12", "name": "Libur mingguan perusahaan", "dayoff_type": "perusahaan", "applies_to": "all", "office_id": null, "scope_label": "Semua Karyawan", "note": "", "declarer": "Manager"}, {"id": "5df8aaad-d23b-4315-9647-a491d02d51f4", "date": "2026-04-19", "name": "Libur Mingguan", "dayoff_type": "perusahaan", "applies_to": "all", "office_id": null, "scope_label": "Semua Karyawan", "note": "", "declarer": "Manager"}, {"id": "5bdb6095-b41d-4f05-b82c-f66446447d16", "date": "2026-04-26", "name": "Libur mingguan perusahaan", "dayoff_type": "perusahaan", "applies_to": "all", "office_id": null, "scope_label": "Semua Karyawan", "note": "-", "declarer": "Manager"}, {"id": "d52d7651-f470-4d56-ac09-cfbbf4addf77", "date": "2026-05-02", "name": "Libur", "dayoff_type": "perusahaan", "applies_to": "all", "office_id": null, "scope_label": "Semua Karyawan", "note": "", "declarer": "Manager"}, {"id": "e3397f04-b4b8-4afe-9cba-ccf80cabfb97", "date": "2026-05-03", "name": "Libur", "dayoff_type": "perusahaan", "applies_to": "all", "office_id": null, "scope_label": "Semua Karyawan", "note": "", "declarer": "Manager"}, {"id": "65a03358-bc92-4d9c-8d06-4c0f1adb0a06", "date": "2026-05-10", "name": "Libur", "dayoff_type": "perusahaan", "applies_to": "all", "office_id": null, "scope_label": "Semua Karyawan", "note": "libur hari minggu", "declarer": "Manager"}, {"id": "87af9fb2-175f-4d82-a31c-235a9db47112", "date": "2026-05-15", "name": "Libur", "dayoff_type": "perusahaan", "applies_to": "all", "office_id": null, "scope_label": "Semua Karyawan", "note": "Libur", "declarer": "Manager"}, {"id": "dee40787-dfdd-42e4-af0c-74fed3d0c8b2", "date": "2026-05-16", "name": "Libur", "dayoff_type": "perusahaan", "applies_to": "all", "office_id": null, "scope_label": "Semua Karyawan", "note": "Libur", "declarer": "Manager"}, {"id": "bfa51774-f62a-425e-8316-b3b0e149d6b8", "date": "2026-05-17", "name": "Libur", "dayoff_type": "perusahaan", "applies_to": "all", "office_id": null, "scope_label": "Semua Karyawan", "note": "Libur", "declarer": "Manager"}, {"id": "4b471f8d-0b29-45aa-9605-9e0077984f2f", "date": "2026-05-24", "name": "Libur mingguan", "dayoff_type": "mingguan", "applies_to": "all", "office_id": null, "scope_label": "Semua Karyawan", "note": "", "declarer": "Manager"}];
+
+  // Today string: YYYY-MM-DD (WIB)
+  var KAL_TODAY = "2026-05-25";
+</script>
+<meta name="csrf-token" content="IjdlOGQxNGYzZTYzZDI5OTA1M2JhM2YyMjM0ZjE2OWNlNDMxMDAwMDUi.ahPTNQ.OTDsbaJmx_-J0bHQTlckx9tSU0A">
+<script src="../scripts/company_calendar.js"></script>
+
+      </main>
+    </div>
+
+     
+    <nav class="bottom-nav" aria-label="Bottom navigation">
+       
+      <a href="../pages/dashboard.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7" />
+          <rect x="14" y="3" width="7" height="7" />
+          <rect x="14" y="14" width="7" height="7" />
+          <rect x="3" y="14" width="7" height="7" />
+        </svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="../pages/employees.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+        </svg>
+        <span>Employees</span>
+      </a>
+      <a href="../pages/shift-schedule.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2" />
+          <line x1="16" y1="2" x2="16" y2="6" />
+          <line x1="8" y1="2" x2="8" y2="6" />
+          <line x1="3" y1="10" x2="21" y2="10" />
+          <line x1="8" y1="14" x2="12" y2="14" />
+          <line x1="8" y1="18" x2="16" y2="18" />
+        </svg>
+        <span>Schedule</span>
+      </a>
+      <a href="../pages/leaves.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+        </svg>
+        <span>Leave</span>
+      </a>
+      <a href="../pages/company-calendar.html" class="active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2" />
+          <line x1="16" y1="2" x2="16" y2="6" />
+          <line x1="8" y1="2" x2="8" y2="6" />
+          <line x1="3" y1="10" x2="21" y2="10" />
+          <line x1="8" y1="15" x2="16" y2="15" />
+        </svg>
+        <span>Calendar</span>
+      </a>
+      <a href="../pages/reports.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="20" x2="18" y2="10" />
+          <line x1="12" y1="20" x2="12" y2="4" />
+          <line x1="6" y1="20" x2="6" y2="14" />
+        </svg>
+        <span>Reports</span>
+      </a>
+      <a href="../pages/corrections.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+          <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+        </svg>
+        <span>Corrections</span>
+      </a>
+      <a href="../pages/offices.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+          <circle cx="12" cy="9" r="2.5" />
+        </svg>
+        <span>Offices</span>
+      </a>
+      
+      <a href="../pages/equipment.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2" />
+          <line x1="8" y1="21" x2="16" y2="21" />
+          <line x1="12" y1="17" x2="12" y2="21" />
+        </svg>
+        <span>Alat</span>
+      </a>
+      <a href="../pages/logout.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+        <span>Sign Out</span>
+      </a>
+
+       
+    </nav>
+     
+    <script src="../scripts/app.js"></script>
+    
+    <script src="../scripts/notifications.js"></script>
+    
+  
+</body></html>

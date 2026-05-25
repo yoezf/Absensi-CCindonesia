@@ -1,0 +1,1590 @@
+/* ════════════════════════════════════════════════════════════════════
+   KALENDER PERUSAHAAN — Standalone CSS
+   Desain kelas dunia: elegan, tajam, profesional.
+   Font: DM Sans (body) + DM Mono (tanggal).
+   Palet: Navy + Slate + Emerald + Accent Amber.
+   ════════════════════════════════════════════════════════════════════ */
+
+@import url("../images/css2.bin");
+
+/* ── CSS Variabel — scoped ke kalender agar tidak konflik sidebar ── */
+.kal-page,
+.modal-overlay,
+.kal-popover,
+.flash-wrap {
+  /* Brand */
+  --brand: #1a3a5c;
+  --brand-mid: #2a5298;
+  --brand-light: #e8eef8;
+  --brand-xlight: #f2f5fc;
+  --brand-accent: #0ea5e9;
+
+  /* Warna tipe libur */
+  --c-nasional: #ef4444;
+  --c-nasional-bg: #fef2f2;
+  --c-nasional-dk: #991b1b;
+  --c-bersama: #f59e0b;
+  --c-bersama-bg: #fffbeb;
+  --c-bersama-dk: #78350f;
+  --c-mingguan: #8b5cf6;
+  --c-mingguan-bg: #f5f3ff;
+  --c-mingguan-dk: #4c1d95;
+  --c-perusahaan: #10b981;
+  --c-perusahaan-bg: #ecfdf5;
+  --c-perusahaan-dk: #064e3b;
+
+  /* Teks */
+  --text-primary: #0d1b2a;
+  --text-secondary: #2c3e54;
+  --text-muted: #64748b;
+  --text-faint: #94a3b8;
+  --text-inverse: #ffffff;
+
+  /* Surface */
+  --bg: #f0f4f9;
+  --bg-card: #ffffff;
+  --bg-raised: #fafbfd;
+
+  /* Border */
+  --border: #dde3ed;
+  --border-light: #edf1f7;
+  --border-focus: #2a5298;
+
+  /* Semantic */
+  --success: #059669;
+  --success-bg: #ecfdf5;
+  --danger: #dc2626;
+  --danger-bg: #fef2f2;
+  --warning: #d97706;
+  --warning-bg: #fffbeb;
+  --info: #0284c7;
+  --info-bg: #f0f9ff;
+
+  /* Radius */
+  --r-xs: 4px;
+  --r-sm: 8px;
+  --r: 14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+
+  /* Shadow */
+  --shadow-xs: 0 1px 2px rgba(13, 27, 42, 0.04);
+  --shadow-sm:
+    0 1px 3px rgba(13, 27, 42, 0.05), 0 2px 8px rgba(13, 27, 42, 0.04);
+  --shadow: 0 2px 6px rgba(13, 27, 42, 0.05), 0 6px 20px rgba(13, 27, 42, 0.05);
+  --shadow-md:
+    0 4px 12px rgba(13, 27, 42, 0.07), 0 2px 4px rgba(13, 27, 42, 0.04);
+  --shadow-lg:
+    0 12px 36px rgba(13, 27, 42, 0.1), 0 4px 10px rgba(13, 27, 42, 0.05);
+  --shadow-xl:
+    0 24px 56px rgba(13, 27, 42, 0.14), 0 8px 16px rgba(13, 27, 42, 0.06);
+
+  /* Transition */
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --tx: 0.15s var(--ease);
+  --tx-md: 0.22s var(--ease);
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+
+  /* Font */
+  --font: "DM Sans", -apple-system, system-ui, sans-serif;
+  --font-mono: "DM Mono", "SF Mono", monospace;
+}
+
+/* ── Scope: semua rule di bawah ini scoped ke komponen kalender.
+   Tidak ada reset *, tidak ada body/html rule —
+   agar tidak conflict dengan main.css dan sidebar. ─────────────── */
+.kal-page,
+.kal-page *,
+.modal-overlay,
+.modal-overlay *,
+.kal-popover,
+.kal-popover *,
+.flash-wrap,
+.flash-wrap * {
+  box-sizing: border-box;
+}
+
+/* ── Neutralize main.css global rules yang bleed ke dalam modal ──
+   main.css punya: label { display:block; margin-bottom:0.3rem }
+                   input,select,textarea { width:100%; padding:... }
+   Kita reset khusus untuk radio & checkbox di dalam modal.        */
+.modal-overlay input[type="radio"],
+.modal-overlay input[type="checkbox"] {
+  width: auto !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transition: none !important;
+  flex-shrink: 0;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   LAYOUT PAGE
+   ════════════════════════════════════════════════════════════════ */
+.kal-page {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-lg) var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   PAGE HEADER
+   ════════════════════════════════════════════════════════════════ */
+.kal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 18px 24px;
+  box-shadow: var(--shadow-xs);
+}
+
+.kal-header-left h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.kal-header-left p {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.kal-header-actions {
+  display: flex;
+  flex-direction: column; /* legend di atas, button di bawah */
+  align-items: flex-end; /* keduanya rata kanan */
+  justify-content: space-between;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* ── Legend chips ──────────────────────────────────────────── */
+.kal-legend {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 7px 12px;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-light);
+  border-radius: var(--r-xl);
+  box-shadow: inset 0 1px 2px rgba(13, 27, 42, 0.04);
+}
+
+.kal-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+  padding: 2px 4px;
+  border-radius: var(--r-xs);
+  transition: color var(--tx);
+}
+.kal-legend-item:hover {
+  color: var(--text-secondary);
+}
+
+.kal-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.dot-nasional {
+  background: var(--c-nasional);
+}
+.dot-bersama {
+  background: var(--c-bersama);
+}
+.dot-mingguan {
+  background: var(--c-mingguan);
+}
+.dot-perusahaan {
+  background: var(--c-perusahaan);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   BUTTONS
+   ════════════════════════════════════════════════════════════════ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 9px 18px;
+  border-radius: var(--r-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    background var(--tx),
+    border-color var(--tx),
+    box-shadow var(--tx),
+    transform var(--tx),
+    color var(--tx),
+    opacity var(--tx);
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  user-select: none;
+}
+.btn:active {
+  transform: scale(0.97);
+}
+.btn:focus-visible {
+  outline: 2px solid var(--brand-accent);
+  outline-offset: 2px;
+}
+
+/* Primary */
+.btn-primary {
+  background: var(--brand);
+  color: var(--text-inverse);
+  border-color: var(--brand);
+  box-shadow:
+    0 1px 3px rgba(26, 58, 92, 0.25),
+    0 1px 2px rgba(26, 58, 92, 0.15);
+}
+.btn-primary:hover {
+  background: #142d48;
+  border-color: #142d48;
+  box-shadow:
+    0 2px 8px rgba(26, 58, 92, 0.3),
+    0 1px 3px rgba(26, 58, 92, 0.2);
+}
+.btn-primary:active {
+  background: #0f2235;
+}
+
+/* Ghost */
+.btn-ghost {
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-color: var(--border);
+  box-shadow: var(--shadow-xs);
+}
+.btn-ghost:hover {
+  background: var(--bg-raised);
+  border-color: var(--border-focus);
+  color: var(--text-primary);
+}
+
+/* Danger */
+.btn-danger {
+  background: var(--danger);
+  color: #fff;
+  border-color: var(--danger);
+  box-shadow: 0 1px 3px rgba(220, 38, 38, 0.25);
+}
+.btn-danger:hover {
+  background: #b91c1c;
+  border-color: #b91c1c;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+}
+
+/* Size variants */
+.btn-sm {
+  font-size: 0.8rem;
+  padding: 6px 13px;
+  letter-spacing: 0;
+}
+
+/* Icon-only circular */
+.btn-icon {
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   INFO BANNER
+   ════════════════════════════════════════════════════════════════ */
+.info-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--r-sm);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  border: 1px solid transparent;
+}
+
+.info-banner--warning {
+  background: var(--warning-bg);
+  color: #92400e;
+  border-color: #fde68a;
+}
+.info-banner--info {
+  background: var(--info-bg);
+  color: #075985;
+  border-color: #bae6fd;
+}
+.info-banner > svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   BODY LAYOUT: kalender + panel upcoming
+   ════════════════════════════════════════════════════════════════ */
+.kal-body {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: var(--space-xl);
+  align-items: start;
+}
+@media (max-width: 960px) {
+  .kal-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   KALENDER CARD
+   ════════════════════════════════════════════════════════════════ */
+.kal-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── Month navigation bar ──────────────────────────────────── */
+.kal-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-light);
+  background: linear-gradient(180deg, var(--bg-raised) 0%, var(--bg-card) 100%);
+}
+
+.kal-nav-center {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.kal-nav-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.025em;
+  min-width: 130px;
+  text-align: center;
+}
+
+.kal-nav-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition:
+    background var(--tx),
+    color var(--tx),
+    border-color var(--tx),
+    box-shadow var(--tx),
+    transform var(--tx);
+  flex-shrink: 0;
+}
+.kal-nav-btn:hover {
+  background: var(--brand);
+  color: #fff;
+  border-color: var(--brand);
+  box-shadow: 0 2px 8px rgba(26, 58, 92, 0.25);
+}
+.kal-nav-btn:active {
+  transform: scale(0.93);
+}
+
+/* Month + year dropdowns */
+.kal-nav-month-select,
+.kal-nav-year-select {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  border-radius: var(--r-sm);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-family: var(--font);
+  padding: 5px 10px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition:
+    border-color var(--tx),
+    box-shadow var(--tx);
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2394a3b8' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 26px;
+}
+.kal-nav-month-select:focus,
+.kal-nav-year-select:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.12);
+}
+
+/* ── Day-of-week header ────────────────────────────────────── */
+.kal-page .kal-grid-head {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  border-bottom: 1px solid var(--border-light);
+  background: var(--bg-raised);
+  /* Harus identik persis dengan .kal-grid agar kolom sejajar */
+}
+
+.kal-page .kal-grid-head span {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 10px 0;
+  color: var(--text-secondary);
+  /* Tidak ada border-right di sini — cukup grid */
+  min-width: 0;
+}
+.kal-page .kal-grid-head span:first-child {
+  color: var(--c-nasional);
+}
+.kal-page .kal-grid-head span:last-child {
+  color: var(--brand-mid);
+}
+
+/* ── Day grid ──────────────────────────────────────────────── */
+.kal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  /* Setiap baris tinggi sama — dihitung dari sisa ruang kalender.
+     Kalender punya ~6 baris, masing-masing cukup untuk 3 chip kecil + nomor tanggal.
+     Nilai 76px memberikan tampilan kompak tapi tetap terbaca.               */
+  grid-auto-rows: 76px;
+}
+
+/* ── Individual day cell ───────────────────────────────────── */
+.kal-day {
+  /* Height diatur oleh grid-auto-rows, bukan oleh konten */
+  border-right: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+  padding: 4px 5px 3px;
+  position: relative;
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden; /* konten melebihi batas disembunyikan — ukuran tidak berubah */
+  transition: background var(--tx);
+}
+.kal-day:nth-child(7n) {
+  border-right: none;
+}
+
+/* Outside-month cells */
+.kal-day--outside {
+  background: #fafbfd;
+  opacity: 0.38; /* seluruh cell termasuk event chip jadi redup */
+}
+.kal-day--outside .kal-day-num {
+  color: var(--text-faint);
+}
+
+/* Today marker */
+.kal-day--today .kal-day-num {
+  background: var(--brand);
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(26, 58, 92, 0.3);
+}
+
+/* Weekday colors */
+.kal-day:nth-child(7n + 1) .kal-day-num {
+  color: var(--c-nasional);
+}
+.kal-day:nth-child(7n) .kal-day-num {
+  color: var(--brand-mid);
+}
+
+/* Hover on active months */
+.kal-day:not(.kal-day--outside):hover {
+  background: var(--brand-xlight);
+}
+.kal-day--clickable {
+  cursor: pointer;
+}
+
+/* Day number bubble */
+.kal-day-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  align-self: flex-end;
+  flex-shrink: 0;
+  margin-left: auto;
+  letter-spacing: -0.02em;
+  transition:
+    background var(--tx),
+    color var(--tx),
+    box-shadow var(--tx);
+}
+
+/* ── Event chips ───────────────────────────────────────────── */
+.kal-day-events {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.kal-event {
+  font-size: 0.58rem;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: var(--r-xs);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  display: block; /* block sederhana, tidak flex agar tidak mengubah ukuran */
+  transition:
+    filter var(--tx),
+    opacity var(--tx);
+}
+.kal-event:hover {
+  filter: brightness(0.9);
+}
+
+/* Chip inline action buttons — dihapus, edit/hapus ada di popover */
+
+/* Dummy placeholder agar tidak break referensi lama */
+.kal-event-name {
+  display: none;
+}
+.kal-event-actions {
+  display: none !important;
+}
+.kal-event-btn {
+  display: none;
+}
+
+/* Type colors */
+.kal-event--nasional {
+  background: var(--c-nasional-bg);
+  color: var(--c-nasional-dk);
+  border-left: 2px solid var(--c-nasional);
+}
+.kal-event--bersama {
+  background: var(--c-bersama-bg);
+  color: var(--c-bersama-dk);
+  border-left: 2px solid var(--c-bersama);
+}
+.kal-event--mingguan {
+  background: var(--c-mingguan-bg);
+  color: var(--c-mingguan-dk);
+  border-left: 2px solid var(--c-mingguan);
+}
+.kal-event--perusahaan {
+  background: var(--c-perusahaan-bg);
+  color: var(--c-perusahaan-dk);
+  border-left: 2px solid var(--c-perusahaan);
+}
+
+/* Expired state */
+.kal-event--expired {
+  opacity: 0.6;
+  cursor: default;
+}
+.kal-event--expired:hover {
+  filter: none;
+}
+
+/* "+N lainnya" chip */
+.kal-event--more {
+  font-size: 0.58rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  background: transparent;
+  border-left: none;
+  cursor: pointer;
+  padding: 0 4px;
+}
+.kal-event--more:hover {
+  color: var(--brand-mid);
+  transform: none;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   POPOVER (hover / klik detail)
+   ════════════════════════════════════════════════════════════════ */
+.kal-popover {
+  position: fixed;
+  z-index: 700;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-xl);
+  padding: 14px 16px;
+  width: 268px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(6px) scale(0.97);
+  transition:
+    opacity 0.16s var(--ease),
+    transform 0.16s var(--spring);
+  will-change: opacity, transform;
+  /* Pastikan tidak terpotong viewport */
+  max-width: calc(100vw - 32px);
+}
+.kal-popover.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.kal-popover-date {
+  font-size: 0.7rem;
+  color: var(--text-faint);
+  margin-bottom: 8px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.kal-popover-event {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 0;
+  border-top: 1px solid var(--border-light);
+  font-size: 0.8rem;
+}
+.kal-popover-event:first-of-type {
+  border-top: none;
+}
+
+.kal-popover-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.kal-popover-info {
+  flex: 1;
+  min-width: 0;
+}
+.kal-popover-name {
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--text-primary);
+}
+.kal-popover-sub {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+  line-height: 1.4;
+}
+
+.kal-popover-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-light);
+  pointer-events: auto;
+}
+
+.btn-edit-pop,
+.btn-del-pop {
+  flex: 1;
+  font-size: 0.72rem;
+  padding: 5px 10px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  cursor: pointer;
+  font-family: var(--font);
+  font-weight: 700;
+  transition:
+    background var(--tx),
+    color var(--tx),
+    border-color var(--tx),
+    box-shadow var(--tx);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.btn-edit-pop {
+  color: var(--brand-mid);
+}
+.btn-edit-pop:hover {
+  background: var(--brand-light);
+  border-color: var(--brand-mid);
+  box-shadow: 0 1px 4px rgba(42, 82, 152, 0.15);
+}
+.btn-del-pop {
+  color: var(--danger);
+}
+.btn-del-pop:hover {
+  background: var(--danger-bg);
+  border-color: var(--danger);
+  box-shadow: 0 1px 4px rgba(220, 38, 38, 0.15);
+}
+
+/* Expired lock notice in popover */
+.kal-popover-lock {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 8px;
+  padding: 6px 8px;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-light);
+  border-radius: var(--r-xs);
+  font-size: 0.65rem;
+  color: var(--text-faint);
+  font-weight: 600;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   UPCOMING PANEL
+   ════════════════════════════════════════════════════════════════ */
+.kal-upcoming {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  position: sticky;
+  top: 20px;
+}
+
+.kal-upcoming-header {
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.kal-upcoming-header-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.015em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.kal-upcoming-list {
+  padding: 4px 0;
+}
+
+.kal-upcoming-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 7px 14px;
+  transition: background var(--tx);
+  position: relative;
+}
+.kal-upcoming-item:hover {
+  background: var(--brand-xlight);
+}
+
+/* Inline edit/hapus di item upcoming */
+.kal-upcoming-item-actions {
+  display: none;
+  gap: 4px;
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 3px;
+  box-shadow: var(--shadow-sm);
+}
+.kal-upcoming-item:hover .kal-upcoming-item-actions {
+  display: flex;
+}
+
+.kal-upcoming-item-btn {
+  width: 18px;
+  height: 18px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-xs);
+  color: var(--text-muted);
+  transition:
+    background var(--tx),
+    color var(--tx);
+}
+.kal-upcoming-item-btn:hover {
+  color: var(--text-primary);
+  background: var(--border-light);
+}
+.kal-upcoming-item-btn.is-danger:hover {
+  color: var(--danger);
+  background: var(--danger-bg);
+}
+
+/* Datebox */
+.kal-upcoming-datebox {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.48rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1;
+  gap: 1px;
+}
+.kal-upcoming-datebox-day {
+  font-size: 0.88rem;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  line-height: 1;
+}
+
+/* Datebox colors */
+.datebox--nasional {
+  background: var(--c-nasional-bg);
+  color: var(--c-nasional-dk);
+}
+.datebox--bersama {
+  background: var(--c-bersama-bg);
+  color: var(--c-bersama-dk);
+}
+.datebox--mingguan {
+  background: var(--c-mingguan-bg);
+  color: var(--c-mingguan-dk);
+}
+.datebox--perusahaan {
+  background: var(--c-perusahaan-bg);
+  color: var(--c-perusahaan-dk);
+}
+
+.kal-upcoming-info {
+  flex: 1;
+  min-width: 0;
+  padding-right: 8px;
+}
+.kal-upcoming-name {
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-primary);
+}
+.kal-upcoming-sub {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  margin-top: 1px;
+  font-weight: 500;
+}
+
+.kal-upcoming-empty {
+  padding: 28px 20px;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--text-faint);
+  line-height: 1.6;
+}
+.kal-upcoming-empty-cta {
+  margin-top: 12px;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   MODAL BASE
+   ════════════════════════════════════════════════════════════════ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(13, 27, 42, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s var(--ease);
+}
+.modal-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal {
+  background: var(--bg-card);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-xl);
+  width: calc(100% - 0px);
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transform: translateY(20px) scale(0.98);
+  transition: transform 0.2s var(--spring);
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+  will-change: transform;
+  margin: auto;
+  box-sizing: border-box;
+}
+.modal-overlay.is-open .modal {
+  transform: translateY(0) scale(1);
+}
+.modal--sm {
+  max-width: 400px;
+}
+
+/* Modal scrollbar */
+.modal::-webkit-scrollbar {
+  width: 4px;
+}
+.modal::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--border-light);
+  position: sticky;
+  top: 0;
+  background: var(--bg-card);
+  z-index: 1;
+}
+
+.modal-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.modal-close {
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background var(--tx),
+    color var(--tx),
+    border-color var(--tx);
+}
+.modal-close:hover {
+  background: var(--danger-bg);
+  color: var(--danger);
+  border-color: #fca5a5;
+}
+
+.modal-body {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 14px 24px 20px;
+  border-top: 1px solid var(--border-light);
+  position: sticky;
+  bottom: 0;
+  background: var(--bg-card);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   FORM ELEMENTS
+   ════════════════════════════════════════════════════════════════ */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  width: 100%;
+}
+
+.form-group label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  letter-spacing: 0.015em;
+}
+
+.required {
+  color: var(--danger);
+}
+.label-hint {
+  font-weight: 400;
+  color: var(--text-faint);
+  font-size: 0.72rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group select,
+.form-group textarea {
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 9px 12px;
+  font-size: 0.875rem;
+  font-family: var(--font);
+  color: var(--text-primary);
+  background: var(--bg-card);
+  outline: none;
+  transition:
+    border-color var(--tx),
+    box-shadow var(--tx);
+  width: 100%;
+  line-height: 1.5;
+}
+.form-group input[type="date"] {
+  font-family: var(--font-mono);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.12);
+}
+.form-group input:hover:not(:focus),
+.form-group select:hover:not(:focus),
+.form-group textarea:hover:not(:focus) {
+  border-color: #b3becc;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.field-error {
+  font-size: 0.72rem;
+  color: var(--danger);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.field-error::before {
+  content: "⚠";
+}
+
+/* ── Date multi-select ─────────────────────────────────────── */
+.dayoff-date-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.dayoff-date-row input {
+  flex: 1;
+}
+
+/* Date tags */
+.dayoff-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 4px;
+  min-height: 0;
+}
+
+.dayoff-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--brand-light);
+  color: var(--brand);
+  border: 1px solid #c7d5f0;
+  border-radius: var(--r-sm);
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  padding: 3px 8px;
+}
+
+.dayoff-tag-remove {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--brand-mid);
+  font-size: 0.85rem;
+  line-height: 1;
+  padding: 0 1px;
+  display: flex;
+  align-items: center;
+  transition: color var(--tx);
+}
+.dayoff-tag-remove:hover {
+  color: var(--danger);
+}
+
+/* ── Scope radio ───────────────────────────────────────────── */
+.dayoff-scope-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.dayoff-scope-option {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.84rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 8px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-sm);
+  flex: 1;
+  transition:
+    border-color var(--tx),
+    background var(--tx);
+  min-width: 120px;
+  margin-bottom: 0 !important;
+}
+.dayoff-scope-option:has(input:checked) {
+  border-color: var(--brand-mid);
+  background: var(--brand-light);
+  color: var(--brand);
+}
+.dayoff-scope-option input {
+  accent-color: var(--brand);
+  /* Counter main.css: input { width:100%; padding:...; border:...; } */
+  width: auto !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  flex-shrink: 0;
+}
+
+/* ── Type radio grid ───────────────────────────────────────── */
+.dayoff-type-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.dayoff-type-opt {
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 10px 12px;
+  cursor: pointer;
+  transition:
+    border-color var(--tx),
+    background var(--tx),
+    box-shadow var(--tx);
+  font-size: 0.8rem;
+  display: flex !important;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 0 !important;
+}
+.dayoff-type-opt:hover {
+  border-color: #b3becc;
+  background: var(--bg-raised);
+}
+.dayoff-type-opt:has(input:checked) {
+  border-color: var(--brand-mid);
+  background: var(--brand-light);
+  box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.08);
+}
+.dayoff-type-opt input {
+  accent-color: var(--brand-mid);
+  margin-top: 2px;
+  flex-shrink: 0;
+  /* Counter main.css: input { width:100%; padding:...; border:...; } */
+  width: auto !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  font-size: inherit !important;
+  transition: none !important;
+}
+.dayoff-type-label {
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+.dayoff-type-sub {
+  font-size: 0.67rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Warning baris: Libur Nasional / Cuti Bersama notice */
+.dayoff-type-notice {
+  display: none;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--warning-bg);
+  border: 1px solid #fde68a;
+  border-radius: var(--r-sm);
+  font-size: 0.74rem;
+  color: #92400e;
+  line-height: 1.5;
+}
+.dayoff-type-notice.is-visible {
+  display: flex;
+}
+
+/* ── Spinner ───────────────────────────────────────────────── */
+/* Pastikan [hidden] tidak di-override oleh display: inline-block */
+.modal-overlay [hidden],
+.kal-page [hidden] {
+  display: none !important;
+}
+
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
+  flex-shrink: 0;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Spinner dark (untuk ghost button) */
+.spinner--dark {
+  border-color: rgba(30, 50, 80, 0.2);
+  border-top-color: var(--brand);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   FLASH TOAST
+   ════════════════════════════════════════════════════════════════ */
+.flash-wrap {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 360px;
+}
+
+.flash {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 16px;
+  border-radius: var(--r-sm);
+  font-size: 0.8rem;
+  font-weight: 500;
+  box-shadow: var(--shadow-lg);
+  min-width: 240px;
+  animation: toastIn 0.22s var(--spring);
+}
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateX(24px) scale(0.96);
+  }
+}
+
+.flash-success {
+  background: var(--success-bg);
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+.flash-danger {
+  background: var(--danger-bg);
+  color: #991b1b;
+  border: 1px solid #fca5a5;
+}
+.flash-warning {
+  background: var(--warning-bg);
+  color: #78350f;
+  border: 1px solid #fde68a;
+}
+.flash-info {
+  background: var(--info-bg);
+  color: #075985;
+  border: 1px solid #bae6fd;
+}
+
+.flash-close {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  margin-left: auto;
+  font-size: 1.1rem;
+  color: inherit;
+  opacity: 0.6;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  transition: opacity var(--tx);
+}
+.flash-close:hover {
+  opacity: 1;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   RESPONSIVE: Mobile
+   ════════════════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  .kal-page {
+    padding: var(--space-md) var(--space-sm) var(--space-xl);
+    gap: var(--space-lg);
+  }
+
+  .kal-header {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+  .kal-header-left h1 {
+    font-size: 1.2rem;
+  }
+  .kal-header-actions {
+    width: 100%;
+    flex-direction: row; /* kembali horizontal di mobile */
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .kal-legend {
+    padding: 6px 10px;
+    gap: 4px;
+  }
+  .kal-legend-item {
+    font-size: 0.62rem;
+  }
+
+  .kal-grid {
+    grid-auto-rows: 56px;
+  }
+  .kal-day {
+    padding: 3px 3px 2px;
+  }
+  .kal-day-num {
+    width: 20px;
+    height: 20px;
+    font-size: 0.7rem;
+  }
+  .kal-event {
+    font-size: 0.56rem;
+    padding: 1px 4px;
+  }
+  .kal-event-actions {
+    display: none !important;
+  }
+  .kal-nav-month-select,
+  .kal-nav-year-select {
+    font-size: 0.75rem;
+    padding: 4px 22px 4px 8px;
+  }
+
+  .kal-popover {
+    width: 220px;
+    font-size: 0.78rem;
+  }
+
+  /* Modal mobile: type grid jadi 1 kolom agar tidak terpotong */
+  .dayoff-type-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modal {
+    border-radius: var(--r);
+  }
+  .modal-header {
+    padding: 14px 18px 12px;
+  }
+  .modal-body {
+    padding: 14px 18px;
+  }
+  .modal-footer {
+    padding: 12px 18px 16px;
+  }
+
+  .flash-wrap {
+    right: 10px;
+    left: 10px;
+    max-width: unset;
+  }
+  .flash {
+    min-width: unset;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SCROLL BEHAVIOR & ACCESSIBILITY
+   ════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand-accent);
+  outline-offset: 2px;
+  border-radius: var(--r-xs);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   UTILITY
+   ════════════════════════════════════════════════════════════════ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Divider ringan di dalam modal body */
+.modal-divider {
+  height: 1px;
+  background: var(--border-light);
+  margin: 2px 0;
+}
+
+/* Badge tipe kecil */
+.type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.type-badge--nasional {
+  background: var(--c-nasional-bg);
+  color: var(--c-nasional-dk);
+}
+.type-badge--bersama {
+  background: var(--c-bersama-bg);
+  color: var(--c-bersama-dk);
+}
+.type-badge--mingguan {
+  background: var(--c-mingguan-bg);
+  color: var(--c-mingguan-dk);
+}
+.type-badge--perusahaan {
+  background: var(--c-perusahaan-bg);
+  color: var(--c-perusahaan-dk);
+}
